@@ -1,6 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Home from './pages/Home';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import Cookies from './pages/Cookies';
 import Header from './components/Header';
 
 function App() {
@@ -28,6 +30,8 @@ function App() {
         <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/cookies" element={<Cookies />} />
         </Routes>
       </div>
     </Router>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 function Home() {
   const [lastPlayed, setLastPlayed] = useState<string | null>(null);
@@ -783,13 +784,13 @@ function Home() {
 
       {/* Footer */}
       <footer className="site-footer">
-        <a href="#">Integritetspolicy</a>
+        <Link to="/privacy-policy">Integritetspolicy</Link>
         <span>•</span>
         <a href="#" onClick={(e) => { e.preventDefault(); setShowAboutModal(true); }}>
           Om oss / Kontakt
         </a>
         <span>•</span>
-        <a href="#">Cookie-inställningar</a>
+        <Link to="/cookies">Cookie-inställningar</Link>
       </footer>
 
       {/* Cookie Banner */}
@@ -802,9 +803,9 @@ function Home() {
             <button onClick={acceptCookies} className="cookie-accept-btn">
               Godkänn
             </button>
-            <a href="/cookies.html" className="cookie-link">
+            <Link to="/cookies" className="cookie-link">
               Läs mer
-            </a>
+            </Link>
           </div>
         </div>
       )}

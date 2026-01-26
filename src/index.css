@@ -341,7 +341,9 @@ body.dark .site-footer {
   color: #bbb;
 }
 
-.site-footer a {
+.site-footer a,
+.site-footer a:link,
+.site-footer a:visited {
   color: #888;
   text-decoration: none;
   margin: 0 15px;
@@ -353,7 +355,9 @@ body.dark .site-footer {
   text-decoration: underline;
 }
 
-body.dark .site-footer a {
+body.dark .site-footer a,
+body.dark .site-footer a:link,
+body.dark .site-footer a:visited {
   color: #ddd;
 }
 
