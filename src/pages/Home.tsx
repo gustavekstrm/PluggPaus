@@ -5,6 +5,7 @@ function Home() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
+  const [showCookieBanner, setShowCookieBanner] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('lastPlayedGame');
@@ -15,7 +16,18 @@ function Home() {
     if (savedFavorites) {
       setFavorites(JSON.parse(savedFavorites));
     }
+
+    // Check if cookies have been accepted
+    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
+    if (!cookiesAccepted) {
+      setShowCookieBanner(true);
+    }
   }, []);
+
+  const acceptCookies = () => {
+    localStorage.setItem('cookiesAccepted', 'true');
+    setShowCookieBanner(false);
+  };
 
   const toggleFavorite = (gameId: string) => {
     const newFavorites = favorites.includes(gameId)
@@ -41,10 +53,10 @@ function Home() {
             PluggPaus
           </span>
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 font-normal max-w-xl mx-auto mb-2">
+        <p className="text-base sm:text-lg text-gray-600 dark:text-white font-normal max-w-xl mx-auto mb-2">
           Ta en paus från plugget med roliga ordspel och tankenötter
         </p>
-        <p className="text-sm text-gray-500 dark:text-gray-500 max-w-xl mx-auto mb-6">
+        <p className="text-sm text-gray-500 dark:text-gray-200 max-w-xl mx-auto mb-6">
           Välj ditt favoritspel nedan 🎮
         </p>
 
@@ -673,68 +685,93 @@ function Home() {
       </div>
 
       {/* SEO Content Section */}
-      <section className="seo-content">
-        <h1>Varför din hjärna behöver en PluggPaus</h1>
+      <section 
+        id="seo-article-fixed" 
+        className="seo-content"
+        style={{
+          color: '#ffffff',
+          maxWidth: '800px',
+          margin: '60px auto 40px',
+          padding: '60px 20px',
+          lineHeight: 1.6,
+          fontSize: '1rem',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Roboto", system-ui, sans-serif',
+          borderTop: '1px solid #444',
+          backgroundColor: 'transparent',
+          textAlign: 'left'
+        }}
+      >
+        <h1 style={{ color: '#ffffff', fontWeight: 700, fontSize: '2rem', marginBottom: '1.5rem', lineHeight: 1.3 }}>
+          Varför din hjärna behöver en PluggPaus
+        </h1>
 
-        <p>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
           Under långa föreläsningar eller intensiva pluggpass är det lätt att tro att konstant fokus är nyckeln till framgång.
           Men forskning visar att din hjärna faktiskt presterar bättre med regelbundna mikropauser. När du tar korta pauser
-          på 5-10 minuter aktiveras hjärnans <strong>dopaminsystem</strong>, vilket förbättrar både motivation och
-          minneskonsolidering. Detta är grunden i den populära <strong>Pomodoro-tekniken</strong>, där du växlar mellan
+          på 5-10 minuter aktiveras hjärnans <strong style={{ color: '#ffffff', fontWeight: 700 }}>dopaminsystem</strong>, vilket förbättrar både motivation och
+          minneskonsolidering. Detta är grunden i den populära <strong style={{ color: '#ffffff', fontWeight: 700 }}>Pomodoro-tekniken</strong>, där du växlar mellan
           koncentrerade arbetspass och korta avbrott.
         </p>
 
-        <p>
-          Här på PluggPaus samlar vi <strong>gratis onlinespel</strong> som är perfekta för just detta ändamål.
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          Här på PluggPaus samlar vi <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis onlinespel</strong> som är perfekta för just detta ändamål.
           Våra spel är snabba, utmanande och kräver ingen nedladdning – du spelar direkt i webbläsaren.
-          Dessutom fungerar de som <strong>hjärngympa för studenter</strong> genom att träna olika kognitiva förmågor
+          Dessutom fungerar de som <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärngympa för studenter</strong> genom att träna olika kognitiva förmågor
           som ordförråd, logiskt tänkande och rumslig uppfattning.
         </p>
 
-        <h2>Wordle – Träna ditt ordförråd</h2>
-        <p>
-          <strong>Wordle</strong> är ett ordspel där du har sex försök att gissa dagens femstaviga ord.
+        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
+          Wordle – Träna ditt ordförråd
+        </h2>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          <strong style={{ color: '#ffffff', fontWeight: 700 }}>Wordle</strong> är ett ordspel där du har sex försök att gissa dagens femstaviga ord.
           Varje gissning ger ledtrådar genom färgkodade rutor: grön betyder rätt bokstav på rätt plats,
-          gul betyder rätt bokstav men fel plats. Detta <strong>gratis webbläsarspel</strong> har blivit
+          gul betyder rätt bokstav men fel plats. Detta <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis webbläsarspel</strong> har blivit
           en global succé tack vare sin perfekta balans mellan utmaning och tillgänglighet.
-          Att spela Wordle dagligen tränar aktivt ditt <strong>ordförråd</strong>, mönsterigenkänning
+          Att spela Wordle dagligen tränar aktivt ditt <strong style={{ color: '#ffffff', fontWeight: 700 }}>ordförråd</strong>, mönsterigenkänning
           och deduktiv förmåga – färdigheter som är ovärderliga både i studier och vardagsliv.
         </p>
 
-        <h2>2048 – Öva logiskt tänkande</h2>
-        <p>
-          I <strong>2048</strong> kombinerar du numrerade brickor på ett 4x4-rutnät för att nå målet:
+        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
+          2048 – Öva logiskt tänkande
+        </h2>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          I <strong style={{ color: '#ffffff', fontWeight: 700 }}>2048</strong> kombinerar du numrerade brickor på ett 4x4-rutnät för att nå målet:
           brickan med värdet 2048. Du flyttar alla brickor åt samma håll samtidigt, och när två brickor
           med samma nummer möts slås de samman till en dubbelt så stor. Detta pussel är ett utmärkt
-          <strong>tidsfördriv under föreläsningar</strong> eftersom varje omgång tar bara 2-5 minuter,
+          <strong style={{ color: '#ffffff', fontWeight: 700 }}>tidsfördriv under föreläsningar</strong> eftersom varje omgång tar bara 2-5 minuter,
           men kräver intensiv koncentration och planering. Spelet tränar din förmåga att tänka flera
           steg framåt och utveckla långsiktiga strategier – precis som när du löser komplexa matematikproblem
           eller skriver uppsatser.
         </p>
 
-        <h2>GeoGuessr – Upptäck världen</h2>
-        <p>
-          <strong>GeoGuessr</strong> placerar dig på en slumpmässig plats i världen via Google Street View,
-          och din uppgift är att gissa var du befinner dig. Spelet tränar din <strong>geografiska kunskap</strong>,
+        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
+          GeoGuessr – Upptäck världen
+        </h2>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          <strong style={{ color: '#ffffff', fontWeight: 700 }}>GeoGuessr</strong> placerar dig på en slumpmässig plats i världen via Google Street View,
+          och din uppgift är att gissa var du befinner dig. Spelet tränar din <strong style={{ color: '#ffffff', fontWeight: 700 }}>geografiska kunskap</strong>,
           visuella minnesbild och analytiska förmåga genom att du letar efter ledtrådar som vägskyltar,
-          arkitektur, vegetation och språk. Det är ett perfekt <strong>gratis onlinespel</strong> för studiepauser
+          arkitektur, vegetation och språk. Det är ett perfekt <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis onlinespel</strong> för studiepauser
           eftersom det kombinerar avkoppling med inlärning – du utforskar världen samtidigt som du ger din
           hjärna en paus från böckerna. Många användare rapporterar att de lärt sig mer geografi genom
           GeoGuessr än genom traditionella studier!
         </p>
 
-        <h2>Vetenskapliga fördelar med spelpauser</h2>
-        <p>
-          Studier från Stanford University visar att korta <strong>hjärngymnastik-pauser</strong> kan öka
-          produktiviteten med upp till 25%. När du <strong>spelar gratis webbläsarspel</strong> aktiveras
+        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
+          Vetenskapliga fördelar med spelpauser
+        </h2>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+          Studier från Stanford University visar att korta <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärngymnastik-pauser</strong> kan öka
+          produktiviteten med upp till 25%. När du <strong style={{ color: '#ffffff', fontWeight: 700 }}>spelar gratis webbläsarspel</strong> aktiveras
           andra delar av hjärnan än de du använder för pluggande, vilket ger dina "studieområden" tid att
-          återhämta sig och konsolidera ny information. Detta fenomen kallas för <strong>diffust tänkande</strong>
+          återhämta sig och konsolidera ny information. Detta fenomen kallas för <strong style={{ color: '#ffffff', fontWeight: 700 }}>diffust tänkande</strong>
           och är lika viktigt som fokuserat lärande.
         </p>
 
-        <p>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
           Så nästa gång du känner att koncentrationen sviktar under en lång föreläsning – ta en PluggPaus!
-          Välj ett av våra <strong>hjärntränande spel</strong> och ge din hjärna den paus den förtjänar.
+          Välj ett av våra <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärntränande spel</strong> och ge din hjärna den paus den förtjänar.
           Du kommer tillbaka starkare, mer fokuserad och redo att ta dig an nya utmaningar.
         </p>
       </section>
@@ -754,6 +791,23 @@ function Home() {
         <span>•</span>
         <a href="#">Cookie-inställningar</a>
       </footer>
+
+      {/* Cookie Banner */}
+      {showCookieBanner && (
+        <div className="cookie-banner">
+          <p>
+            Vi använder kakor för att optimera din pluggpaus. Genom att använda sidan godkänner du vår användning av cookies.
+          </p>
+          <div className="cookie-banner-buttons">
+            <button onClick={acceptCookies} className="cookie-accept-btn">
+              Godkänn
+            </button>
+            <a href="/cookies.html" className="cookie-link">
+              Läs mer
+            </a>
+          </div>
+        </div>
+      )}
 
       {/* About Modal */}
       {showAboutModal && (

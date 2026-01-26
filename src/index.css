@@ -11,7 +11,7 @@ body {
 }
 
 body.dark {
-  background-color: #1a1a1a;
+  background-color: #0f1729;
 }
 
 .title-font {
@@ -209,13 +209,14 @@ body.dark .ad-sticky-bottom {
   font-size: 1rem;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', system-ui, sans-serif;
   border-top: 1px solid #e0e0e0;
-  background-color: rgba(248, 249, 250, 0.5);
+  background-color: transparent;
+  text-align: left;
 }
 
-body.dark .seo-content {
-  color: #e0e0e0;
-  border-top: 1px solid #333;
-  background-color: rgba(30, 30, 30, 0.5);
+body.dark .seo-content,
+body.dark-mode .seo-content {
+  border-top: 1px solid #444;
+  background-color: transparent !important;
 }
 
 .seo-content h1 {
@@ -224,10 +225,14 @@ body.dark .seo-content {
   color: #1a1a1a;
   margin-bottom: 1.5rem;
   line-height: 1.3;
+  text-align: left;
 }
 
-body.dark .seo-content h1 {
-  color: #ffffff;
+body.dark .seo-content h1,
+body.dark-mode .seo-content h1 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
 }
 
 .seo-content h2 {
@@ -237,10 +242,31 @@ body.dark .seo-content h1 {
   margin-top: 2rem;
   margin-bottom: 1rem;
   line-height: 1.4;
+  text-align: left;
 }
 
-body.dark .seo-content h2 {
-  color: #ffffff;
+body.dark .seo-content h2,
+body.dark-mode .seo-content h2 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+}
+
+.seo-content h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2c2c2c;
+  margin-top: 1.5rem;
+  margin-bottom: 0.8rem;
+  line-height: 1.4;
+  text-align: left;
+}
+
+body.dark .seo-content h3,
+body.dark-mode .seo-content h3 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
 }
 
 .seo-content p {
@@ -248,10 +274,27 @@ body.dark .seo-content h2 {
   color: #333;
   font-size: 1.1rem;
   line-height: 1.6;
+  text-align: left;
 }
 
-body.dark .seo-content p {
-  color: #e0e0e0;
+body.dark .seo-content p,
+body.dark-mode .seo-content p {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
+}
+
+.seo-content li {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+body.dark .seo-content li,
+body.dark-mode .seo-content li {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  opacity: 1 !important;
 }
 
 .seo-content strong {
@@ -259,8 +302,28 @@ body.dark .seo-content p {
   color: #1a1a1a;
 }
 
-body.dark .seo-content strong {
-  color: #ffffff;
+body.dark .seo-content strong,
+body.dark-mode .seo-content strong {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  opacity: 1 !important;
+}
+
+.seo-content a {
+  color: #667eea;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+body.dark .seo-content a,
+body.dark-mode .seo-content a {
+  color: #ffd700 !important;
+  opacity: 1 !important;
+}
+
+body.dark .seo-content a:hover,
+body.dark-mode .seo-content a:hover {
+  color: #ffed4e !important;
 }
 
 /* Footer */
@@ -275,7 +338,7 @@ body.dark .seo-content strong {
 }
 
 body.dark .site-footer {
-  color: #777;
+  color: #bbb;
 }
 
 .site-footer a {
@@ -291,11 +354,16 @@ body.dark .site-footer {
 }
 
 body.dark .site-footer a {
-  color: #777;
+  color: #ddd;
 }
 
 body.dark .site-footer a:hover {
-  color: #aaa;
+  color: #fff;
+  text-decoration: underline;
+}
+
+body.dark .site-footer span {
+  color: #888;
 }
 
 /* Modal */
@@ -398,4 +466,144 @@ body.dark .modal-content p {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Cookie Banner */
+.cookie-banner {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 30px;
+  padding: 20px 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  animation: slideUp 0.4s ease-out;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+body.dark .cookie-banner {
+  background: rgba(30, 30, 30, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cookie-banner p {
+  margin: 0;
+  color: #333;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+body.dark .cookie-banner p {
+  color: #f8f9fa;
+}
+
+.cookie-banner-buttons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cookie-accept-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+.cookie-accept-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+}
+
+.cookie-accept-btn:active {
+  transform: translateY(0);
+}
+
+.cookie-link {
+  color: #667eea;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.cookie-link:hover {
+  color: #764ba2;
+  text-decoration: underline;
+}
+
+body.dark .cookie-link {
+  color: #a0aef7;
+}
+
+body.dark .cookie-link:hover {
+  color: #c0caff;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateX(-50%) translateY(100px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .cookie-banner {
+    bottom: 15px;
+    padding: 18px 20px;
+    max-width: calc(100% - 30px);
+  }
+
+  .cookie-banner p {
+    font-size: 0.85rem;
+  }
+
+  .cookie-banner-buttons {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cookie-accept-btn {
+    width: 100%;
+  }
+
+  .cookie-link {
+    text-align: center;
+  }
+}
+
+/* Forced Dark Mode Fix for SEO Section - MUST BE AT THE BOTTOM */
+body.dark-mode .seo-content,
+body.dark-mode .seo-content * {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+
+body.dark .seo-content,
+body.dark .seo-content * {
+  color: #ffffff !important;
+  opacity: 1 !important;
+  -webkit-text-fill-color: #ffffff !important;
 }
