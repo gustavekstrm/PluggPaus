@@ -203,57 +203,64 @@ body.dark .ad-sticky-bottom {
 .seo-content {
   max-width: 800px;
   margin: 60px auto 40px;
-  padding: 40px 20px;
-  color: #444;
-  line-height: 1.8;
+  padding: 60px 20px;
+  color: #333;
+  line-height: 1.6;
   font-size: 1rem;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Roboto', system-ui, sans-serif;
+  border-top: 1px solid #e0e0e0;
+  background-color: rgba(248, 249, 250, 0.5);
 }
 
 body.dark .seo-content {
-  color: #b8b8b8;
+  color: #e0e0e0;
+  border-top: 1px solid #333;
+  background-color: rgba(30, 30, 30, 0.5);
 }
 
 .seo-content h1 {
   font-size: 2rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: #1a1a1a;
   margin-bottom: 1.5rem;
   line-height: 1.3;
 }
 
 body.dark .seo-content h1 {
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 .seo-content h2 {
   font-size: 1.5rem;
   font-weight: 600;
-  color: #34495e;
+  color: #2c2c2c;
   margin-top: 2rem;
   margin-bottom: 1rem;
   line-height: 1.4;
 }
 
 body.dark .seo-content h2 {
-  color: #d0d0d0;
+  color: #ffffff;
 }
 
 .seo-content p {
   margin-bottom: 1.2rem;
-  color: #555;
+  color: #333;
+  font-size: 1.1rem;
+  line-height: 1.6;
 }
 
 body.dark .seo-content p {
-  color: #aaa;
+  color: #e0e0e0;
 }
 
 .seo-content strong {
   font-weight: 600;
-  color: #2c3e50;
+  color: #1a1a1a;
 }
 
 body.dark .seo-content strong {
-  color: #e0e0e0;
+  color: #ffffff;
 }
 
 /* Footer */
