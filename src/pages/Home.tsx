@@ -849,15 +849,15 @@ function Home() {
               Har du frågor, förslag på nya spel eller vill du bara komma i kontakt med oss? Maila oss gärna!
             </p>
             <p>
-              <a
-                href="mailto:gurkanekstrom@gmail.com"
-                style={{
-                  color: '#667eea',
+              <a 
+                href="mailto:pluggpaus@gmail.com" 
+                style={{ 
+                  color: '#667eea', 
                   textDecoration: 'underline',
                   fontWeight: 600
                 }}
               >
-                gurkanekstrom@gmail.com
+                pluggpaus@gmail.com
               </a>
             </p>
           </div>
