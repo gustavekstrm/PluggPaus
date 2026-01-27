@@ -54,8 +54,8 @@ function Home() {
             PluggPaus
           </span>
         </h1>
-        <p className="text-base sm:text-lg text-gray-600 dark:text-white font-normal max-w-xl mx-auto mb-2">
-          Ta en paus från plugget med roliga ordspel och tankenötter
+        <p className="text-base sm:text-lg text-gray-700 dark:text-white font-normal max-w-2xl mx-auto mb-4 leading-relaxed px-4">
+          Välkommen till PluggPaus! Din samlingsplats för mikropauser. Vi erbjuder smidiga webbspel som hjälper dig att hålla fokus genom en snabb paus under en lång föreläsning eller ett tråkigt pluggpass.
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-200 max-w-xl mx-auto mb-6">
           Välj ditt favoritspel nedan 🎮
@@ -83,7 +83,7 @@ function Home() {
 
       {/* Top Ad Banner */}
       <div className="ad-banner-top">
-        ANNONSPLATS (Top Banner)
+        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
@@ -779,7 +779,7 @@ function Home() {
 
       {/* Sticky Bottom Ad Bar */}
       <div className="ad-sticky-bottom">
-        ANNONSPLATS (Sticky Footer)
+        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
       </div>
 
       {/* Footer */}
