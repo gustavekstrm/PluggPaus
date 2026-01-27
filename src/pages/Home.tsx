@@ -55,7 +55,9 @@ function Home() {
           </span>
         </h1>
         <p className="text-base sm:text-lg text-gray-700 dark:text-white font-normal max-w-2xl mx-auto mb-4 leading-relaxed px-4">
-          Välkommen till PluggPaus! Din samlingsplats för mikropauser. Vi erbjuder smidiga webbspel som hjälper dig att hålla fokus genom en snabb paus under en lång föreläsning eller ett tråkigt pluggpass.
+          Välkommen till PluggPaus!
+          <br /><br />
+          Vi erbjuder smidiga webbspel som hjälper dig att hålla fokus genom en snabb paus under en lång föreläsning eller ett tråkigt pluggpass.
         </p>
         <p className="text-sm text-gray-500 dark:text-gray-200 max-w-xl mx-auto mb-6">
           Välj ditt favoritspel nedan 🎮
@@ -841,16 +843,16 @@ function Home() {
             <p>
               Projektet drivs av kodglädje (och en del prokrastinering).
             </p>
-            
+
             <h2 style={{ marginTop: '2rem' }}>Kontakt</h2>
             <p>
               Har du frågor, förslag på nya spel eller vill du bara komma i kontakt med oss? Maila oss gärna!
             </p>
             <p>
-              <a 
-                href="mailto:gurkanekstrom@gmail.com" 
-                style={{ 
-                  color: '#667eea', 
+              <a
+                href="mailto:gurkanekstrom@gmail.com"
+                style={{
+                  color: '#667eea',
                   textDecoration: 'underline',
                   fontWeight: 600
                 }}
