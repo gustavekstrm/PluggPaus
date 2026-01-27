@@ -4,8 +4,13 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: './', // Use relative paths for GitHub Pages with custom domain
+  base: './', // Relative paths for custom domain
   build: {
-    assetsDir: 'assets', // Ensure all assets go into the 'assets' folder
+    assetsDir: 'assets',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
   },
 })
