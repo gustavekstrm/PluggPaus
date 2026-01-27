@@ -686,8 +686,8 @@ function Home() {
       </div>
 
       {/* SEO Content Section */}
-      <section 
-        id="seo-article-fixed" 
+      <section
+        id="seo-article-fixed"
         className="seo-content"
         style={{
           color: '#ffffff',
@@ -840,6 +840,23 @@ function Home() {
             </p>
             <p>
               Projektet drivs av kodglädje (och en del prokrastinering).
+            </p>
+            
+            <h2 style={{ marginTop: '2rem' }}>Kontakt</h2>
+            <p>
+              Har du frågor, förslag på nya spel eller vill du bara komma i kontakt med oss? Maila oss gärna!
+            </p>
+            <p>
+              <a 
+                href="mailto:gurkanekstrom@gmail.com" 
+                style={{ 
+                  color: '#667eea', 
+                  textDecoration: 'underline',
+                  fontWeight: 600
+                }}
+              >
+                gurkanekstrom@gmail.com
+              </a>
             </p>
           </div>
         </div>

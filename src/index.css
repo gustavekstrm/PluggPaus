@@ -451,6 +451,16 @@ body.dark .modal-content p {
   color: #bbb;
 }
 
+.modal-content a {
+  color: #667eea;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+body.dark .modal-content a {
+  color: #a0aef7;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
