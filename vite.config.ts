@@ -2,10 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
-// DO NOT CHANGE: base MUST be './' for custom domain to work
+// Custom domain (pluggpaus.se) requires absolute paths from root
 export default defineConfig({
   plugins: [react()],
-  base: './', // LOCKED: Relative paths for GitHub Pages custom domain
+  base: '/', // Absolute paths for custom domain
   publicDir: 'public', // Explicitly set public directory
   build: {
     assetsDir: 'assets',
