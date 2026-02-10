@@ -1,48 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { useConnections } from '../hooks/useConnections';
-import SolvedCategories from '../components/connections/SolvedCategories';
-import WordGrid from '../components/connections/WordGrid';
-import GameControls from '../components/connections/GameControls';
-import ConnectionsStatsModal from '../components/connections/ConnectionsStatsModal';
+import { useEffect } from 'react';
 
 function ConnectionsPage() {
-  const {
-    gameState,
-    stats,
-    toggleWordSelection,
-    deselectAll,
-    shuffleWords,
-    submitGuess,
-  } = useConnections();
-
-  const [showStats, setShowStats] = useState(false);
-
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'connections');
   }, []);
 
-  // Show stats when game ends
-  useEffect(() => {
-    if (gameState && gameState.gameStatus !== 'playing') {
-      const timer = setTimeout(() => setShowStats(true), 1500);
-      return () => clearTimeout(timer);
-    }
-  }, [gameState?.gameStatus]);
-
-  if (!gameState) {
-    return (
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="text-center">
-          <p className="text-gray-600 dark:text-gray-400">Loading...</p>
-        </div>
-      </main>
-    );
-  }
-
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="flex justify-between items-center mb-6">
+      {/* Back button */}
+      <div className="mb-6">
         <Link
           to="/"
           className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
@@ -50,108 +17,108 @@ function ConnectionsPage() {
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-          Tillbaka till spel
+          Tillbaka till alla spel
         </Link>
+      </div>
 
-        <button
-          onClick={() => setShowStats(true)}
-          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
-          aria-label="Visa statistik"
-        >
-          <svg
-            className="w-6 h-6 text-gray-700 dark:text-gray-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+      {/* Top Ad Banner Placeholder */}
+      <div className="ad-banner-top mb-8">
+        <span>Annons</span>
+      </div>
+
+      {/* Game Info Card */}
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Spela Connections - Hitta Sambanden
+          </h1>
+          <div className="inline-block bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            Nytt pussel varje dag
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p>
+            <strong>Connections</strong> är New York Times senaste ordpussel-sensation. Du får 16 ord och ska gruppera dem i fyra kategorier om fyra ord varandra. Låter enkelt? Tänk om!
+          </p>
+          <p>
+            🟨 <strong>Gul</strong> = Enklast att hitta<br />
+            🟩 <strong>Grön</strong> = Lite svårare<br />
+            🟦 <strong>Blå</strong> = Utmanande<br />
+            🟪 <strong>Lila</strong> = Mycket svår
+          </p>
+          <p>
+            Spelet kräver kreativt tänkande och förmågan att se mönster. Perfekt för att aktivera hjärnan under en studiedag. Varje pussel innehåller överraskande kopplingar och kluriga kategorier som får dig att tänka i nya banor.
+          </p>
+        </div>
+
+        {/* Play Button */}
+        <div className="text-center">
+          <a
+            href="https://www.nytimes.com/games/connections"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-xl px-12 py-5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-            />
+            SPELA NU →
+          </a>
+          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+            Öppnas på New York Times (gratis)
+          </p>
+        </div>
+      </div>
+
+      {/* Why Connections Section */}
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Varför är Connections perfekt för studenter?
+        </h2>
+        <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Kreativt tänkande</strong> - Tränar förmågan att se mönster och samband</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Mental gymnastik</strong> - Aktiverar olika delar av hjärnan samtidigt</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Snabbt & roligt</strong> - Ta en paus på 10 minuter och kom tillbaka fräschare</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Utmanande</strong> - Varje pussel är unikt och ger känsla av prestation</span>
+          </li>
+        </ul>
+      </div>
+
+      {/* Bottom Ad Banner Placeholder */}
+      <div className="ad-banner-top mb-8">
+        <span>Annons</span>
+      </div>
+
+      {/* Back to games link */}
+      <div className="text-center">
+        <Link
+          to="/"
+          className="inline-flex items-center text-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-semibold"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
-        </button>
+          Se alla spel
+        </Link>
       </div>
-
-      <div className="text-center mb-8">
-        <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-2">Connections</h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Hitta grupper av fyra ord som hör ihop
-        </p>
-      </div>
-
-      {/* Game status messages */}
-      {gameState.gameStatus === 'won' && (
-        <div className="text-center mb-6">
-          <div className="inline-block bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-6 py-3 rounded-lg">
-            <p className="font-bold">Perfekt! Du hittade alla grupper!</p>
-          </div>
-        </div>
-      )}
-
-      {gameState.gameStatus === 'lost' && (
-        <div className="text-center mb-6">
-          <div className="inline-block bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-6 py-3 rounded-lg">
-            <p className="font-bold">Slut på försök! Bättre lycka nästa gång!</p>
-          </div>
-        </div>
-      )}
-
-      {/* Mistakes remaining */}
-      {gameState.gameStatus === 'playing' && (
-        <div className="text-center mb-6">
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            Misstag kvar:{' '}
-            <span className="font-bold text-gray-900 dark:text-white">
-              {gameState.mistakesRemaining}
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* Solved categories */}
-      {gameState.solvedCategories.length > 0 && (
-        <div className="mb-6">
-          <SolvedCategories categories={gameState.solvedCategories} />
-        </div>
-      )}
-
-      {/* Word grid */}
-      {gameState.remainingWords.length > 0 && (
-        <div className="mb-6">
-          <WordGrid
-            words={gameState.remainingWords}
-            selectedWords={gameState.selectedWords}
-            shakingWords={gameState.shakingWords}
-            onWordClick={toggleWordSelection}
-            disabled={gameState.gameStatus !== 'playing'}
-          />
-        </div>
-      )}
-
-      {/* Game controls */}
-      {gameState.remainingWords.length > 0 && (
-        <div className="mb-6">
-          <GameControls
-            onShuffle={shuffleWords}
-            onDeselectAll={deselectAll}
-            onSubmit={submitGuess}
-            selectedCount={gameState.selectedWords.length}
-            disabled={gameState.gameStatus !== 'playing'}
-          />
-        </div>
-      )}
-
-      {/* Stats Modal */}
-      <ConnectionsStatsModal
-        isOpen={showStats}
-        onClose={() => setShowStats(false)}
-        stats={stats}
-        gameStatus={gameState.gameStatus}
-        solvedCategories={gameState.solvedCategories}
-        mistakesRemaining={gameState.mistakesRemaining}
-      />
     </main>
   );
 }

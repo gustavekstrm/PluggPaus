@@ -608,6 +608,37 @@ body.dark .cookie-link:hover {
   }
 }
 
+/* Shimmer Animation for FIFA Gold Card */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(20deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(200%) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+.shimmer-overlay {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.8) 50%,
+    transparent 100%
+  );
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -50%;
+  animation: shimmer 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
 /* Forced Dark Mode Fix for SEO Section - MUST BE AT THE BOTTOM */
 body.dark-mode .seo-content,
 body.dark-mode .seo-content * {

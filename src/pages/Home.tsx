@@ -146,22 +146,13 @@ function Home() {
                 Gissa dagens ord på sex försök
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://www.nytimes.com/games/wordle/index.html"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/wordle"
                 className="block w-full text-center text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
                 style={{ backgroundColor: '#538d4e' }}
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -220,24 +211,15 @@ function Home() {
               </div>
 
               <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
-                Hitta grupper av fyra ord som hör ihop - spela på New York Times
+                Hitta grupper av fyra ord som hör ihop
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://www.nytimes.com/games/connections"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/connections"
                 className="block w-full text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -294,24 +276,15 @@ function Home() {
               </div>
 
               <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
-                Gissa ordet baserat på kontext och likhet - spela på Contexto.me
+                Gissa ordet baserat på kontext och likhet
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://contexto.me/en/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/contexto"
                 className="block w-full text-center bg-gradient-to-r from-pink-600 to-indigo-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -371,21 +344,12 @@ function Home() {
                 Pussla ihop siffrorna för att nå 2048!
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://play2048.co/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/2048"
                 className="block w-full text-center bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -445,21 +409,12 @@ function Home() {
                 Utforska världen och gissa var du är.
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://www.geoguessr.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/geoguessr"
                 className="block w-full text-center bg-gradient-to-r from-green-600 to-teal-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -519,21 +474,12 @@ function Home() {
                 Tävla i att klicka dig från en Wikipedia-artikel till en annan.
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://www.thewikigame.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/wikigame"
                 className="block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -593,21 +539,12 @@ function Home() {
                 Avslöja den dolda artikeln genom att gissa ord.
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://redactle.net/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/redactle"
                 className="block w-full text-center bg-gradient-to-r from-red-600 to-rose-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -667,21 +604,140 @@ function Home() {
                 Hitta den dolda uträkningen. Som Wordle, fast med siffror.
               </p>
 
-              <div className="mb-5 flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400 bg-gray-50 dark:bg-dark-surface py-2 px-3 rounded-lg border border-gray-200 dark:border-dark-border">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-                <span className="font-medium">Öppnas på extern webbplats</span>
-              </div>
-
-              <a
-                href="https://www.mathler.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/mathler"
                 className="block w-full text-center bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
-                Spela nu
-              </a>
+                Spela nu →
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Football 501 Card - TEMPORARILY DISABLED */}
+        {false && shouldShowGame('football501') && (
+          <div className="bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative">
+            {/* Favorite Heart Icon - Top Right */}
+            <button
+              onClick={() => toggleFavorite('football501')}
+              className="absolute z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
+              style={{ top: '10px', right: '10px' }}
+              aria-label="Toggle favorite"
+            >
+              <svg
+                className={`w-6 h-6 transition-all duration-200 ${isFavorite('football501')
+                  ? 'fill-red-500 stroke-red-500'
+                  : 'fill-none stroke-gray-300 dark:stroke-gray-600'
+                }`}
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </button>
+
+            {/* Last Played Badge - Top Left */}
+            {lastPlayed === 'football501' && (
+              <span className="absolute z-20 text-[0.7rem] font-semibold uppercase tracking-wide bg-green-500 text-white px-3 py-1 rounded-full shadow-md"
+                style={{ top: '10px', left: '10px', letterSpacing: '0.5px' }}>
+                Senast spelad
+              </span>
+            )}
+
+            <div className="relative h-48 sm:h-56 overflow-hidden bg-gradient-to-br from-green-500 to-emerald-600">
+              <img
+                src="https://placehold.co/300x200/16a34a/ffffff?text=Football+501"
+                alt="Football 501"
+                className="w-full h-full object-cover opacity-80"
+              />
+            </div>
+
+            <div className="p-6 sm:p-7">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-gray-900 dark:text-white">
+                Football 501
+              </h3>
+
+              <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
+                Kan du namnen? Identifiera fotbollsspelare!
+              </p>
+
+              <Link
+                to="/football501"
+                className="block w-full text-center bg-gradient-to-r from-green-600 to-emerald-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
+              >
+                Spela nu →
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* Fifa Nostalgia Card - PREMIUM GOLD */}
+        {shouldShowGame('fifanostalgia') && (
+          <div className="bg-white dark:bg-dark-card rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 hover:shadow-2xl relative fifa-gold-card">
+            {/* Favorite Heart Icon - Top Right */}
+            <button
+              onClick={() => toggleFavorite('fifanostalgia')}
+              className="absolute z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
+              style={{ top: '10px', right: '10px' }}
+              aria-label="Toggle favorite"
+            >
+              <svg
+                className={`w-6 h-6 transition-all duration-200 ${isFavorite('fifanostalgia')
+                  ? 'fill-red-500 stroke-red-500'
+                  : 'fill-none stroke-gray-300 dark:stroke-gray-600'
+                }`}
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+                />
+              </svg>
+            </button>
+
+            {/* Last Played Badge - Top Left */}
+            {lastPlayed === 'fifanostalgia' && (
+              <span className="absolute z-20 text-[0.7rem] font-semibold uppercase tracking-wide bg-green-500 text-white px-3 py-1 rounded-full shadow-md"
+                style={{ top: '10px', left: '10px', letterSpacing: '0.5px' }}>
+                Senast spelad
+              </span>
+            )}
+
+            <div className="relative h-48 sm:h-56 overflow-hidden" style={{ background: 'linear-gradient(135deg, #fbf2c4 0%, #ce9e48 50%, #fbf2c4 100%)' }}>
+              {/* FUT Card Watermark */}
+              <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none">
+                <div className="border-4 border-white rounded-lg" style={{ width: '60%', height: '85%' }}></div>
+              </div>
+              {/* Shimmer Animation */}
+              <div className="shimmer-overlay absolute inset-0"></div>
+              <img
+                src="https://placehold.co/300x200/ce9e48/ffffff?text=FIFA+Nostalgia"
+                alt="Fifa Nostalgia"
+                className="w-full h-full object-cover opacity-70"
+              />
+            </div>
+
+            <div className="p-6 sm:p-7">
+              <h3 className="text-2xl sm:text-3xl font-bold mb-3 text-gray-900 dark:text-white">
+                Fifa Nostalgia
+              </h3>
+
+              <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
+                Minns du de klassiska FUT-korten? Testa dina FIFA-minnen!
+              </p>
+
+              <Link
+                to="/fifanostalgia"
+                className="block w-full text-center bg-gradient-to-r from-yellow-500 to-amber-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
+              >
+                Spela nu →
+              </Link>
             </div>
           </div>
         )}
@@ -849,10 +905,10 @@ function Home() {
               Har du frågor, förslag på nya spel eller vill du bara komma i kontakt med oss? Maila oss gärna!
             </p>
             <p>
-              <a 
-                href="mailto:pluggpaus@gmail.com" 
-                style={{ 
-                  color: '#667eea', 
+              <a
+                href="mailto:pluggpaus@gmail.com"
+                style={{
+                  color: '#667eea',
                   textDecoration: 'underline',
                   fontWeight: 600
                 }}
