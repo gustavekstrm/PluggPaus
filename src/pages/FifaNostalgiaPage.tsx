@@ -147,6 +147,7 @@ function FifaNostalgiaPage() {
   const [guess, setGuess] = useState('');
   const [shuffledCards, setShuffledCards] = useState<typeof FIFA_CARDS>([]);
   const [showCorrect, setShowCorrect] = useState(false);
+  const [showWrong, setShowWrong] = useState(false);
   const [skipCount, setSkipCount] = useState(0);
   const [scoreAnimation, setScoreAnimation] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -165,6 +166,7 @@ function FifaNostalgiaPage() {
     setCurrentCardIndex(0);
     setGuess('');
     setShowCorrect(false);
+    setShowWrong(false);
     setSkipCount(0);
     setScoreAnimation(false);
     setIsProcessing(false);
@@ -236,6 +238,35 @@ function FifaNostalgiaPage() {
     const value = e.target.value;
     setGuess(value);
     checkAnswer(value);
+  };
+
+  // Handle Enter key press for wrong answer feedback
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !isProcessing && shuffledCards.length) {
+      const currentCard = shuffledCards[currentCardIndex];
+      if (!currentCard) return;
+
+      const normalizedGuess = guess.trim().toLowerCase();
+      const normalizedAnswer = currentCard.lastName.toLowerCase();
+
+      // If answer is wrong, show feedback
+      if (normalizedGuess !== '' && normalizedGuess !== normalizedAnswer) {
+        setIsProcessing(true);
+        setShowWrong(true);
+
+        // Show wrong feedback for 0.6s then reset
+        setTimeout(() => {
+          setShowWrong(false);
+          setGuess('');
+          setIsProcessing(false);
+
+          // Auto-focus input
+          setTimeout(() => {
+            document.getElementById('guess-input')?.focus();
+          }, 50);
+        }, 600);
+      }
+    }
   };
 
   // Skip current card
@@ -359,7 +390,14 @@ function FifaNostalgiaPage() {
           </div>
 
           {/* Card Display */}
-          <div className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center relative transition-all duration-200 ${showCorrect ? 'ring-4 ring-green-500' : ''}`} style={{ boxShadow: showCorrect ? '0 0 40px rgba(34, 197, 94, 0.5)' : '' }}>
+          <div 
+            className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center relative transition-all duration-200 ${
+              showCorrect ? 'ring-4 ring-green-500' : showWrong ? 'ring-4 ring-red-500 animate-shake' : ''
+            }`} 
+            style={{ 
+              boxShadow: showCorrect ? '0 0 40px rgba(34, 197, 94, 0.5)' : showWrong ? '0 0 40px rgba(239, 68, 68, 0.5)' : '' 
+            }}
+          >
             {/* "RÄTT!" Overlay - Smooth fade-in */}
             {showCorrect && (
               <div 
@@ -368,6 +406,18 @@ function FifaNostalgiaPage() {
               >
                 <div className="bg-green-500 text-white text-4xl sm:text-5xl font-bold px-8 sm:px-12 py-4 sm:py-6 rounded-xl shadow-2xl transition-transform duration-200" style={{ transform: showCorrect ? 'scale(1)' : 'scale(0.8)' }}>
                   ✓ RÄTT!
+                </div>
+              </div>
+            )}
+
+            {/* "FEL SVAR!" Overlay - Smooth fade-in */}
+            {showWrong && (
+              <div 
+                className="absolute inset-0 bg-red-500/15 dark:bg-red-500/25 rounded-2xl flex items-center justify-center z-30 transition-opacity duration-200"
+                style={{ opacity: showWrong ? 1 : 0 }}
+              >
+                <div className="bg-red-500 text-white text-4xl sm:text-5xl font-bold px-8 sm:px-12 py-4 sm:py-6 rounded-xl shadow-2xl transition-transform duration-200" style={{ transform: showWrong ? 'scale(1)' : 'scale(0.8)' }}>
+                  ✗ FEL SVAR!
                 </div>
               </div>
             )}
@@ -397,10 +447,13 @@ function FifaNostalgiaPage() {
                 type="text"
                 value={guess}
                 onChange={handleInputChange}
+                onKeyPress={handleKeyPress}
                 placeholder="Skriv spelarens efternamn..."
-                className="w-full px-6 py-4 text-lg text-center border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-700 dark:text-white transition-all"
+                className={`w-full px-6 py-4 text-lg text-center border-2 border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 dark:bg-gray-700 dark:text-white transition-all ${
+                  showWrong ? 'animate-shake border-red-500' : ''
+                }`}
                 autoFocus
-                disabled={showCorrect}
+                disabled={showCorrect || showWrong}
               />
             </div>
 

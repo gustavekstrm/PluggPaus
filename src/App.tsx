@@ -13,6 +13,9 @@ import RedactlePage from './pages/RedactlePage';
 import MathlerPage from './pages/MathlerPage';
 import Football501Page from './pages/Football501Page';
 import FifaNostalgiaPage from './pages/FifaNostalgiaPage';
+import ContextinhoPage from './pages/ContextinhoPage';
+import StatlePage from './pages/StatlePage';
+import AgeOfWarPage from './pages/AgeOfWarPage';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -52,6 +55,9 @@ function App() {
           <Route path="/mathler" element={<MathlerPage />} />
           <Route path="/football501" element={<Football501Page />} />
           <Route path="/fifanostalgia" element={<FifaNostalgiaPage />} />
+          <Route path="/contextinho" element={<ContextinhoPage />} />
+          <Route path="/statle" element={<StatlePage />} />
+          <Route path="/ageofwar" element={<AgeOfWarPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
         </Routes>
