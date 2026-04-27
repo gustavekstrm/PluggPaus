@@ -16,6 +16,7 @@ import FifaNostalgiaPage from './pages/FifaNostalgiaPage';
 import ContextinhoPage from './pages/ContextinhoPage';
 import StatlePage from './pages/StatlePage';
 import AgeOfWarPage from './pages/AgeOfWarPage';
+import TimeguessrPage from './pages/TimeguessrPage';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/wikigame" element={<WikiGamePage />} />
           <Route path="/redactle" element={<RedactlePage />} />
           <Route path="/mathler" element={<MathlerPage />} />
+          <Route path="/timeguessr" element={<TimeguessrPage />} />
           <Route path="/football501" element={<Football501Page />} />
           <Route path="/fifanostalgia" element={<FifaNostalgiaPage />} />
           <Route path="/contextinho" element={<ContextinhoPage />} />

@@ -658,95 +658,27 @@ function Home() {
               </span>
             )}
 
-            <div className="relative z-10">
+            <div className="relative z-10 flex flex-col h-full">
               <div className="flex justify-between items-start mb-5">
                 <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
                   Timeguessr
                 </h2>
               </div>
 
-              <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
+              <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed flex-1">
                 Gissa platsen och året i historien! En utmaning för den geografiskt kunnige.
               </p>
 
-              <a
-                href="https://timeguessr.com/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/timeguessr"
                 className="block w-full text-center bg-gradient-to-r from-blue-900 to-blue-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
-              </a>
+              </Link>
             </div>
           </div>
         )}
 
-        {/* Slope Card */}
-        {shouldShowGame('slope') && (
-          <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-emerald-500/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'slope' ? 'ring-2 ring-emerald-500 shadow-glow-md' : ''
-              }`}
-            style={{ animationDelay: '0.9s' }}
-          >
-            <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-emerald-900/10 to-emerald-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
-
-            <button
-              onClick={() => toggleFavorite('slope')}
-              className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
-              aria-label="Toggle favorite"
-            >
-              <svg
-                className={`w-6 h-6 transition-all duration-200 ${isFavorite('slope')
-                  ? 'fill-red-500 stroke-red-500'
-                  : 'fill-none stroke-gray-400 dark:stroke-gray-500 hover:stroke-red-400'
-                  }`}
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </button>
-
-            {/* Recently Played Badge - Top Left */}
-            {lastPlayed === 'slope' && (
-              <span
-                className="absolute z-20 bg-emerald-500 text-white uppercase tracking-wide"
-                style={{
-                  top: '10px',
-                  left: '10px',
-                  fontSize: '0.7rem',
-                  padding: '4px 10px',
-                  borderRadius: '20px',
-                  fontWeight: 600,
-                  letterSpacing: '0.5px'
-                }}
-              >
-                ⭐ Senast
-              </span>
-            )}
-
-            <div className="relative z-10">
-              <div className="flex justify-between items-start mb-5">
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors duration-300">
-                  Slope
-                </h2>
-              </div>
-
-              <p className="text-gray-700 dark:text-gray-300 mb-5 min-h-[3rem] leading-relaxed">
-                Snabbhet och precision i en neon-belyst 3D-värld. Hur långt når du?
-              </p>
-
-              <a
-                href="https://slope-game.github.io/file/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center bg-gradient-to-r from-emerald-900 to-emerald-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
-              >
-                Spela nu →
-              </a>
-            </div>
-          </div>
-        )}
 
         {/* Age of War Card */}
         {shouldShowGame('ageofwar') && (

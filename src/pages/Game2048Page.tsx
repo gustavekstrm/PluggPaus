@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import QuickStats from '../components/QuickStats';
 
 function Game2048Page() {
   useEffect(() => {
@@ -36,6 +37,14 @@ function Game2048Page() {
             Beroendeframkallande strategi
           </div>
         </div>
+
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Puzzle"
+          difficulty="Easy"
+          playtime="1-5 min"
+          benefit="Logical thinking"
+        />
 
         {/* Description */}
         <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import QuickStats from '../components/QuickStats';
 
 function WikiGamePage() {
   useEffect(() => {
@@ -36,6 +37,14 @@ function WikiGamePage() {
             📚 Kunskapsjakt
           </div>
         </div>
+
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Knowledge"
+          difficulty="Hard"
+          playtime="3-5 min"
+          benefit="Creative thinking"
+        />
 
         {/* Description */}
         <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
