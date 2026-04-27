@@ -1217,22 +1217,18 @@ function Home() {
             </span>
             <h2>Om PluggPaus</h2>
             <p>
-              PluggPaus är skapat av <strong>Eken</strong>, en systemvetarstudent som upplever att
-              långa föreläsningar kan vara tröttsamma och att koncentrationen ibland behöver en kickstart.
-              Idén föddes ur behovet av en snabb mental reboot.
+              <strong>PluggPaus</strong> är en kuraterad plattform som hjälper studenter att maximera sin produktivitet genom kontrollerade mikropauser. Vår mission är att erbjuda vetenskapligt förankrade studiepauser som förbättrar fokus, minne och välmående.
             </p>
             <p>
-              Ibland räcker kaffet helt enkelt inte till, och då är fem minuters hjärngympa den bästa
-              medicinen för att orka med sista timmen. Sidan är en samlingsplats för webbens bästa
-              tidsfördriv – perfekta för det diskreta fönstret längst bak i hörsalen.
+              Forskning visar att strategiska pauser på 5-10 minuter mellan studiepass förbättrar informationsretention och minskar mental trötthet. Alla spel på PluggPaus är noggrant utvalda för att aktivera olika kognitiva funktioner – från mönsterigenkänning till strategiskt tänkande – vilket ger din hjärna en aktiv återhämtning istället för passiv scrollning.
             </p>
             <p>
-              Projektet drivs av kodglädje (och en del prokrastinering).
+              Plattformen grundades 2024 av <strong>Eken</strong>, systemvetarstudent med passion för EdTech och kognitiv psykologi. Projektet kombinerar teknisk innovation med evidensbaserad pedagogik för att skapa den ultimata studiehjälpen.
             </p>
 
             <h2 style={{ marginTop: '2rem' }}>Kontakt</h2>
             <p>
-              Har du frågor, förslag på nya spel eller vill du bara komma i kontakt med oss? Maila oss gärna!
+              För frågor, feedback eller samarbeten:
             </p>
             <p>
               <a

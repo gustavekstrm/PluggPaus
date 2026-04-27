@@ -87,6 +87,11 @@ function PrivacyPolicy() {
           våra användare baserat på deras besök på vår webbplats och/eller andra webbplatser på internet.
         </p>
         <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1rem', lineHeight: 1.6 }}>
+          <strong style={{ color: '#ffffff', fontWeight: 700 }}>AdSense-policy efterlevnad:</strong> PluggPaus följer 
+          Google AdSenses policys och riktlinjer. Vi säkerställer att alla annonser visas i enlighet med Googles program-
+          policyer för utgivare, inklusive krav på innehållskvalitet, användarupplevelse och transparens.
+        </p>
+        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1rem', lineHeight: 1.6 }}>
           Du kan välja bort personaliserad annonsering genom att besöka {' '}
           <a
             href="https://www.google.com/settings/ads"

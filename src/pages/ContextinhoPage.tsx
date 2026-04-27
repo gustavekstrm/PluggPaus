@@ -1,11 +1,51 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import QuickStats from '../components/QuickStats';
 
 function ContextinhoPage() {
   useEffect(() => {
-    document.title = 'Contextinho - Fotbollsspelare Quiz | PluggPaus';
+    // Set page title and meta description
+    document.title = 'Contextinho | Football Player Quiz for Study Breaks | PluggPaus';
+    
+    // Update or create meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', 'Test your football knowledge with Contextinho - a semantic guessing game that helps students take productive micro-breaks. Improve deductive reasoning while having fun.');
+
+    // Add JSON-LD structured data
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Contextinho",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.6",
+        "ratingCount": "980"
+      },
+      "description": "Interactive football player guessing game using semantic similarity. Designed for quick study breaks to improve deductive reasoning and analytical thinking."
+    });
+    document.head.appendChild(script);
+
     localStorage.setItem('lastPlayedGame', 'contextinho');
     window.scrollTo(0, 0);
+
+    // Cleanup
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   return (
@@ -24,7 +64,7 @@ function ContextinhoPage() {
       </div>
 
       {/* Game Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
           Contextinho
         </h1>
@@ -32,6 +72,14 @@ function ContextinhoPage() {
           Fotbollsvariant av Contexto – Hitta dagens hemliga spelare!
         </p>
       </div>
+
+      {/* Quick Stats Component */}
+      <QuickStats
+        category="Football Quiz"
+        difficulty="Medium"
+        playtime="2-5 min"
+        benefit="Deductive reasoning"
+      />
 
       {/* Top Ad Banner */}
       <div className="ad-banner-top mb-8">

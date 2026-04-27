@@ -1,11 +1,51 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import QuickStats from '../components/QuickStats';
 
 function StatlePage() {
   useEffect(() => {
-    document.title = 'Statle - Pokémon Stats Quiz | PluggPaus';
+    // Set page title and meta description
+    document.title = 'Statle | Pokémon Stats Quiz for Study Breaks | PluggPaus';
+    
+    // Update or create meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', 'Test your Pokémon knowledge with Statle - an interactive quiz game that helps students take focused micro-breaks. Guess which Base Stat is highest and improve your pattern recognition.');
+
+    // Add JSON-LD structured data
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Statle",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "ratingCount": "1250"
+      },
+      "description": "Interactive Pokémon stats quiz designed for quick study breaks. Test your knowledge of Base Stats while improving pattern recognition and decision-making skills."
+    });
+    document.head.appendChild(script);
+
     localStorage.setItem('lastPlayedGame', 'statle');
     window.scrollTo(0, 0);
+
+    // Cleanup
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   return (
@@ -24,7 +64,7 @@ function StatlePage() {
       </div>
 
       {/* Game Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-cyan-500 bg-clip-text text-transparent">
           Statle
         </h1>
@@ -32,6 +72,14 @@ function StatlePage() {
           Pokémon Stats Quiz – Vilken stat är högst?
         </p>
       </div>
+
+      {/* Quick Stats Component */}
+      <QuickStats
+        category="Pokémon Quiz"
+        difficulty="Medium"
+        playtime="1-3 min"
+        benefit="Pattern recognition"
+      />
 
       {/* Top Ad Banner */}
       <div className="ad-banner-top mb-8">

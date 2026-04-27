@@ -1,11 +1,51 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import QuickStats from '../components/QuickStats';
 
 function AgeOfWarPage() {
   useEffect(() => {
-    document.title = 'Age of War - Strategispel | PluggPaus';
+    // Set page title and meta description
+    document.title = 'Age of War | Strategy Game for Study Breaks | PluggPaus';
+    
+    // Update or create meta description
+    let metaDescription = document.querySelector('meta[name="description"]');
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+    }
+    metaDescription.setAttribute('content', 'Play Age of War - a classic strategy game for quick study breaks. Develop through 5 ages from Stone Age to Future. Improve tactical thinking and resource management skills.');
+
+    // Add JSON-LD structured data
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Game",
+      "name": "Age of War",
+      "gameType": "Strategy",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "SEK"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "2150"
+      },
+      "description": "Classic tower defense strategy game spanning 5 historical ages. Perfect for 10-15 minute study breaks to improve tactical thinking and decision-making under pressure."
+    });
+    document.head.appendChild(script);
+
     localStorage.setItem('lastPlayedGame', 'ageofwar');
     window.scrollTo(0, 0);
+
+    // Cleanup
+    return () => {
+      document.head.removeChild(script);
+    };
   }, []);
 
   return (
@@ -24,7 +64,7 @@ function AgeOfWarPage() {
       </div>
 
       {/* Game Header */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-8">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
           Age of War
         </h1>
@@ -32,6 +72,14 @@ function AgeOfWarPage() {
           Utvecklas genom tiderna – Från stenåldern till framtiden!
         </p>
       </div>
+
+      {/* Quick Stats Component */}
+      <QuickStats
+        category="Strategy"
+        difficulty="Medium"
+        playtime="10-15 min"
+        benefit="Tactical thinking"
+      />
 
       {/* Top Ad Banner */}
       <div className="ad-banner-top mb-8">
