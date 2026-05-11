@@ -73,14 +73,6 @@ function StatlePage() {
         </p>
       </div>
 
-      {/* Quick Stats Component */}
-      <QuickStats
-        category="Pokémon Quiz"
-        difficulty="Medium"
-        playtime="1-3 min"
-        benefit="Pattern recognition"
-      />
-
       {/* Top Ad Banner */}
       <div className="ad-banner-top mb-8">
         <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
@@ -88,132 +80,25 @@ function StatlePage() {
 
       {/* Main Content */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Vad är Statle?
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            <strong>Statle</strong> är ett unikt Pokémon-quiz där du måste gissa vilken av en Pokémons 
-            sex "Base Stats" som är högst. Är du en Pokémon-expert? Statle utmanar dina kunskaper om 
-            de olika varelsernas styrkor och svagheter på ett roligt och snabbt sätt.
+        {/* Short Description */}
+        <div className="max-w-2xl mx-auto mb-8 text-center">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Gissa vilken Base Stat (HP, Attack, Defense, Sp. Atk, Sp. Def, Speed) som är högst för varje Pokémon. Testa ditt minne och bygg upp din streak!
           </p>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Varje Pokémon har sex grundläggande statistikvärden som definierar dess stridsförmåga: 
-            <span className="font-bold text-blue-600 dark:text-blue-400"> HP (hälsopoäng), Attack (fysisk attack), 
-            Defense (fysiskt försvar), Special Attack (specialattack), Special Defense (specialförsvar) och 
-            Speed (hastighet)</span>. Din uppgift är att lista ut vilken av dessa stats som är högst för 
-            den visade Pokémon – och göra det så snabbt och korrekt som möjligt!
-          </p>
-        </section>
+        </div>
 
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Hur man spelar
-          </h2>
-          <div className="space-y-4 text-gray-700 dark:text-gray-300">
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-bold mr-3 flex-shrink-0">
-                1
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Se den slumpmässiga Pokémon.</strong> Varje runda visar spelet en Pokémon 
-                från något av de olika generationerna. Det kan vara en klassiker som Pikachu eller 
-                en nyare som Dragapult.
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-bold mr-3 flex-shrink-0">
-                2
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Gissa den högsta "Base Stat".</strong> Du får sex alternativ att välja mellan:
-                <ul className="list-disc ml-6 mt-2 space-y-1">
-                  <li><strong>HP</strong> – Total hälsa</li>
-                  <li><strong>Attack</strong> – Fysisk attackstyrka</li>
-                  <li><strong>Defense</strong> – Motstånd mot fysiska attacker</li>
-                  <li><strong>Special Attack</strong> – Styrka för speciella attacker</li>
-                  <li><strong>Special Defense</strong> – Motstånd mot speciella attacker</li>
-                  <li><strong>Speed</strong> – Vem som attackerar först</li>
-                </ul>
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-bold mr-3 flex-shrink-0">
-                3
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Klicka på ditt svar.</strong> Tänk snabbt och välj vilken stat du tror är högst. 
-                Spelet ger dig omedelbar feedback om du hade rätt eller fel.
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 font-bold mr-3 flex-shrink-0">
-                4
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Bygg upp din streak!</strong> Fortsätt gissa korrekt för att bygga upp en 
-                vinstsvit. Hur många Pokémon i rad kan du gissa rätt på?
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Pokémon Quiz"
+          difficulty="Medium"
+          playtime="1-3 min"
+          benefit="Pattern recognition"
+        />
 
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Strategi & Tips
-          </h2>
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-4">
-            <h3 className="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">
-              ⚡ Tänk på Pokémon-typen
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              En snabb Pokémon som <strong>Jolteon</strong> (Electric-typ) har oftast <strong>Speed</strong> som 
-              högsta stat, medan en tungviktare som <strong>Snorlax</strong> (Normal-typ) oftast har <strong>HP</strong>. 
-              Använd din kunskap om typiska roller: attackers har hög Attack/Special Attack, tanks har hög Defense/HP, 
-              och sweepers har hög Speed.
-            </p>
-          </div>
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 mb-4">
-            <h3 className="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">
-              🎯 Lär känna evolutionslinjer
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              Pokémon i samma evolutionslinje delar ofta samma "stat spread". Om du vet att 
-              Charmander har hög Special Attack, är chansen stor att även Charmeleon och Charizard 
-              har det. Detta gäller särskilt för legendära Pokémon som har extremt specialiserade stats.
-            </p>
-          </div>
-          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-blue-800 dark:text-blue-300 mb-3">
-              📊 Vissa typer har mönster
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              <strong>Steel-typer</strong> har ofta hög Defense, <strong>Psychic-typer</strong> har ofta 
-              hög Special Attack eller Special Defense, och <strong>Fighting-typer</strong> har ofta hög Attack. 
-              Även om det finns undantag, kan dessa generella regler hjälpa dig att göra snabba beslut.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Varför Statle är en bra paus
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Statle är perfekt för en kort mental paus där du får testa ditt minne från barndomen 
-            (eller nutiden!). Spelet kräver <strong>snabb slutledningsförmåga</strong> och tränar din 
-            förmåga att fatta beslut baserat på visuell information och tidigare kunskap. Till skillnad 
-            från passiva aktiviteter aktiverar Statle flera kognitiva funktioner samtidigt: minne 
-            (vilka Pokémon känner jag till?), mönsterigenkänning (vilka typer brukar ha vilka stats?), 
-            och strategiskt tänkande (hur ska jag resonera för att öka min chans att gissa rätt?).
-          </p>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Varje runda tar bara 5-10 sekunder, vilket gör det idealiskt för mikro-pauser mellan 
-            studiepass. Du kan spela en handfull rundor på 2-3 minuter och sedan återgå till 
-            studierna med en fräsch hjärna. Dessutom ger den nostalgiska Pokémon-känslan en 
-            positiv känslomässig laddning som kan minska stress och öka motivation – precis vad 
-            du behöver när plugget känns tungt. Och för dig som fortfarande spelar moderna 
-            Pokémon-spel är det dessutom praktisk träning inför competitive battles!
+        {/* SEO Footer Section */}
+        <section className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Statle är ett Pokémon-quiz som utmanar dina kunskaper om Base Stats. Perfekt för 1-3 minuters mikropauser som tränar snabb slutledningsförmåga och mönsterigenkänning. Använd din kunskap om Pokémon-typer och evolutionslinjer för att gissa rätt och bygga upp en imponerande vinstsvit.
           </p>
         </section>
 

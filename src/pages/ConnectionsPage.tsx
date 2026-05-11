@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import QuickStats from '../components/QuickStats';
 
 function ConnectionsPage() {
   useEffect(() => {
@@ -38,20 +39,26 @@ function ConnectionsPage() {
         </div>
 
         {/* Description */}
-        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          <p>
-            <strong>Connections</strong> är New York Times senaste ordpussel-sensation. Du får 16 ord och ska gruppera dem i fyra kategorier om fyra ord varandra. Låter enkelt? Tänk om!
-          </p>
-          <p>
-            🟨 <strong>Gul</strong> = Enklast att hitta<br />
-            🟩 <strong>Grön</strong> = Lite svårare<br />
-            🟦 <strong>Blå</strong> = Utmanande<br />
-            🟪 <strong>Lila</strong> = Mycket svår
-          </p>
-          <p>
-            Spelet kräver kreativt tänkande och förmågan att se mönster. Perfekt för att aktivera hjärnan under en studiedag. Varje pussel innehåller överraskande kopplingar och kluriga kategorier som får dig att tänka i nya banor.
+        <div className="max-w-2xl mx-auto mb-8 text-center">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Gruppera 16 ord i fyra kategorier om fyra ord. Kräver kreativt tänkande och förmågan att se dolda mönster och samband.
           </p>
         </div>
+
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Pattern Matching"
+          difficulty="Medium"
+          playtime="5-10 min"
+          benefit="Creative thinking"
+        />
+
+        {/* SEO Footer Section */}
+        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Connections är New York Times senaste ordpussel-sensation. Perfekt för att aktivera hjärnan under studiedagen med kluriga kategorier och överraskande kopplingar. Tränar kreativt tänkande, mönsterigenkänning och mental gymnastik på 5-10 minuter.
+          </p>
+        </section>
 
         {/* Play Button */}
         <div className="text-center">

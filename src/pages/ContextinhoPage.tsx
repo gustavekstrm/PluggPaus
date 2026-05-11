@@ -73,14 +73,6 @@ function ContextinhoPage() {
         </p>
       </div>
 
-      {/* Quick Stats Component */}
-      <QuickStats
-        category="Football Quiz"
-        difficulty="Medium"
-        playtime="2-5 min"
-        benefit="Deductive reasoning"
-      />
-
       {/* Top Ad Banner */}
       <div className="ad-banner-top mb-8">
         <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
@@ -88,121 +80,25 @@ function ContextinhoPage() {
 
       {/* Main Content */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Vad är Contextinho?
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            <strong>Contextinho</strong> är en fotbollsvariant av det populära ordspelet Contexto. 
-            Målet är att hitta dagens hemliga fotbollsspelare genom att gissa på andra spelare. 
-            En intelligent algoritm räknar ut hur lik din gissning är den hemliga spelaren baserat på 
-            faktorer som nationalitet, klubbhistorik, ålder, position och spelstil.
+        {/* Short Description */}
+        <div className="max-w-2xl mx-auto mb-8 text-center">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Hitta dagens hemliga fotbollsspelare genom semantisk gissning. Varje gissning ger en poäng som visar hur nära du är – nummer 1 är rätt svar!
           </p>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Till skillnad från traditionella fotbollsquiz där du antingen har rätt eller fel, 
-            använder Contextinho semantisk analys för att ge dig kontinuerlig feedback. 
-            Varje gissning får en poäng mellan 1 och 100,000+, där <span className="font-bold text-green-600 dark:text-green-400">nummer 1 är det rätta svaret</span>. 
-            Ju lägre nummer, desto närmare är du!
-          </p>
-        </section>
+        </div>
 
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Hur man spelar
-          </h2>
-          <div className="space-y-4 text-gray-700 dark:text-gray-300">
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-bold mr-3 flex-shrink-0">
-                1
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Skriv namnet på en fotbollsspelare.</strong> Du kan gissa på både aktiva spelare och legender. 
-                Spelet känner igen tusentals spelare från hela världen.
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-bold mr-3 flex-shrink-0">
-                2
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Få feedback baserad på likhet.</strong> Algoritmen jämför din gissning med den hemliga spelaren 
-                och ger dig en siffra. Om du gissar "Cristiano Ronaldo" och får nummer 450, betyder det att det finns 
-                449 spelare som är mer lika den hemliga spelaren.
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-bold mr-3 flex-shrink-0">
-                3
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Fortsätt gissa smartare.</strong> Använd feedbacken för att ringa in rätt spelare. 
-                Om dina gissningar från Premier League får höga nummer men en La Liga-spelare får ett lågt nummer, 
-                vet du att svaret troligen spelar i Spanien.
-              </p>
-            </div>
-            <div className="flex items-start">
-              <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 font-bold mr-3 flex-shrink-0">
-                4
-              </span>
-              <p className="text-lg leading-relaxed">
-                <strong>Vinn när du når nummer 1!</strong> Fortsätt tills du hittar den exakta spelaren. 
-                Ju färre gissningar du behöver, desto bättre.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Football Quiz"
+          difficulty="Medium"
+          playtime="2-5 min"
+          benefit="Deductive reasoning"
+        />
 
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Strategi & Tips
-          </h2>
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 mb-4">
-            <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-3">
-              💡 Börja brett
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              Gissa kända spelare från olika ligor (Premier League, La Liga, Serie A, Bundesliga) 
-              för att snabbt ringa in rätt land eller klubb. Om Messi ger dig nummer 2000 men 
-              Kevin De Bruyne ger dig nummer 150, vet du att spelaren troligen spelar i Premier League.
-            </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6 mb-4">
-            <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-3">
-              ⚽ Testa olika positioner
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              Om dina anfallare får höga nummer men en mittfältare får ett lågt nummer, 
-              fokusera på mittfältare i nästa gissning. Position spelar ofta en stor roll i likhetsalgoritmen.
-            </p>
-          </div>
-          <div className="bg-green-50 dark:bg-green-900/20 rounded-xl p-6">
-            <h3 className="text-xl font-bold text-green-800 dark:text-green-300 mb-3">
-              🌍 Använd nationalitet som ledtråd
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-              När du kommit ner till nummer under 100, börja gissa spelare från samma nationalitet 
-              eller som spelat i samma klubb. Contextinho väger nationalitet och klubbhistorik tungt.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-            Varför Contextinho är en bra paus
-          </h2>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Contextinho kombinerar fotbollskunskap med deduktiv problemlösning på ett unikt sätt. 
-            Till skillnad från passiv scrollning på sociala medier aktiverar det här spelet flera 
-            kognitiva områden samtidigt: minne (vilka spelare känner jag till?), analys (vilken feedback 
-            får jag?) och strategiskt tänkande (hur kan jag använda denna information för nästa gissning?). 
-            Detta gör det till en perfekt <strong>aktiv paus</strong> som ger din hjärna en välbehövlig 
-            förändring från studiematerial, samtidigt som du tränar värdefulla färdigheter.
-          </p>
-          <p className="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-lg">
-            Dessutom är varje omgång tidsbegränsad till cirka 5-10 minuter – exakt rätt längd för en 
-            mikropaus enligt Pomodoro-tekniken. Du hinner återhämta dig mentalt utan att förlora 
-            studiemomentumet. Och eftersom spelet uppdateras dagligen med nya spelare får du alltid 
-            en fräsch utmaning som håller det intressant dag efter dag.
+        {/* SEO Footer Section */}
+        <section className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Contextinho är fotbollsversionen av Contexto som kombinerar fotbollskunskap med deduktiv problemlösning. Algoritmen jämför dina gissningar baserat på nationalitet, klubbhistorik, position och spelstil. Perfekt för 5-10 minuters mikropaus som tränar analytiskt tänkande och strategisk resonemang.
           </p>
         </section>
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import QuickStats from '../components/QuickStats';
 
 function WordlePage() {
   useEffect(() => {
@@ -38,19 +39,26 @@ function WordlePage() {
         </div>
 
         {/* Description */}
-        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          <p>
-            <strong>Wordle</strong> är det klassiska ordpusslet som har tagit världen med storm. Gissa dagens femstaviga ord på sex försök och få feedback genom färgkodade rutor.
-          </p>
-          <p>
-            🟩 <strong>Grön</strong> = rätt bokstav på rätt plats<br />
-            🟨 <strong>Gul</strong> = rätt bokstav, fel plats<br />
-            ⬜ <strong>Grå</strong> = bokstaven finns inte i ordet
-          </p>
-          <p>
-            Perfekt för en snabb hjärnpaus under föreläsningen. Wordle tränar ditt ordförråd, logiskt tänkande och problemlösning på bara några minuter. Dela ditt resultat med vänner och se vem som klarar det på färre försök!
+        <div className="max-w-2xl mx-auto mb-8 text-center">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Gissa dagens femstaviga ord på sex försök. Få feedback genom färgkodade rutor och träna ditt ordförråd och logiska tänkande.
           </p>
         </div>
+
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="Word Puzzle"
+          difficulty="Easy"
+          playtime="5-10 min"
+          benefit="Vocabulary & logic"
+        />
+
+        {/* SEO Footer Section */}
+        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Wordle är det klassiska ordpusslet som har tagit världen med storm. Perfekt för snabba studiepauser mellan föreläsningar. Tränar ordförråd, problemlösning och logiskt tänkande på bara några minuter. Ett nytt ord varje dag ger en daglig mental utmaning.
+          </p>
+        </section>
 
         {/* Play Button */}
         <div className="text-center">

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import QuickStats from '../components/QuickStats';
 
 function ContextoPage() {
   useEffect(() => {
@@ -38,20 +39,26 @@ function ContextoPage() {
         </div>
 
         {/* Description */}
-        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
-          <p>
-            <strong>Contexto</strong> är ett unikt ordspel där du ska gissa det hemliga ordet med hjälp av AI. Varje gissning rankas baserat på hur semantiskt likt det är till målorden - ju närmare #1, desto varmare!
-          </p>
-          <p>
-            🟢 <strong>Grön (1-10)</strong> = Mycket nära!<br />
-            🟡 <strong>Gul (11-50)</strong> = Närmar dig<br />
-            🟠 <strong>Orange (51-200)</strong> = På rätt spår<br />
-            🔴 <strong>Röd (201+)</strong> = Långt bort
-          </p>
-          <p>
-            Spelet använder maskininlärning för att jämföra ord baserat på betydelse och kontext, inte stavning. Gissa "hund" när ordet är "katt" och du får hög poäng, trots att orden inte liknar varandra! Det är ett fascinerande sätt att förstå hur AI tolkar språk.
+        <div className="max-w-2xl mx-auto mb-8 text-center">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+            Gissa det hemliga ordet med hjälp av AI. Varje gissning rankas efter semantisk likhet – ju närmare #1, desto varmare!
           </p>
         </div>
+
+        {/* Quick Stats Component */}
+        <QuickStats
+          category="AI Word Game"
+          difficulty="Medium"
+          playtime="5-15 min"
+          benefit="Semantic reasoning"
+        />
+
+        {/* SEO Footer Section */}
+        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
+          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+            Contexto är ett unikt ordspel drivet av maskininlärning som jämför ord baserat på betydelse och kontext, inte stavning. Perfekt för att förstå hur AI tolkar språk samtidigt som du tränar semantisk förståelse och ordassociationer. Inget tidsgräns – spela i din egen takt.
+          </p>
+        </section>
 
         {/* Play Button */}
         <div className="text-center">
