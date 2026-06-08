@@ -114,6 +114,30 @@ function AgeOfWarPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Age of War</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Uppgradera torn strategiskt</strong> – torn är ditt viktigaste försvar i tidiga epoker. Uppgradera det första tornet maximalt innan du lägger pengar på enheter.</li>
+            <li><strong>Spara XP till åldersbyte</strong> – det är frestande att spendera XP på specialattacker, men att avancera till nästa tidsålder ger kraftfullare enheter och torn.</li>
+            <li><strong>Balansera anfall och försvar</strong> – spamma inte bara anfallsenheter. Om fienden bryter igenom ditt försvar är spelet snabbt över.</li>
+            <li><strong>Utnyttja specialattacker i kritiska stunder</strong> – spara din specialattack till när fienden har en stor armé nära din bas. Masspåverkan är dess styrka.</li>
+            <li><strong>Stenåldern är avgörande</strong> – de första minuterna sätter tonen. Spela aggressivt tidigt och försök driva tillbaka fienden innan de hinner bygga momentum.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Age of War</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Hur många tidsåldrar finns det?</strong><p className="mt-1">Det finns 5 tidsåldrar: Stenåldern, Forntiden, Medeltiden, Renässansen och Framtiden. Varje epok låser upp nya enheter och torn.</p></div>
+            <div><strong>Vad händer när man byter tidsålder?</strong><p className="mt-1">Du låser upp kraftfullare krigsenheter och starkare torn. Fienden avancerar också, så bytet är alltid ett race.</p></div>
+            <div><strong>Finns det tidsgräns per omgång?</strong><p className="mt-1">Nej, spelet är realtidsstrategi utan tidsgräns. En match tar vanligtvis 10–15 minuter beroende på svårighetsnivå.</p></div>
+            <div><strong>Kan man ändra svårighetsgrad?</strong><p className="mt-1">Ja, du kan välja svårighetsgrad i början av spelet. Nybörjare rekommenderas Easy för att lära sig spelets mekanik.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 

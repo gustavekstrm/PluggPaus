@@ -114,6 +114,30 @@ function ContextinhoPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Contextinho</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja med stora stjärnor</strong> – gissa världskända spelare som Messi, Ronaldo och Neymar för att etablera en baslinje och se vilken era och stil som är relevant.</li>
+            <li><strong>Tänk på spelstil och position</strong> – algoritmen tar hänsyn till position, spelstil och meriter. En anfallare med hög rang leder dig mot andra anfallare.</li>
+            <li><strong>Nationalitet och liga ger ledtrådar</strong> – om en spelare från Brasilien rankas högt, testa fler brasilianska spelare eller spelare i liknande ligor.</li>
+            <li><strong>Era spelar roll</strong> – nutida och historiska spelare kan ingå. En hög rank för en 90-talsspjärnare tyder på att svaret är från samma era.</li>
+            <li><strong>Testa klubbar som genväg</strong> – spelare från samma storklubbar (Barcelona, Real Madrid, Man City) hamnar ofta nära varandra i rankningen.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Contextinho</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad är det hemliga svaret?</strong><p className="mt-1">Det hemliga svaret är alltid en professionell fotbollsspelare. Spelet byter spelare varje dag.</p></div>
+            <div><strong>Ingår pensionerade spelare?</strong><p className="mt-1">Ja, både aktiva och pensionerade legender kan vara dagens hemliga spelare. Historisk fotbollskunskap är en fördel.</p></div>
+            <div><strong>Finns det gränser för antal gissningar?</strong><p className="mt-1">Nej, du kan gissa hur många spelare du vill. Utmaningen är att hitta rätt på så få gissningar som möjligt.</p></div>
+            <div><strong>Vad är en bra poäng?</strong><p className="mt-1">Under 15 gissningar anses vara utmärkt. Riktiga fotbollsfantaster klarar det ibland på under 10.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 

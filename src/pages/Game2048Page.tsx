@@ -112,6 +112,30 @@ function Game2048Page() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för 2048</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Håll din högsta bricka i ett hörn</strong> – välj ett hörn (helst nedre vänster) och håll din största bricka där hela spelet. Bygg en kedja från det hörnet.</li>
+            <li><strong>Svep bara i två riktningar</strong> – försök hålla dig till nedåt och åt vänster (eller dina valda riktningar). Svepa uppåt och åt höger bara när det är absolut nödvändigt.</li>
+            <li><strong>Bygg en nedåtgående kedja</strong> – längs en kant: 1024 → 512 → 256 → 128 → 64. Det gör det enkelt att slå ihop brickorna i ordning.</li>
+            <li><strong>Fyll inte brädet</strong> – ha alltid minst ett fåtal lediga rutor. Om brädet fylls är du nära game over.</li>
+            <li><strong>Planera tre drag framåt</strong> – tänk inte bara på nästa drag utan vad som händer med brädet de tre närmaste svepningarna.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om 2048</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad är målet med 2048?</strong><p className="mt-1">Målet är att kombinera brickor tills du når brickan med värdet 2048. Du kan fortsätta spela och sikta på 4096 eller ännu högre.</p></div>
+            <div><strong>Kan man gå förbi 2048?</strong><p className="mt-1">Ja! Spelet slutar inte när du når 2048 om du inte vill. Många spelare siktar på 4096, 8192 eller ännu högre rekord.</p></div>
+            <div><strong>Finns det tidsgräns?</strong><p className="mt-1">Nej, 2048 spelas i din egen takt. Du kan tänka hur länge du vill innan varje drag.</p></div>
+            <div><strong>Hur startar en ny omgång?</strong><p className="mt-1">När brädet är fullt och inga drag är möjliga är spelet slut. Tryck på "New Game" för att börja om från noll.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

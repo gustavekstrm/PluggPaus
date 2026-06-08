@@ -113,6 +113,30 @@ function WikiGamePage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Wiki Game</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Gå via stora noder</strong> – artiklar som "USA", "Europa", "Krig" eller "Historia" länkar till nästan allt. Använd dem som genvägar.</li>
+            <li><strong>Tänk kategorier, inte innehåll</strong> – istället för att läsa artiklarna, hoppa direkt till kategorisektionen längst ned. Kategorier ger ofta snabba vägar vidare.</li>
+            <li><strong>Undvik döda grenar</strong> – smala specialämnen kan sakna vidare länkar. Välj alltid en länk som leder mot något brett och välkänt.</li>
+            <li><strong>Bakåt-strategin</strong> – om du är nära målet, tänk: vilka artiklar länkas från målartikeln? Gå dit istället för att försöka ta sig direkt dit.</li>
+            <li><strong>Geografi och politik är snabbvägar</strong> – de flesta ämnen kan nås via ett lands eller en stads Wikipedia-artikel, som i sin tur länkas från otaliga andra sidor.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Wiki Game</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad är målet med spelet?</strong><p className="mt-1">Navigera från en Wikipedia-artikel till en annan, enbart genom att klicka på länkar inom artiklarna. Kortast väg vinner.</p></div>
+            <div><strong>Finns det tidsgräns?</strong><p className="mt-1">Det beror på spelläge. I tävlingsläge tävlar du mot klockan, i casual läge spelar du i din egen takt.</p></div>
+            <div><strong>Vad är ett bra resultat?</strong><p className="mt-1">Att klara banan på 4–6 klick anses vara bra. Riktiga experter klarar de flesta kombinationer på 3 klick eller färre.</p></div>
+            <div><strong>Tränar spelet verkligen hjärnan?</strong><p className="mt-1">Ja! Spelet kräver associativt tänkande, kunskapsbredd och strategisk planering – alla kognitiva förmågor som är värdefulla i studier.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

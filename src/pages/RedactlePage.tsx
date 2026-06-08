@@ -113,6 +113,30 @@ function RedactlePage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Redactle</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja med de vanligaste orden</strong> – gissa "the", "of", "and", "in", "is" och "was" direkt. De avslöjar artikelns struktur och ger sammanhang gratis.</li>
+            <li><strong>Titta på meningsstrukturen</strong> – antalet ord i en mening och interpunktion avslöjar ofta om texten är faktabaserad, historisk eller vetenskaplig.</li>
+            <li><strong>Gissa ordklasser strategiskt</strong> – gissa vanliga verb ("born", "known", "used"), adjektiv ("large", "major", "national") för att snabbt fylla ut texten.</li>
+            <li><strong>Räkna blanketter</strong> – ett redigerat ord med 10+ bokstäver är troligen ett substantiv eller egennamn. Korta redaktioner är ofta prepositioner eller artiklar.</li>
+            <li><strong>Var uppmärksam på siffror</strong> – år och datum är ofta synliga och ger ledtrådar om tidsperiod och ämne.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Redactle</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad är redigerat i artikeln?</strong><p className="mt-1">Alla innehållsord (substantiv, verb, adjektiv, egennamn) är dolda. Strukturord som kommatecken och siffror är ofta synliga.</p></div>
+            <div><strong>Hur många gissningar har man?</strong><p className="mt-1">Obegränsade gissningar, men spelet räknar och visar ditt totala antal. Utmaningen är att klara det på så få som möjligt.</p></div>
+            <div><strong>Är det en ny artikel varje dag?</strong><p className="mt-1">Ja, varje dag publiceras en ny hemlig Wikipedia-artikel att avkoda.</p></div>
+            <div><strong>Hur svårt är spelet?</strong><p className="mt-1">Redactle är ett av de svårare ordspelen. Genomsnittliga spelare behöver 50–150 gissningar. Experter klarar det ibland på under 20.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

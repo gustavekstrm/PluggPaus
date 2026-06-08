@@ -113,6 +113,30 @@ function ContextoPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Contexto</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja brett</strong> – starta med ord inom en vanlig kategori (djur, mat, sport) för att snabbt identifiera vilket område det hemliga ordet tillhör.</li>
+            <li><strong>Använd rankingen som karta</strong> – rang 1–50 är mycket nära. Rang 51–200 är på rätt spår. Över 500 är du långt ifrån.</li>
+            <li><strong>Testa synonymer</strong> – om "glad" ger rang 150, testa "lycklig", "nöjd", "belåten". Semantiskt nära ord avslöjar snabbt rätt riktning.</li>
+            <li><strong>Tänk på sammanhang, inte bara definitioner</strong> – Contexto bygger på ord som ofta förekommer tillsammans i text, inte ordböckens definitioner.</li>
+            <li><strong>Dra nytta av associationer</strong> – ord som ofta dyker upp i samma meningar som svaret rankas högt. Tänk: vad skriver man om när man skriver om det här ordet?</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Contexto</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad innebär ranknumret?</strong><p className="mt-1">Ranknumret visar hur semantiskt nära ditt ord är det hemliga svaret. Rang 1 är perfekt matchning, höga nummer är långt ifrån.</p></div>
+            <div><strong>Finns det en gränser för antal gissningar?</strong><p className="mt-1">Nej, du kan gissa hur många gånger du vill. Utmaningen är att klara det på så få gissningar som möjligt.</p></div>
+            <div><strong>Är det samma ord för alla?</strong><p className="mt-1">Ja, alla spelare världen över gissar samma hemliga ord varje dag.</p></div>
+            <div><strong>Vad är en bra poäng?</strong><p className="mt-1">Under 20 gissningar är utmärkt. Under 50 är bra. Nybörjare brukar behöva 50–100 gissningar.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

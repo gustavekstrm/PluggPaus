@@ -113,6 +113,30 @@ function GeoGuessrPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för GeoGuessr</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Läs vägskyltar och text</strong> – språket på skyltar avslöjar landet direkt. Kyrilliska = Ryssland/Östeuropa, arabiska = Mellanöstern, kanji = Japan/Kina.</li>
+            <li><strong>Kolla vägens utseende</strong> – vilken sida kör man på? Gula mittlinjer är typiska för USA och Kanada, vita linjer för Europa.</li>
+            <li><strong>Titta på vegetationen</strong> – palmer = tropisk zon, barrträd = norra halvklotet, savann = Afrika eller Australien.</li>
+            <li><strong>Arkitekturens stil</strong> – husstil, färg på tak och byggnadsmaterial varierar markant mellan länder och regioner.</li>
+            <li><strong>Google Street View-kamerans kvalitet</strong> – äldre, suddigare bilder är ofta från länder som indexerades tidigt (USA, Australien, Europa). Nyare HD-bilder kan indikera nyare regioner.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om GeoGuessr</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Hur beräknas poängen?</strong><p className="mt-1">Poäng baseras på hur nära din gissning är den faktiska platsen. Maxpoäng är 5 000 per runda – ju kortare avstånd, desto fler poäng.</p></div>
+            <div><strong>Hur många rundor finns det?</strong><p className="mt-1">En standard GeoGuessr-omgång består av 5 rundor, vardera med en ny plats att identifiera.</p></div>
+            <div><strong>Är det gratis att spela?</strong><p className="mt-1">GeoGuessr har en gratis version med begränsade rundor per dag. Premium ger obegränsad tillgång och fler spellägen.</p></div>
+            <div><strong>Kan man öva på specifika länder?</strong><p className="mt-1">Ja, det finns landspecifika kartor och utmaningar. Perfekt om du studerar geografi eller vill förbättra dig på en kontinent.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

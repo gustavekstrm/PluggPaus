@@ -113,6 +113,30 @@ function ConnectionsPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Connections</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja med den mest uppenbara gruppen</strong> – leta efter ord som tydligt hör ihop och lös dem först. Det minskar röran och gör resterande grupper tydligare.</li>
+            <li><strong>Akta dig för röda sillar</strong> – ord kan verka passa in i en grupp men egentligen tillhöra en annan. Connections är designat för att lura dig med överlappande teman.</li>
+            <li><strong>Tänk på dubbla betydelser</strong> – ett ord kan vara ett adjektiv, ett substantiv och ett verb. Ofta är det ordets mindre uppenbara betydelse som är rätt.</li>
+            <li><strong>Spara lila gruppen till sist</strong> – den svåraste kategorin (lila) är alltid knepigast. Löser du de tre enklare grupperna först är lila kvar av sig själv.</li>
+            <li><strong>Läs alla ord innan du väljer</strong> – skumma igenom alla 16 ord och låt hjärnan jobba i bakgrunden innan du bestämmer dig.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Connections</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Hur många grupper finns det?</strong><p className="mt-1">Det finns alltid exakt fyra grupper med fyra ord vardera – totalt 16 ord att sortera.</p></div>
+            <div><strong>Vad betyder färgerna?</strong><p className="mt-1">Gul är lättast, grön är medel, blå är svår och lila är svårast. Lila innehåller alltid en lömsk twist.</p></div>
+            <div><strong>Hur många misstag tillåts?</strong><p className="mt-1">Du kan göra fyra misstag innan spelet tar slut. Använd dem klokt – spara dem till osäkra gissningar.</p></div>
+            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, ett nytt Connections-pussel publiceras dagligen med helt nya ord och kategorier.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

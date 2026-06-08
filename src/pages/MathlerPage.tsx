@@ -113,6 +113,30 @@ function MathlerPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Mathler</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja med enkla uttryck</strong> – testa gissningar som "10+2=12" eller "3*4=12" tidigt för att identifiera vilka siffror och operatorer som ingår i svaret.</li>
+            <li><strong>Operationsordning spelar roll</strong> – multiplikation och division beräknas före addition och subtraktion. Tänk på det när du konstruerar dina gissningar.</li>
+            <li><strong>Testa alla fyra räknesätt</strong> – använd +, -, * och / i dina tidiga gissningar för att eliminera vilka operatorer som inte ingår.</li>
+            <li><strong>Använd färgfeedbacken maximalt</strong> – precis som i Wordle, gul = rätt siffra/operator på fel plats. Flytta den och testa igen.</li>
+            <li><strong>Kommutativa egenskaper</strong> – 3+5 och 5+3 är båda giltiga gissningar om svaret innehåller de siffrorna. Testa båda varianterna vid behov.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Mathler</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vad är målet med Mathler?</strong><p className="mt-1">Hitta den dolda matematiska ekvationen på sex positioner. Du vet svaret (t.ex. =12) och ska lista ut vilket uttryck som ger det svaret.</p></div>
+            <div><strong>Hur lång är ekvationen?</strong><p className="mt-1">Mathler använder 6-karaktärslånga ekvationer, till exempel "3+9=12" eller "24/2=12".</p></div>
+            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, varje dag finns ett nytt mål-värde att lösa mot. Spelet är dagligen återkommande och tar vanligtvis 2–5 minuter.</p></div>
+            <div><strong>Behöver man vara bra på matte?</strong><p className="mt-1">Grundläggande aritmetik räcker. Spelet kräver logiskt tänkande snarare än avancerad matematik.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

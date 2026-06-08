@@ -114,6 +114,30 @@ function TimeguessrPage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Timeguessr</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Titta på fordonsmodeller</strong> – bilmärken och -modeller är utmärkta tidsindikatorer. En VW Bubbla säger 1950–70-tal, en fyrkantig Volvo 240 säger 1970–80-tal.</li>
+            <li><strong>Analysera fotokvaliteten</strong> – svartvitt = före 1970-tal (ofta), blekta färger = 1970–80-tal, skarp HD-bild = 2000-talet och framåt.</li>
+            <li><strong>Klädmode som ledtråd</strong> – mode ändras tydligt per decennium. Breda slag och vida byxor signalerar 70-tal, axelvaddar och kraftiga mönster = 80-tal.</li>
+            <li><strong>Arkitekturstil och teknik</strong> – antenner på tak, reklamskyltar och teknisk utrustning i bakgrunden ger tydliga periodtips.</li>
+            <li><strong>Hitta kontinenten först</strong> – vegetation, infrastruktur och arkitektur avslöjar kontinent innan du försöker peka ut exakt stad eller land.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Timeguessr</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Hur beräknas poängen?</strong><p className="mt-1">Poängen baseras på två faktorer: hur nära du gissade platsen och hur nära du gissade årtalet. Maxpoäng kräver träff på båda.</p></div>
+            <div><strong>Hur många rundor finns det?</strong><p className="mt-1">En standard Timeguessr-omgång består av 5 rundor med historiska fotografier från olika platser och epoker.</p></div>
+            <div><strong>Vilket tidsintervall täcker spelet?</strong><p className="mt-1">Spelet täcker huvudsakligen 1900-talet fram till nutid, med fokus på decennierna 1920–2000.</p></div>
+            <div><strong>Kan man förbättra sig?</strong><p className="mt-1">Absolut. Ju mer historia och geografi du lär dig, desto bättre blir du. Spelet är ett roligt sätt att träna historisk allmänbildning.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 

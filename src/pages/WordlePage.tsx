@@ -113,6 +113,30 @@ function WordlePage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Wordle</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Börja med vokalrika ord</strong> – ord som RAISE, AUDIO eller STARE avslöjar många bokstäver direkt och ger dig ett bra utgångsläge.</li>
+            <li><strong>Undvik att återanvända grå bokstäver</strong> – varje gissning ska ge ny information. Grå bokstav = den finns inte i ordet.</li>
+            <li><strong>Gula bokstäver anger position</strong> – om en bokstav är gul vet du att den finns i ordet, men på fel plats. Testa den på andra positioner nästa gissning.</li>
+            <li><strong>Tänk på ordstrukturer</strong> – svenska ord slutar ofta på -IG, -EN, -AR eller -ER. Utnyttja det i dina sista gissningar.</li>
+            <li><strong>Spara svåra positioner till sist</strong> – lås fast de gröna bokstäverna och fokusera på att lösa de okända platserna en i taget.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Wordle</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Hur många försök har man?</strong><p className="mt-1">Du har exakt 6 försök att gissa rätt ord. Varje gissning måste vara ett riktigt ord.</p></div>
+            <div><strong>Är det samma ord för alla?</strong><p className="mt-1">Ja, hela världen löser samma ord varje dag. Det gör det enkelt att jämföra resultat med vänner.</p></div>
+            <div><strong>Hur lång tid tar ett spel?</strong><p className="mt-1">Normalt 3–10 minuter beroende på erfarenhet. Perfekt för en kort studiepaus.</p></div>
+            <div><strong>Kan man spela flera gånger om dagen?</strong><p className="mt-1">Det finns bara ett nytt ord per dag, men det finns arkiv med gamla Wordle-pussel att lösa.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner Placeholder */}
       <AdBanner slot="2861993283" className="mb-8" />
 

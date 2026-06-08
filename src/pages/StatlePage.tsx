@@ -114,6 +114,30 @@ function StatlePage() {
         </ul>
       </div>
 
+
+      {/* SEO Content - Tips & FAQ */}
+      <div className="space-y-6 mb-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Statle</h2>
+          <ul className="space-y-2 text-gray-700 dark:text-gray-300">
+            <li><strong>Lär dig legendärernas stats</strong> – legendariska Pokémon (Mewtwo, Rayquaza, Arceus) har extremt höga totalstats och sticker ofta ut tydligt.</li>
+            <li><strong>Typ avgör starkaste stat</strong> – snabba Pokémon (Jolteon, Crobat) har nästan alltid Speed som högst. Tunga försvarare (Shuckle, Steelix) har Defence som högst.</li>
+            <li><strong>Startpokémon har balanserade stats</strong> – de tre startpokémons stat-fördelning är relativt jämn. Ingen stat är extrem, vilket gör dem svårare att gissa rätt på.</li>
+            <li><strong>Memorera extremfallen</strong> – Shedinja har alltid HP=1. Shuckle har extremt hög Def/Sp.Def men uselt allt annat. Dessa är enkla att identifiera.</li>
+            <li><strong>Generation ger ledtrådar</strong> – Gen 1-Pokémon har ofta mer obalanserade stats jämfört med nyare generationers mer välbalanserade design.</li>
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Statle</h2>
+          <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Vilka stats ingår?</strong><p className="mt-1">De sex bas-statsen: HP, Attack, Defense, Special Attack, Special Defense och Speed. Du gissar vilken av de sex som är högst.</p></div>
+            <div><strong>Vilka Pokémon ingår?</strong><p className="mt-1">Spelet inkluderar Pokémon från generation 1–9. Mega-evolutioner och regionala varianter används normalt inte.</p></div>
+            <div><strong>Vad händer vid oavgjort?</strong><p className="mt-1">Om två stats är lika höga kan båda vara korrekta svar. Spelet hanterar detta med fleralternativsfrågor.</p></div>
+            <div><strong>Behöver man vara Pokémon-expert?</strong><p className="mt-1">Inte alls! Grundläggande Pokémon-kunskap räcker. Spelet är roligt även för casual fans och ett bra sätt att lära sig mer.</p></div>
+          </div>
+        </div>
+      </div>
+
       {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 
