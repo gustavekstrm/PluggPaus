@@ -1,51 +1,13 @@
 import { useEffect } from 'react';
+import AdBanner from '../components/AdBanner';
 import { Link } from 'react-router-dom';
 import QuickStats from '../components/QuickStats';
 
 function AgeOfWarPage() {
   useEffect(() => {
-    // Set page title and meta description
-    document.title = 'Age of War | Strategy Game for Study Breaks | PluggPaus';
-    
-    // Update or create meta description
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.setAttribute('name', 'description');
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.setAttribute('content', 'Play Age of War - a classic strategy game for quick study breaks. Develop through 5 ages from Stone Age to Future. Improve tactical thinking and resource management skills.');
-
-    // Add JSON-LD structured data
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Game",
-      "name": "Age of War",
-      "gameType": "Strategy",
-      "operatingSystem": "Web Browser",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "SEK"
-      },
-      "aggregateRating": {
-        "@type": "AggregateRating",
-        "ratingValue": "4.8",
-        "ratingCount": "2150"
-      },
-      "description": "Classic tower defense strategy game spanning 5 historical ages. Perfect for 10-15 minute study breaks to improve tactical thinking and decision-making under pressure."
-    });
-    document.head.appendChild(script);
-
+    document.title = 'Age of War – Klassiskt Strategispel | PluggPaus';
     localStorage.setItem('lastPlayedGame', 'ageofwar');
     window.scrollTo(0, 0);
-
-    // Cleanup
-    return () => {
-      document.head.removeChild(script);
-    };
   }, []);
 
   return (
@@ -54,70 +16,118 @@ function AgeOfWarPage() {
       <div className="mb-6">
         <Link
           to="/"
-          className="inline-flex items-center text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 transition-colors duration-200"
+          className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Tillbaka till alla spel
         </Link>
       </div>
 
-      {/* Game Header */}
-      <div className="text-center mb-8">
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-orange-600 to-red-500 bg-clip-text text-transparent">
-          Age of War
-        </h1>
-        <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Utvecklas genom tiderna – Från stenåldern till framtiden!
-        </p>
-      </div>
-
       {/* Top Ad Banner */}
-      <div className="ad-banner-top mb-8">
-        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
-      {/* Main Content */}
+      {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
-        {/* Short Description */}
-        <div className="max-w-2xl mx-auto mb-8 text-center">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
-            Klassiskt försvarsspel där du utvecklas genom 5 tidsåldrar. Bygg enheter, uppgradera torn och förstör fiendens bas innan de förstör din.
-          </p>
+        <div className="text-center mb-8">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+            Spela Age of War - Tidernas Krig
+          </h1>
+          <div className="inline-block bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 text-orange-800 dark:text-orange-200 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+            ⚔️ Klassiskt strategispel
+          </div>
         </div>
 
         {/* Quick Stats Component */}
         <QuickStats
-          category="Strategy"
+          category="Strategi"
           difficulty="Medium"
           playtime="10-15 min"
-          benefit="Tactical thinking"
+          benefit="Taktiskt tänkande"
         />
 
-        {/* SEO Footer Section */}
-        <section className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-            Age of War är ett legendariskt strategispel som har underhållit spelare sedan 2007. Perfekt för studiepauser med 10-15 minuters matcher som tränar beslutsfattande, resurshantering och strategisk planering. Utvecklas från stenåldern till framtiden och bemästra balansen mellan anfall och försvar.
+        {/* Description */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p>
+            <strong>Age of War</strong> är ett legendariskt strategispel där du utvecklas genom 5 tidsåldrar – från stenåldern till framtiden. Bygg enheter, uppgradera torn och förstör fiendens bas!
           </p>
-        </section>
+          <p>
+            <strong>Hur det fungerar:</strong><br />
+            • Bygg krigsenheter och skicka dem mot fienden<br />
+            • Försvara din bas med uppgraderbara torn<br />
+            • Samla XP och lås upp nästa tidsålder<br />
+            • Balansera anfall och försvar strategiskt<br />
+            • Från stenålder till framtiden – 5 epoker att bemästra!
+          </p>
+          <p>
+            Tränar beslutsfattande, resurshantering och strategisk planering på 10-15 minuter. Perfekt studiepaus!
+          </p>
+        </div>
 
-        {/* CTA Button */}
-        <div className="text-center mt-10">
+        {/* Play Button */}
+        <div className="text-center">
           <a
             href="https://ageofwargame.io/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-gradient-to-r from-orange-600 to-red-500 text-white px-8 sm:px-12 py-4 sm:py-5 rounded-xl text-lg sm:text-xl font-bold shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            className="inline-block bg-gradient-to-r from-orange-600 to-red-500 hover:from-orange-700 hover:to-red-600 text-white font-bold text-xl px-12 py-5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
           >
-            Spela Age of War nu →
+            SPELA NU →
           </a>
+          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
+            Öppnas på AgeOfWarGame.io (gratis)
+          </p>
         </div>
       </div>
 
+      {/* Why Age of War Section */}
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Varför är Age of War perfekt för studenter?
+        </h2>
+        <ul className="space-y-3 text-gray-700 dark:text-gray-300">
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-orange-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Taktiskt tänkande</strong> - Tränar strategisk planering och resursprioritering</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-orange-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Beslutsfattande</strong> - Snabba val under tryck förbättrar kognitiv flexibilitet</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-orange-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Tidsavgränsad</strong> - En match tar 10-15 minuter, perfekt för en studiepaus</span>
+          </li>
+          <li className="flex items-start">
+            <svg className="w-6 h-6 text-orange-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span><strong>Klassiker</strong> - Nostalgi och lättillgänglighet ger snabb mental återhämtning</span>
+          </li>
+        </ul>
+      </div>
+
       {/* Bottom Ad Banner */}
-      <div className="ad-banner-top mb-8">
-        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
+      <AdBanner slot="2861993283" className="mb-8" />
+
+      {/* Back to games link */}
+      <div className="text-center">
+        <Link
+          to="/"
+          className="inline-flex items-center text-lg text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors font-semibold"
+        >
+          <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+          Se alla spel
+        </Link>
       </div>
     </main>
   );

@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
 
 function ConnectionsPage() {
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'connections');
+    document.title = 'Connections – Hitta Ord som Hör Ihop | PluggPaus';
   }, []);
 
   return (
@@ -23,9 +25,7 @@ function ConnectionsPage() {
       </div>
 
       {/* Top Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
@@ -38,27 +38,31 @@ function ConnectionsPage() {
           </div>
         </div>
 
-        {/* Description */}
-        <div className="max-w-2xl mx-auto mb-8 text-center">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
-            Gruppera 16 ord i fyra kategorier om fyra ord. Kräver kreativt tänkande och förmågan att se dolda mönster och samband.
-          </p>
-        </div>
-
         {/* Quick Stats Component */}
         <QuickStats
-          category="Pattern Matching"
+          category="Mönsterigenkänning"
           difficulty="Medium"
           playtime="5-10 min"
-          benefit="Creative thinking"
+          benefit="Kreativt tänkande"
         />
 
-        {/* SEO Footer Section */}
-        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-            Connections är New York Times senaste ordpussel-sensation. Perfekt för att aktivera hjärnan under studiedagen med kluriga kategorier och överraskande kopplingar. Tränar kreativt tänkande, mönsterigenkänning och mental gymnastik på 5-10 minuter.
+        {/* Description */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p>
+            <strong>Connections</strong> är New York Times ordpussel-sensation. Gruppera 16 ord i fyra kategorier om fyra ord och hitta de dolda sambanden.
           </p>
-        </section>
+          <p>
+            <strong>Hur det fungerar:</strong><br />
+            • Du ser 16 ord på skärmen<br />
+            • Hitta fyra grupper om fyra ord som hör ihop<br />
+            • Varje grupp har ett tema (ex. typer av musik, filmtitlar...)<br />
+            • Se upp – ord kan verka höra till flera grupper!<br />
+            • Fyra felgissningar och spelet är slut
+          </p>
+          <p>
+            Tränar kreativt tänkande, mönsterigenkänning och mental gymnastik. Nytt pussel varje dag!
+          </p>
+        </div>
 
         {/* Play Button */}
         <div className="text-center">
@@ -110,9 +114,7 @@ function ConnectionsPage() {
       </div>
 
       {/* Bottom Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

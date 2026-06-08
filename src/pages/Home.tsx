@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Home() {
   const [lastPlayed, setLastPlayed] = useState<string | null>(null);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
-  const [showAboutModal, setShowAboutModal] = useState(false);
   const [showCookieBanner, setShowCookieBanner] = useState(false);
 
   useEffect(() => {
+    document.title = 'PluggPaus – Gratis Hjärntränande Spel för Studenter';
     const saved = localStorage.getItem('lastPlayedGame');
     setLastPlayed(saved);
 
@@ -18,15 +19,20 @@ function Home() {
       setFavorites(JSON.parse(savedFavorites));
     }
 
-    // Check if cookies have been accepted
-    const cookiesAccepted = localStorage.getItem('cookiesAccepted');
-    if (!cookiesAccepted) {
+    // Show banner if no decision has been made yet
+    const cookieChoice = localStorage.getItem('cookiesAccepted');
+    if (!cookieChoice) {
       setShowCookieBanner(true);
     }
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookiesAccepted', 'true');
+    localStorage.setItem('cookiesAccepted', 'accepted');
+    setShowCookieBanner(false);
+  };
+
+  const declineCookies = () => {
+    localStorage.setItem('cookiesAccepted', 'declined');
     setShowCookieBanner(false);
   };
 
@@ -40,6 +46,7 @@ function Home() {
   };
 
   const isFavorite = (gameId: string) => favorites.includes(gameId);
+  const navigate = useNavigate();
 
   const shouldShowGame = (gameId: string) => {
     if (!showFavoritesOnly) return true;
@@ -84,15 +91,14 @@ function Home() {
       </div>
 
       {/* Top Ad Banner */}
-      <div className="ad-banner-top">
-        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="ad-banner-top" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
         {/* Wordle Card */}
         {shouldShowGame('wordle') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-500/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'wordle' ? 'ring-2 ring-green-500 shadow-glow-md' : ''
+            onClick={() => navigate('/wordle')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-500/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'wordle' ? 'ring-2 ring-green-500 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0s' }}
           >
@@ -118,7 +124,7 @@ function Home() {
 
             {/* Favorite Heart Icon - Top Right */}
             <button
-              onClick={() => toggleFavorite('wordle')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('wordle'); }}
               className="absolute z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               style={{ top: '10px', right: '10px' }}
               aria-label="Toggle favorite"
@@ -148,6 +154,7 @@ function Home() {
 
               <Link
                 to="/wordle"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
                 style={{ backgroundColor: '#538d4e' }}
               >
@@ -160,7 +167,8 @@ function Home() {
         {/* Connections Card */}
         {shouldShowGame('connections') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-purple-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'connections' ? 'ring-2 ring-purple-600 shadow-glow-md' : ''
+            onClick={() => navigate('/connections')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-purple-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'connections' ? 'ring-2 ring-purple-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.1s' }}
           >
@@ -186,7 +194,7 @@ function Home() {
 
             {/* Favorite Heart Icon - Top Right */}
             <button
-              onClick={() => toggleFavorite('connections')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('connections'); }}
               className="absolute z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               style={{ top: '10px', right: '10px' }}
               aria-label="Toggle favorite"
@@ -216,6 +224,7 @@ function Home() {
 
               <Link
                 to="/connections"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -227,14 +236,15 @@ function Home() {
         {/* Contexto Card */}
         {shouldShowGame('contexto') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-pink-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'contexto' ? 'ring-2 ring-pink-600 shadow-glow-md' : ''
+            onClick={() => navigate('/contexto')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-pink-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'contexto' ? 'ring-2 ring-pink-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.2s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-pink-600/10 to-indigo-600/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('contexto')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('contexto'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -281,6 +291,7 @@ function Home() {
 
               <Link
                 to="/contexto"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-pink-600 to-indigo-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -292,14 +303,15 @@ function Home() {
         {/* 2048 Card */}
         {shouldShowGame('2048') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-orange-500/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === '2048' ? 'ring-2 ring-orange-500 shadow-glow-md' : ''
+            onClick={() => navigate('/2048')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-orange-500/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === '2048' ? 'ring-2 ring-orange-500 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.3s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-orange-500/10 to-yellow-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('2048')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('2048'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -346,6 +358,7 @@ function Home() {
 
               <Link
                 to="/2048"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-orange-500 to-yellow-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -357,14 +370,15 @@ function Home() {
         {/* GeoGuessr Card */}
         {shouldShowGame('geoguessr') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'geoguessr' ? 'ring-2 ring-green-600 shadow-glow-md' : ''
+            onClick={() => navigate('/geoguessr')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'geoguessr' ? 'ring-2 ring-green-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.4s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-green-600/10 to-teal-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('geoguessr')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('geoguessr'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -411,6 +425,7 @@ function Home() {
 
               <Link
                 to="/geoguessr"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-green-600 to-teal-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -422,14 +437,15 @@ function Home() {
         {/* The Wiki Game Card */}
         {shouldShowGame('wikigame') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'wikigame' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
+            onClick={() => navigate('/wikigame')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'wikigame' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.5s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-blue-600/10 to-cyan-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('wikigame')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('wikigame'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -476,6 +492,7 @@ function Home() {
 
               <Link
                 to="/wikigame"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-blue-600 to-cyan-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -487,14 +504,15 @@ function Home() {
         {/* Redactle Card */}
         {shouldShowGame('redactle') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-red-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'redactle' ? 'ring-2 ring-red-600 shadow-glow-md' : ''
+            onClick={() => navigate('/redactle')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-red-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'redactle' ? 'ring-2 ring-red-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.6s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-red-600/10 to-rose-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('redactle')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('redactle'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -541,6 +559,7 @@ function Home() {
 
               <Link
                 to="/redactle"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-red-600 to-rose-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -552,14 +571,15 @@ function Home() {
         {/* Mathler Card */}
         {shouldShowGame('mathler') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-violet-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'mathler' ? 'ring-2 ring-violet-600 shadow-glow-md' : ''
+            onClick={() => navigate('/mathler')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-violet-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'mathler' ? 'ring-2 ring-violet-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.7s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-violet-600/10 to-fuchsia-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('mathler')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('mathler'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -606,6 +626,7 @@ function Home() {
 
               <Link
                 to="/mathler"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-violet-600 to-fuchsia-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -617,14 +638,15 @@ function Home() {
         {/* Timeguessr Card */}
         {shouldShowGame('timeguessr') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'timeguessr' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
+            onClick={() => navigate('/timeguessr')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'timeguessr' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '0.8s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-blue-900/10 to-blue-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('timeguessr')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('timeguessr'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -671,6 +693,7 @@ function Home() {
 
               <Link
                 to="/timeguessr"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-blue-900 to-blue-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -683,14 +706,15 @@ function Home() {
         {/* Age of War Card */}
         {shouldShowGame('ageofwar') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-orange-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'ageofwar' ? 'ring-2 ring-orange-600 shadow-glow-md' : ''
+            onClick={() => navigate('/ageofwar')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-orange-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'ageofwar' ? 'ring-2 ring-orange-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '1.0s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-orange-900/10 to-orange-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('ageofwar')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('ageofwar'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -737,6 +761,7 @@ function Home() {
 
               <Link
                 to="/ageofwar"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-orange-900 to-orange-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -748,14 +773,15 @@ function Home() {
         {/* Contextinho Card */}
         {shouldShowGame('contextinho') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'contextinho' ? 'ring-2 ring-green-600 shadow-glow-md' : ''
+            onClick={() => navigate('/contextinho')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-green-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'contextinho' ? 'ring-2 ring-green-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '1.2s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-green-700/10 to-emerald-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('contextinho')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('contextinho'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -802,6 +828,7 @@ function Home() {
 
               <Link
                 to="/contextinho"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-green-700 to-emerald-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -813,14 +840,15 @@ function Home() {
         {/* Statle Card */}
         {shouldShowGame('statle') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'statle' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
+            onClick={() => navigate('/statle')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-blue-600/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'statle' ? 'ring-2 ring-blue-600 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '1.3s' }}
           >
             <div className="absolute inset-0 opacity-50 dark:opacity-30 bg-gradient-to-br from-blue-700/10 to-cyan-500/10 group-hover:opacity-70 dark:group-hover:opacity-50 rounded-2xl transition-all duration-500 pointer-events-none" />
 
             <button
-              onClick={() => toggleFavorite('statle')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('statle'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -867,6 +895,7 @@ function Home() {
 
               <Link
                 to="/statle"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-blue-700 to-cyan-500 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -939,7 +968,8 @@ function Home() {
         {/* Fifa Nostalgia Card - PREMIUM GOLD */}
         {shouldShowGame('fifanostalgia') && (
           <div
-            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-yellow-500/50 transform hover:-translate-y-2 animate-scaleIn ${lastPlayed === 'fifanostalgia' ? 'ring-2 ring-yellow-500 shadow-glow-md' : ''
+            onClick={() => navigate('/fifanostalgia')}
+            className={`group relative overflow-hidden bg-white dark:bg-dark-card rounded-2xl shadow-card hover:shadow-card-hover transition-all duration-500 p-6 sm:p-8 border border-gray-200 dark:border-dark-border hover:border-yellow-500/50 transform hover:-translate-y-2 animate-scaleIn cursor-pointer ${lastPlayed === 'fifanostalgia' ? 'ring-2 ring-yellow-500 shadow-glow-md' : ''
               }`}
             style={{ animationDelay: '1.1s' }}
           >
@@ -949,7 +979,7 @@ function Home() {
             </div>
 
             <button
-              onClick={() => toggleFavorite('fifanostalgia')}
+              onClick={(e) => { e.stopPropagation(); toggleFavorite('fifanostalgia'); }}
               className="absolute top-4 right-4 z-20 p-2 rounded-full hover:bg-white/10 dark:hover:bg-black/10 transition-all duration-200 transform hover:scale-110 active:scale-95"
               aria-label="Toggle favorite"
             >
@@ -996,6 +1026,7 @@ function Home() {
 
               <Link
                 to="/fifanostalgia"
+                onClick={(e) => e.stopPropagation()}
                 className="block w-full text-center bg-gradient-to-r from-yellow-500 to-amber-600 text-white py-3.5 sm:py-4 rounded-xl hover:shadow-glow-md transition-all duration-300 font-semibold text-base sm:text-lg transform hover:scale-105 active:scale-95 shadow-lg"
               >
                 Spela nu →
@@ -1006,109 +1037,93 @@ function Home() {
       </div>
 
       {/* SEO Content Section */}
-      <section
-        id="seo-article-fixed"
-        className="seo-content"
-        style={{
-          color: '#ffffff',
-          maxWidth: '800px',
-          margin: '60px auto 40px',
-          padding: '60px 20px',
-          lineHeight: 1.6,
-          fontSize: '1rem',
-          fontFamily: '-apple-system, BlinkMacSystemFont, "Inter", "Roboto", system-ui, sans-serif',
-          borderTop: '1px solid #444',
-          backgroundColor: 'transparent',
-          textAlign: 'left'
-        }}
-      >
-        <h1 style={{ color: '#ffffff', fontWeight: 700, fontSize: '2rem', marginBottom: '1.5rem', lineHeight: 1.3 }}>
-          Varför din hjärna behöver en PluggPaus
-        </h1>
+      <section id="seo-article-fixed" className="seo-content">
+        <h1>Varför din hjärna behöver en PluggPaus</h1>
 
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+        <p>
           Under långa föreläsningar eller intensiva pluggpass är det lätt att tro att konstant fokus är nyckeln till framgång.
           Men forskning visar att din hjärna faktiskt presterar bättre med regelbundna mikropauser. När du tar korta pauser
-          på 5-10 minuter aktiveras hjärnans <strong style={{ color: '#ffffff', fontWeight: 700 }}>dopaminsystem</strong>, vilket förbättrar både motivation och
-          minneskonsolidering. Detta är grunden i den populära <strong style={{ color: '#ffffff', fontWeight: 700 }}>Pomodoro-tekniken</strong>, där du växlar mellan
+          på 5–10 minuter aktiveras hjärnans <strong>dopaminsystem</strong>, vilket förbättrar både motivation och
+          minneskonsolidering. Detta är grunden i den populära <strong>Pomodoro-tekniken</strong>, där du växlar mellan
           koncentrerade arbetspass och korta avbrott.
         </p>
 
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          Här på PluggPaus samlar vi <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis onlinespel</strong> som är perfekta för just detta ändamål.
+        <p>
+          Här på PluggPaus samlar vi <strong>gratis onlinespel</strong> som är perfekta för just detta ändamål.
           Våra spel är snabba, utmanande och kräver ingen nedladdning – du spelar direkt i webbläsaren.
-          Dessutom fungerar de som <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärngympa för studenter</strong> genom att träna olika kognitiva förmågor
+          Dessutom fungerar de som <strong>hjärngympa för studenter</strong> genom att träna olika kognitiva förmågor
           som ordförråd, logiskt tänkande och rumslig uppfattning.
         </p>
 
-        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
-          Wordle – Träna ditt ordförråd
-        </h2>
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          <strong style={{ color: '#ffffff', fontWeight: 700 }}>Wordle</strong> är ett ordspel där du har sex försök att gissa dagens femstaviga ord.
+        <h2>Wordle – Träna ditt ordförråd</h2>
+        <p>
+          <strong>Wordle</strong> är ett ordspel där du har sex försök att gissa dagens femstaviga ord.
           Varje gissning ger ledtrådar genom färgkodade rutor: grön betyder rätt bokstav på rätt plats,
-          gul betyder rätt bokstav men fel plats. Detta <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis webbläsarspel</strong> har blivit
+          gul betyder rätt bokstav men fel plats. Detta <strong>gratis webbläsarspel</strong> har blivit
           en global succé tack vare sin perfekta balans mellan utmaning och tillgänglighet.
-          Att spela Wordle dagligen tränar aktivt ditt <strong style={{ color: '#ffffff', fontWeight: 700 }}>ordförråd</strong>, mönsterigenkänning
+          Att spela Wordle dagligen tränar aktivt ditt <strong>ordförråd</strong>, mönsterigenkänning
           och deduktiv förmåga – färdigheter som är ovärderliga både i studier och vardagsliv.
         </p>
 
-        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
-          2048 – Öva logiskt tänkande
-        </h2>
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          I <strong style={{ color: '#ffffff', fontWeight: 700 }}>2048</strong> kombinerar du numrerade brickor på ett 4x4-rutnät för att nå målet:
+        <h2>Connections – Testa ditt associativa tänkande</h2>
+        <p>
+          <strong>Connections</strong> är PluggPaus eget kategoriseringsspel på svenska. Hitta fyra grupper av ord
+          som hör ihop – men var vaksam, orden är ofta knepigt överlappande! Spelet bygger på
+          <strong>associativt tänkande</strong> och semantisk förståelse, vilket aktiverar hjärnans prefrontala
+          kortex och stärker din analytiska förmåga. Perfekt för en 5-minuters mental uppfräschning.
+        </p>
+
+        <h2>2048 – Öva logiskt tänkande</h2>
+        <p>
+          I <strong>2048</strong> kombinerar du numrerade brickor på ett 4×4-rutnät för att nå målet:
           brickan med värdet 2048. Du flyttar alla brickor åt samma håll samtidigt, och när två brickor
           med samma nummer möts slås de samman till en dubbelt så stor. Detta pussel är ett utmärkt
-          <strong style={{ color: '#ffffff', fontWeight: 700 }}>tidsfördriv under föreläsningar</strong> eftersom varje omgång tar bara 2-5 minuter,
+          <strong>tidsfördriv under föreläsningar</strong> eftersom varje omgång tar bara 2–5 minuter,
           men kräver intensiv koncentration och planering. Spelet tränar din förmåga att tänka flera
-          steg framåt och utveckla långsiktiga strategier – precis som när du löser komplexa matematikproblem
-          eller skriver uppsatser.
+          steg framåt och utveckla långsiktiga strategier.
         </p>
 
-        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
-          GeoGuessr – Upptäck världen
-        </h2>
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          <strong style={{ color: '#ffffff', fontWeight: 700 }}>GeoGuessr</strong> placerar dig på en slumpmässig plats i världen via Google Street View,
-          och din uppgift är att gissa var du befinner dig. Spelet tränar din <strong style={{ color: '#ffffff', fontWeight: 700 }}>geografiska kunskap</strong>,
+        <h2>GeoGuessr – Upptäck världen</h2>
+        <p>
+          <strong>GeoGuessr</strong> placerar dig på en slumpmässig plats i världen via Google Street View,
+          och din uppgift är att gissa var du befinner dig. Spelet tränar din <strong>geografiska kunskap</strong>,
           visuella minnesbild och analytiska förmåga genom att du letar efter ledtrådar som vägskyltar,
-          arkitektur, vegetation och språk. Det är ett perfekt <strong style={{ color: '#ffffff', fontWeight: 700 }}>gratis onlinespel</strong> för studiepauser
-          eftersom det kombinerar avkoppling med inlärning – du utforskar världen samtidigt som du ger din
-          hjärna en paus från böckerna. Många användare rapporterar att de lärt sig mer geografi genom
-          GeoGuessr än genom traditionella studier!
+          arkitektur, vegetation och språk. Det är ett perfekt <strong>gratis onlinespel</strong> för studiepauser
+          eftersom det kombinerar avkoppling med inlärning.
         </p>
 
-        <h2 style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: 700, marginTop: '2rem', marginBottom: '1rem', lineHeight: 1.4 }}>
-          Vetenskapliga fördelar med spelpauser
-        </h2>
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
-          Studier från Stanford University visar att korta <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärngymnastik-pauser</strong> kan öka
-          produktiviteten med upp till 25%. När du <strong style={{ color: '#ffffff', fontWeight: 700 }}>spelar gratis webbläsarspel</strong> aktiveras
+        <h2>Fifa Nostalgia – Testa ditt fotbollsminne</h2>
+        <p>
+          <strong>Fifa Nostalgia</strong> är ett unikt quiz exklusivt för PluggPaus. Gissa spelarnas efternamn
+          från klassiska FIFA Ultimate Team-kort på 90 sekunder. Spelet testar
+          <strong>korttidsminnet</strong> och visuell igenkänning – en rolig utmaning för alla fotbollsfans.
+          Hur många gamla FUT-legends minns du?
+        </p>
+
+        <h2>Vetenskapliga fördelar med spelpauser</h2>
+        <p>
+          Studier visar att korta <strong>hjärngymnastik-pauser</strong> kan öka
+          produktiviteten med upp till 25 %. När du <strong>spelar gratis webbläsarspel</strong> aktiveras
           andra delar av hjärnan än de du använder för pluggande, vilket ger dina "studieområden" tid att
-          återhämta sig och konsolidera ny information. Detta fenomen kallas för <strong style={{ color: '#ffffff', fontWeight: 700 }}>diffust tänkande</strong>
+          återhämta sig och konsolidera ny information. Detta fenomen kallas för <strong>diffust tänkande</strong>
           och är lika viktigt som fokuserat lärande.
         </p>
 
-        <p style={{ color: '#ffffff', marginBottom: '1.2rem', fontSize: '1.1rem', lineHeight: 1.6 }}>
+        <p>
           Så nästa gång du känner att koncentrationen sviktar under en lång föreläsning – ta en PluggPaus!
-          Välj ett av våra <strong style={{ color: '#ffffff', fontWeight: 700 }}>hjärntränande spel</strong> och ge din hjärna den paus den förtjänar.
+          Välj ett av våra <strong>hjärntränande spel</strong> och ge din hjärna den paus den förtjänar.
           Du kommer tillbaka starkare, mer fokuserad och redo att ta dig an nya utmaningar.
         </p>
       </section>
 
       {/* Sticky Bottom Ad Bar */}
-      <div className="ad-sticky-bottom">
-        <span style={{ fontSize: '10px', color: '#999', fontWeight: 400 }}>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="ad-sticky-bottom" />
 
       {/* Footer */}
       <footer className="site-footer">
         <Link to="/privacy-policy">Integritetspolicy</Link>
         <span>•</span>
-        <a href="#" onClick={(e) => { e.preventDefault(); setShowAboutModal(true); }}>
-          Om oss / Kontakt
-        </a>
+        <Link to="/om-oss">Om oss / Kontakt</Link>
         <span>•</span>
         <Link to="/cookies">Cookie-inställningar</Link>
       </footer>
@@ -1117,11 +1132,14 @@ function Home() {
       {showCookieBanner && (
         <div className="cookie-banner">
           <p>
-            Vi använder kakor för att optimera din pluggpaus. Genom att använda sidan godkänner du vår användning av cookies.
+            Vi använder cookies för analys och annonser. Du väljer själv om du vill godkänna eller avvisa icke-nödvändiga cookies.
           </p>
           <div className="cookie-banner-buttons">
             <button onClick={acceptCookies} className="cookie-accept-btn">
-              Godkänn
+              Godkänn alla
+            </button>
+            <button onClick={declineCookies} className="cookie-decline-btn">
+              Avvisa
             </button>
             <Link to="/cookies" className="cookie-link">
               Läs mer
@@ -1130,53 +1148,6 @@ function Home() {
         </div>
       )}
 
-      {/* About Modal */}
-      {showAboutModal && (
-        <div
-          className="modal active"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              setShowAboutModal(false);
-            }
-          }}
-        >
-          <div className="modal-content">
-            <span
-              className="modal-close"
-              onClick={() => setShowAboutModal(false)}
-            >
-              &times;
-            </span>
-            <h2>Om PluggPaus</h2>
-            <p>
-              <strong>PluggPaus</strong> är en kuraterad plattform som hjälper studenter att maximera sin produktivitet genom kontrollerade mikropauser. Vår mission är att erbjuda vetenskapligt förankrade studiepauser som förbättrar fokus, minne och välmående.
-            </p>
-            <p>
-              Forskning visar att strategiska pauser på 5-10 minuter mellan studiepass förbättrar informationsretention och minskar mental trötthet. Alla spel på PluggPaus är noggrant utvalda för att aktivera olika kognitiva funktioner – från mönsterigenkänning till strategiskt tänkande – vilket ger din hjärna en aktiv återhämtning istället för passiv scrollning.
-            </p>
-            <p>
-              Plattformen grundades 2024 av <strong>Eken</strong>, systemvetarstudent med passion för EdTech och kognitiv psykologi. Projektet kombinerar teknisk innovation med evidensbaserad pedagogik för att skapa den ultimata studiehjälpen.
-            </p>
-
-            <h2 style={{ marginTop: '2rem' }}>Kontakt</h2>
-            <p>
-              För frågor, feedback eller samarbeten:
-            </p>
-            <p>
-              <a
-                href="mailto:pluggpaus@gmail.com"
-                style={{
-                  color: '#667eea',
-                  textDecoration: 'underline',
-                  fontWeight: 600
-                }}
-              >
-                pluggpaus@gmail.com
-              </a>
-            </p>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

@@ -1,6 +1,15 @@
 <!doctype html>
-<html lang="en">
+<html lang="sv">
   <head>
+    <!-- Dark mode: apply before first paint to prevent flash -->
+    <script>
+      (function() {
+        var saved = localStorage.getItem('darkMode');
+        var dark = saved !== null ? JSON.parse(saved) : true;
+        if (dark) document.documentElement.classList.add('dark');
+      })();
+    </script>
+
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZKLZ9LXV6"></script>
     <script>
@@ -14,12 +23,32 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4690812143168699" crossorigin="anonymous"></script>
     
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- SEO -->
+    <title>PluggPaus – Gratis Hjärntränande Spel för Studenter</title>
+    <meta name="description" content="Ta en smart studiepaus! PluggPaus erbjuder gratis hjärntränande webbspel som Wordle på svenska, Connections, 2048 och Fifa Nostalgia. Perfekt för studenter mellan föreläsningar." />
+    <meta name="keywords" content="pluggpaus, studiepaus, gratis spel, wordle svenska, connections, 2048, student spel, hjärngympa, onlinespel" />
+    <meta name="author" content="PluggPaus" />
+    <link rel="canonical" href="https://pluggpaus.se/" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://pluggpaus.se/" />
+    <meta property="og:title" content="PluggPaus – Gratis Hjärntränande Spel för Studenter" />
+    <meta property="og:description" content="Ta en smart studiepaus! Gratis hjärntränande webbspel som Wordle på svenska, Connections och 2048. Tränar ordförråd, logik och minne på 5 minuter." />
+    <meta property="og:locale" content="sv_SE" />
+    <meta property="og:site_name" content="PluggPaus" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="PluggPaus – Gratis Hjärntränande Spel för Studenter" />
+    <meta name="twitter:description" content="Ta en smart studiepaus! Gratis hjärntränande webbspel för studenter." />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>PluggPaus - Ta en paus från plugget!</title>
     
     <!-- GitHub Pages SPA redirect handler -->
     <script type="text/javascript">

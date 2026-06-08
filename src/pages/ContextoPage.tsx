@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
 
 function ContextoPage() {
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'contexto');
+    document.title = 'Contexto – Gissa Ordet via Kontext | PluggPaus';
   }, []);
 
   return (
@@ -23,9 +25,7 @@ function ContextoPage() {
       </div>
 
       {/* Top Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
@@ -38,27 +38,31 @@ function ContextoPage() {
           </div>
         </div>
 
-        {/* Description */}
-        <div className="max-w-2xl mx-auto mb-8 text-center">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
-            Gissa det hemliga ordet med hjälp av AI. Varje gissning rankas efter semantisk likhet – ju närmare #1, desto varmare!
-          </p>
-        </div>
-
         {/* Quick Stats Component */}
         <QuickStats
-          category="AI Word Game"
+          category="Ordspel"
           difficulty="Medium"
           playtime="5-15 min"
-          benefit="Semantic reasoning"
+          benefit="Ordförståelse"
         />
 
-        {/* SEO Footer Section */}
-        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-            Contexto är ett unikt ordspel drivet av maskininlärning som jämför ord baserat på betydelse och kontext, inte stavning. Perfekt för att förstå hur AI tolkar språk samtidigt som du tränar semantisk förståelse och ordassociationer. Inget tidsgräns – spela i din egen takt.
+        {/* Description */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p>
+            <strong>Contexto</strong> är ett unikt AI-drivet ordspel där du gissar det hemliga ordet baserat på semantisk likhet. Varje gissning rankas – ju närmare #1, desto varmare!
           </p>
-        </section>
+          <p>
+            <strong>Hur det fungerar:</strong><br />
+            • Gissa vilket ord som är det hemliga målet<br />
+            • AI:n jämför ditt ord baserat på <em>betydelse</em>, inte stavning<br />
+            • Du ser din rankning – tusentals ord bort eller nära #1?<br />
+            • Inget tidsgräns – spela i din egen takt<br />
+            • Obegränsade försök!
+          </p>
+          <p>
+            Tränar semantisk förståelse och ordassociationer. Perfekt för att förstå hur AI tolkar språk.
+          </p>
+        </div>
 
         {/* Play Button */}
         <div className="text-center">
@@ -110,9 +114,7 @@ function ContextoPage() {
       </div>
 
       {/* Bottom Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

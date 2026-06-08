@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 
 function Football501Page() {
@@ -22,9 +23,7 @@ function Football501Page() {
       </div>
 
       {/* Top Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
@@ -105,9 +104,7 @@ function Football501Page() {
       </div>
 
       {/* Bottom Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

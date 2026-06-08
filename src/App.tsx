@@ -17,6 +17,7 @@ import ContextinhoPage from './pages/ContextinhoPage';
 import StatlePage from './pages/StatlePage';
 import AgeOfWarPage from './pages/AgeOfWarPage';
 import TimeguessrPage from './pages/TimeguessrPage';
+import OmOssPage from './pages/OmOssPage';
 import Header from './components/Header';
 import ScrollToTop from './components/ScrollToTop';
 
@@ -62,6 +63,7 @@ function App() {
           <Route path="/ageofwar" element={<AgeOfWarPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
+          <Route path="/om-oss" element={<OmOssPage />} />
         </Routes>
       </div>
     </Router>

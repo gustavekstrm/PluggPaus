@@ -154,6 +154,7 @@ function FifaNostalgiaPage() {
 
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'fifanostalgia');
+    document.title = 'Fifa Nostalgia – Gissa Klassiska FUT-kort | PluggPaus';
   }, []);
 
   // Start game

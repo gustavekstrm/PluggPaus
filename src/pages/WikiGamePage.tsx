@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
 
 function WikiGamePage() {
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'wikigame');
+    document.title = 'The Wiki Game – Navigera Wikipedia | PluggPaus';
   }, []);
 
   return (
@@ -23,9 +25,7 @@ function WikiGamePage() {
       </div>
 
       {/* Top Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
@@ -40,10 +40,10 @@ function WikiGamePage() {
 
         {/* Quick Stats Component */}
         <QuickStats
-          category="Knowledge"
+          category="Kunskap"
           difficulty="Hard"
           playtime="3-5 min"
-          benefit="Creative thinking"
+          benefit="Kreativt tänkande"
         />
 
         {/* Description */}
@@ -114,9 +114,7 @@ function WikiGamePage() {
       </div>
 
       {/* Bottom Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

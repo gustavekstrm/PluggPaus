@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
+import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
 
 function WordlePage() {
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'wordle');
+    document.title = 'Wordle på Svenska – Gissa Dagens Ord | PluggPaus';
   }, []);
 
   return (
@@ -23,9 +25,7 @@ function WordlePage() {
       </div>
 
       {/* Top Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
@@ -38,27 +38,31 @@ function WordlePage() {
           </div>
         </div>
 
-        {/* Description */}
-        <div className="max-w-2xl mx-auto mb-8 text-center">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
-            Gissa dagens femstaviga ord på sex försök. Få feedback genom färgkodade rutor och träna ditt ordförråd och logiska tänkande.
-          </p>
-        </div>
-
         {/* Quick Stats Component */}
         <QuickStats
-          category="Word Puzzle"
+          category="Ordspel"
           difficulty="Easy"
           playtime="5-10 min"
-          benefit="Vocabulary & logic"
+          benefit="Ordförråd & logik"
         />
 
-        {/* SEO Footer Section */}
-        <section className="mb-10 pt-6 border-t border-gray-200 dark:border-gray-700">
-          <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-            Wordle är det klassiska ordpusslet som har tagit världen med storm. Perfekt för snabba studiepauser mellan föreläsningar. Tränar ordförråd, problemlösning och logiskt tänkande på bara några minuter. Ett nytt ord varje dag ger en daglig mental utmaning.
+        {/* Description */}
+        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+          <p>
+            <strong>Wordle</strong> är det klassiska ordpusslet som tagit världen med storm. Gissa dagens femstaviga ord på sex försök och få feedback med färgkodade rutor.
           </p>
-        </section>
+          <p>
+            <strong>Hur det fungerar:</strong><br />
+            • Gissa ett femstavigt ord<br />
+            • Grön = rätt bokstav på rätt plats<br />
+            • Gul = rätt bokstav, fel plats<br />
+            • Grå = bokstaven finns inte i ordet<br />
+            • Du har 6 försök – kan du lösa det?
+          </p>
+          <p>
+            Nytt ord varje dag ger en daglig mental utmaning. Perfekt för snabba studiepauser som tränar ordförråd och logiskt tänkande.
+          </p>
+        </div>
 
         {/* Play Button */}
         <div className="text-center">
@@ -110,9 +114,7 @@ function WordlePage() {
       </div>
 
       {/* Bottom Ad Banner Placeholder */}
-      <div className="ad-banner-top mb-8">
-        <span>Annons</span>
-      </div>
+      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">
