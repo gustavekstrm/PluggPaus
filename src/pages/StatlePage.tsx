@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import AdBanner from '../components/AdBanner';
 import { Link } from 'react-router-dom';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function StatlePage() {
+  useNoIndex();
+
   useEffect(() => {
     document.title = 'Statle – Pokémon Stats Quiz | PluggPaus';
     localStorage.setItem('lastPlayedGame', 'statle');
@@ -25,11 +27,9 @@ function StatlePage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela Statle - Pokémon Stats Quiz
@@ -82,7 +82,7 @@ function StatlePage() {
       </div>
 
       {/* Why Statle Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Statle perfekt för studenter?
         </h2>
@@ -117,7 +117,7 @@ function StatlePage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Statle</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Lär dig legendärernas stats</strong> – legendariska Pokémon (Mewtwo, Rayquaza, Arceus) har extremt höga totalstats och sticker ofta ut tydligt.</li>
@@ -127,7 +127,7 @@ function StatlePage() {
             <li><strong>Generation ger ledtrådar</strong> – Gen 1-Pokémon har ofta mer obalanserade stats jämfört med nyare generationers mer välbalanserade design.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Statle</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Vilka stats ingår?</strong><p className="mt-1">De sex bas-statsen: HP, Attack, Defense, Special Attack, Special Defense och Speed. Du gissar vilken av de sex som är högst.</p></div>
@@ -138,8 +138,6 @@ function StatlePage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import AdBanner from '../components/AdBanner';
 import { Link } from 'react-router-dom';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function TimeguessrPage() {
+  useNoIndex();
+
   useEffect(() => {
     document.title = 'Timeguessr – Gissa Plats och År i Historien | PluggPaus';
     localStorage.setItem('lastPlayedGame', 'timeguessr');
@@ -25,11 +27,9 @@ function TimeguessrPage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela Timeguessr - Historia & Geografi
@@ -82,7 +82,7 @@ function TimeguessrPage() {
       </div>
 
       {/* Why Timeguessr Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Timeguessr perfekt för studenter?
         </h2>
@@ -117,7 +117,7 @@ function TimeguessrPage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Timeguessr</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Titta på fordonsmodeller</strong> – bilmärken och -modeller är utmärkta tidsindikatorer. En VW Bubbla säger 1950–70-tal, en fyrkantig Volvo 240 säger 1970–80-tal.</li>
@@ -127,7 +127,7 @@ function TimeguessrPage() {
             <li><strong>Hitta kontinenten först</strong> – vegetation, infrastruktur och arkitektur avslöjar kontinent innan du försöker peka ut exakt stad eller land.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Timeguessr</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Hur beräknas poängen?</strong><p className="mt-1">Poängen baseras på två faktorer: hur nära du gissade platsen och hur nära du gissade årtalet. Maxpoäng kräver träff på båda.</p></div>
@@ -138,8 +138,6 @@ function TimeguessrPage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

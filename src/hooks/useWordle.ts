@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTodaysWord, VALID_WORDS } from '../data/swedishWords';
+import { getTodaysWord } from '../data/swedishWords';
 import type { GameState, GameStats, WordleData, GuessLetter, LetterStatus } from '../types/wordle';
 
 const MAX_GUESSES = 6;
@@ -106,10 +106,11 @@ export function useWordle() {
         return;
       }
 
-      // Check if word is valid
-      if (!VALID_WORDS.includes(gameState.currentGuess.toLowerCase())) {
+      // Accept any well-formed 5-letter Swedish word so real words are never
+      // wrongly rejected (input is already restricted to Swedish letters).
+      if (!/^[a-zåäöé]{5}$/i.test(gameState.currentGuess)) {
         setInvalidWord(true);
-        setTimeout(() => setInvalidWord(false), 500);
+        setTimeout(() => setInvalidWord(false), 1500);
         return;
       }
 

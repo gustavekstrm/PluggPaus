@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function GeoGuessrPage() {
+  useNoIndex();
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'geoguessr');
     document.title = 'GeoGuessr – Utforska Världen | PluggPaus';
@@ -24,11 +26,9 @@ function GeoGuessrPage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner Placeholder */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela GeoGuessr - Utforska Världen
@@ -81,7 +81,7 @@ function GeoGuessrPage() {
       </div>
 
       {/* Why GeoGuessr Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är GeoGuessr perfekt för studenter?
         </h2>
@@ -116,7 +116,7 @@ function GeoGuessrPage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för GeoGuessr</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Läs vägskyltar och text</strong> – språket på skyltar avslöjar landet direkt. Kyrilliska = Ryssland/Östeuropa, arabiska = Mellanöstern, kanji = Japan/Kina.</li>
@@ -126,7 +126,7 @@ function GeoGuessrPage() {
             <li><strong>Google Street View-kamerans kvalitet</strong> – äldre, suddigare bilder är ofta från länder som indexerades tidigt (USA, Australien, Europa). Nyare HD-bilder kan indikera nyare regioner.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om GeoGuessr</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Hur beräknas poängen?</strong><p className="mt-1">Poäng baseras på hur nära din gissning är den faktiska platsen. Maxpoäng är 5 000 per runda – ju kortare avstånd, desto fler poäng.</p></div>
@@ -137,8 +137,6 @@ function GeoGuessrPage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner Placeholder */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

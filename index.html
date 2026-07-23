@@ -4,9 +4,13 @@
     <!-- Dark mode: apply before first paint to prevent flash -->
     <script>
       (function() {
-        var saved = localStorage.getItem('darkMode');
-        var dark = saved !== null ? JSON.parse(saved) : true;
-        if (dark) document.documentElement.classList.add('dark');
+        var t = localStorage.getItem('theme');
+        if (!t) {
+          var dm = localStorage.getItem('darkMode');
+          t = (dm === null || JSON.parse(dm)) ? 'dark' : 'light';
+        }
+        document.documentElement.setAttribute('data-theme', t);
+        if (t === 'dark') document.documentElement.classList.add('dark');
       })();
     </script>
 
@@ -48,7 +52,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     
     <!-- GitHub Pages SPA redirect handler -->
     <script type="text/javascript">

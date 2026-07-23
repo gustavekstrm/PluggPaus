@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function WikiGamePage() {
+  useNoIndex();
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'wikigame');
     document.title = 'The Wiki Game – Navigera Wikipedia | PluggPaus';
@@ -24,11 +26,9 @@ function WikiGamePage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner Placeholder */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela The Wiki Game - Wikipedia-Racet
@@ -81,7 +81,7 @@ function WikiGamePage() {
       </div>
 
       {/* Why Wiki Game Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är The Wiki Game perfekt för studenter?
         </h2>
@@ -116,7 +116,7 @@ function WikiGamePage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Wiki Game</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Gå via stora noder</strong> – artiklar som "USA", "Europa", "Krig" eller "Historia" länkar till nästan allt. Använd dem som genvägar.</li>
@@ -126,7 +126,7 @@ function WikiGamePage() {
             <li><strong>Geografi och politik är snabbvägar</strong> – de flesta ämnen kan nås via ett lands eller en stads Wikipedia-artikel, som i sin tur länkas från otaliga andra sidor.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Wiki Game</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Vad är målet med spelet?</strong><p className="mt-1">Navigera från en Wikipedia-artikel till en annan, enbart genom att klicka på länkar inom artiklarna. Kortast väg vinner.</p></div>
@@ -137,8 +137,6 @@ function WikiGamePage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner Placeholder */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

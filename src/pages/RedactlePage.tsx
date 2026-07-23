@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function RedactlePage() {
+  useNoIndex();
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'redactle');
     document.title = 'Redactle – Avslöja den Dolda Artikeln | PluggPaus';
@@ -24,11 +26,9 @@ function RedactlePage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner Placeholder */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela Redactle - Avslöja Artikeln
@@ -81,7 +81,7 @@ function RedactlePage() {
       </div>
 
       {/* Why Redactle Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Redactle perfekt för studenter?
         </h2>
@@ -116,7 +116,7 @@ function RedactlePage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Redactle</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Börja med de vanligaste orden</strong> – gissa "the", "of", "and", "in", "is" och "was" direkt. De avslöjar artikelns struktur och ger sammanhang gratis.</li>
@@ -126,7 +126,7 @@ function RedactlePage() {
             <li><strong>Var uppmärksam på siffror</strong> – år och datum är ofta synliga och ger ledtrådar om tidsperiod och ämne.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Redactle</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Vad är redigerat i artikeln?</strong><p className="mt-1">Alla innehållsord (substantiv, verb, adjektiv, egennamn) är dolda. Strukturord som kommatecken och siffror är ofta synliga.</p></div>
@@ -137,8 +137,6 @@ function RedactlePage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner Placeholder */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

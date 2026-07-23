@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { AppStateProvider } from './context/AppState';
 import Home from './pages/Home';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import Cookies from './pages/Cookies';
@@ -17,35 +17,24 @@ import ContextinhoPage from './pages/ContextinhoPage';
 import StatlePage from './pages/StatlePage';
 import AgeOfWarPage from './pages/AgeOfWarPage';
 import TimeguessrPage from './pages/TimeguessrPage';
+import DinoRunnerPage from './pages/DinoRunnerPage';
+import SnakePage from './pages/SnakePage';
+import MemoryPage from './pages/MemoryPage';
+import FargminnePage from './pages/FargminnePage';
 import OmOssPage from './pages/OmOssPage';
 import Header from './components/Header';
+import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
-  const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('darkMode');
-    return saved ? JSON.parse(saved) : true;
-  });
-
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode));
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [darkMode]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-dark-bg dark:to-dark-surface transition-colors duration-300">
-        <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
-        <Routes>
+    <AppStateProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="pp-app">
+          <div className="pp-gridbg" aria-hidden="true" />
+          <Header />
+          <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/wordle" element={<WordlePage />} />
           <Route path="/connections" element={<ConnectionsPage />} />
@@ -61,12 +50,19 @@ function App() {
           <Route path="/contextinho" element={<ContextinhoPage />} />
           <Route path="/statle" element={<StatlePage />} />
           <Route path="/ageofwar" element={<AgeOfWarPage />} />
+          <Route path="/kaffehopp" element={<DinoRunnerPage />} />
+          <Route path="/pluggorm" element={<SnakePage />} />
+          <Route path="/minne" element={<MemoryPage />} />
+          <Route path="/fargminne" element={<FargminnePage />} />
+          <Route path="/simon" element={<FargminnePage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/om-oss" element={<OmOssPage />} />
-        </Routes>
-      </div>
-    </Router>
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
+    </AppStateProvider>
   );
 }
 

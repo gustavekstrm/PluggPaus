@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import AdBanner from '../components/AdBanner';
 import { useEffect } from 'react';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function Football501Page() {
+  useNoIndex();
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'football501');
   }, []);
@@ -26,7 +29,7 @@ function Football501Page() {
       <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Football 501 - Kan du namnen?
@@ -71,7 +74,7 @@ function Football501Page() {
       </div>
 
       {/* Why Football 501 Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Football 501 perfekt för studenter?
         </h2>

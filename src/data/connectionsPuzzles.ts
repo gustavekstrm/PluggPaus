@@ -1,188 +1,70 @@
 import type { ConnectionsPuzzle } from '../types/connections';
 
+// Svenska pussel i Connections-anda. Varje pussel har fyra grupper med fyra ord.
+// Svårigheten byggs med tvetydiga ord (som verkar passa i flera grupper) och
+// ordlek-grupper (t.ex. "___STJÄRNA", "___VÄRK") snarare än självklara kategorier.
 export const PUZZLES: ConnectionsPuzzle[] = [
   {
     date: '2024-01-01',
     categories: [
-      {
-        name: 'TYPES OF BREAD',
-        words: ['SOURDOUGH', 'BAGUETTE', 'CIABATTA', 'FOCACCIA'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'PROGRAMMING LANGUAGES',
-        words: ['PYTHON', 'JAVA', 'RUST', 'SWIFT'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'CARD SUITS',
-        words: ['HEART', 'DIAMOND', 'CLUB', 'SPADE'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'THINGS THAT ARE RED',
-        words: ['RUBY', 'ROSE', 'CHERRY', 'BRICK'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'HUNDRASER', words: ['PUDEL', 'TAX', 'MOPS', 'BOXER'], difficulty: 'easy' },
+      { name: 'KORTSPEL', words: ['VIRA', 'CANASTA', 'KILLE', 'BRIDGE'], difficulty: 'medium' },
+      { name: 'SLANG FÖR PENGAR', words: ['STÅLAR', 'DEG', 'KOSING', 'KLÖVER'], difficulty: 'hard' },
+      { name: 'BAKVERK', words: ['BULLE', 'KAKA', 'TÅRTA', 'LIMPA'], difficulty: 'tricky' },
+    ],
   },
   {
     date: '2024-01-02',
     categories: [
-      {
-        name: 'WEATHER CONDITIONS',
-        words: ['SUNNY', 'RAINY', 'CLOUDY', 'STORMY'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'SOCIAL MEDIA PLATFORMS',
-        words: ['TWITTER', 'INSTAGRAM', 'FACEBOOK', 'TIKTOK'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'UNITS OF TIME',
-        words: ['SECOND', 'MINUTE', 'HOUR', 'DAY'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'WORDS BEFORE "BELL"',
-        words: ['DOOR', 'COW', 'DUMB', 'BLUE'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'SVENSKA STÄDER', words: ['LUND', 'MALMÖ', 'KIRUNA', 'YSTAD'], difficulty: 'easy' },
+      { name: 'TRÄD', words: ['TALL', 'GRAN', 'LÖNN', 'LIND'], difficulty: 'medium' },
+      { name: 'BILMÄRKEN', words: ['VOLVO', 'SAAB', 'FORD', 'KIA'], difficulty: 'hard' },
+      { name: 'FYSIKALISKA ENHETER', words: ['VOLT', 'WATT', 'NEWTON', 'TESLA'], difficulty: 'tricky' },
+    ],
   },
   {
     date: '2024-01-03',
     categories: [
-      {
-        name: 'FRUITS',
-        words: ['APPLE', 'BANANA', 'ORANGE', 'GRAPE'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'MUSICAL INSTRUMENTS',
-        words: ['GUITAR', 'PIANO', 'DRUMS', 'VIOLIN'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'CHESS PIECES',
-        words: ['KING', 'QUEEN', 'ROOK', 'BISHOP'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'SYNONYMS FOR "LARGE"',
-        words: ['BIG', 'HUGE', 'GIANT', 'MASSIVE'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'FÅGLAR', words: ['KRÅKA', 'SKATA', 'MÅS', 'TRAST'], difficulty: 'easy' },
+      { name: 'SCHACKPJÄSER', words: ['KUNG', 'DAM', 'TORN', 'LÖPARE'], difficulty: 'medium' },
+      { name: 'YRKEN', words: ['LÄKARE', 'LÄRARE', 'SNICKARE', 'BAGARE'], difficulty: 'hard' },
+      { name: 'KÖKSREDSKAP', words: ['VISP', 'SLEV', 'KAVEL', 'DURKSLAG'], difficulty: 'tricky' },
+    ],
   },
   {
     date: '2024-01-04',
     categories: [
-      {
-        name: 'COLORS',
-        words: ['RED', 'BLUE', 'GREEN', 'YELLOW'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'PLANETS',
-        words: ['MARS', 'VENUS', 'JUPITER', 'SATURN'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'BODY PARTS',
-        words: ['HAND', 'FOOT', 'HEAD', 'HEART'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'WORDS AFTER "BLACK"',
-        words: ['HOLE', 'JACK', 'BIRD', 'SMITH'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'VÄDERTYPER', words: ['REGN', 'SNÖ', 'DIMMA', 'HAGEL'], difficulty: 'easy' },
+      { name: 'MUSIKGENRER', words: ['ROCK', 'JAZZ', 'PUNK', 'SOUL'], difficulty: 'medium' },
+      { name: 'DELAR AV ANSIKTET', words: ['PANNA', 'HAKA', 'KIND', 'LÄPP'], difficulty: 'hard' },
+      { name: '___STJÄRNA', words: ['FILM', 'SJÖ', 'POP', 'POL'], difficulty: 'tricky' },
+    ],
   },
   {
     date: '2024-01-05',
     categories: [
-      {
-        name: 'SCHOOL SUBJECTS',
-        words: ['MATH', 'HISTORY', 'SCIENCE', 'ENGLISH'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'COFFEE DRINKS',
-        words: ['LATTE', 'ESPRESSO', 'CAPPUCCINO', 'MOCHA'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'TYPES OF SHOES',
-        words: ['BOOT', 'SNEAKER', 'SANDAL', 'LOAFER'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'PALINDROMES',
-        words: ['KAYAK', 'LEVEL', 'RADAR', 'CIVIC'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'FRÅGEORD', words: ['VEM', 'VAR', 'HUR', 'VAD'], difficulty: 'easy' },
+      { name: 'KROPPSDELAR', words: ['ARM', 'LÅR', 'NACKE', 'HÄL'], difficulty: 'medium' },
+      { name: '___VÄRK', words: ['HUVUD', 'TAND', 'RYGG', 'MAG'], difficulty: 'hard' },
+      { name: '___STEG', words: ['FOT', 'BAK', 'FRAM', 'TRAPP'], difficulty: 'tricky' },
+    ],
   },
   {
     date: '2024-01-06',
     categories: [
-      {
-        name: 'DIRECTIONS',
-        words: ['NORTH', 'SOUTH', 'EAST', 'WEST'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'GREEK LETTERS',
-        words: ['ALPHA', 'BETA', 'GAMMA', 'DELTA'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'COOKING METHODS',
-        words: ['BAKE', 'BOIL', 'GRILL', 'STEAM'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'WORDS ENDING IN "ING"',
-        words: ['RING', 'KING', 'WING', 'SING'],
-        difficulty: 'tricky'
-      }
-    ]
+      { name: 'GREKISKA BOKSTÄVER', words: ['ALFA', 'BETA', 'GAMMA', 'SIGMA'], difficulty: 'easy' },
+      { name: 'PALINDROM', words: ['ANNA', 'OTTO', 'KAJAK', 'RADAR'], difficulty: 'medium' },
+      { name: '___LJUS', words: ['SOL', 'MÅN', 'DAG', 'STJÄRN'], difficulty: 'hard' },
+      { name: '___PAPPER', words: ['SAND', 'SMÖR', 'TOA', 'TIDNINGS'], difficulty: 'tricky' },
+    ],
   },
-  {
-    date: '2024-01-07',
-    categories: [
-      {
-        name: 'SEASONS',
-        words: ['SPRING', 'SUMMER', 'AUTUMN', 'WINTER'],
-        difficulty: 'easy'
-      },
-      {
-        name: 'GEMSTONES',
-        words: ['DIAMOND', 'EMERALD', 'SAPPHIRE', 'TOPAZ'],
-        difficulty: 'medium'
-      },
-      {
-        name: 'TREE TYPES',
-        words: ['OAK', 'PINE', 'MAPLE', 'BIRCH'],
-        difficulty: 'hard'
-      },
-      {
-        name: 'WORDS THAT FOLLOW "NEW"',
-        words: ['YORK', 'YEAR', 'MOON', 'WAVE'],
-        difficulty: 'tricky'
-      }
-    ]
-  }
 ];
 
 export function getDailyPuzzle(date: Date): ConnectionsPuzzle {
   const epoch = new Date('2024-01-01T00:00:00+01:00');
   const msPerDay = 86400000;
   const daysSinceEpoch = Math.floor((date.getTime() - epoch.getTime()) / msPerDay);
-  const puzzleIndex = daysSinceEpoch % PUZZLES.length;
+  const puzzleIndex = ((daysSinceEpoch % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
   return PUZZLES[puzzleIndex];
 }
 

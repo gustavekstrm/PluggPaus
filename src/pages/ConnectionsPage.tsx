@@ -1,13 +1,28 @@
 import { Link } from 'react-router-dom';
 import AdBanner from '../components/AdBanner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import QuickStats from '../components/QuickStats';
+import WordGrid from '../components/connections/WordGrid';
+import GameControls from '../components/connections/GameControls';
+import SolvedCategories from '../components/connections/SolvedCategories';
+import ConnectionsStatsModal from '../components/connections/ConnectionsStatsModal';
+import { useConnections } from '../hooks/useConnections';
 
 function ConnectionsPage() {
+  const { gameState, stats, toggleWordSelection, deselectAll, shuffleWords, submitGuess } = useConnections();
+  const [showStats, setShowStats] = useState(false);
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'connections');
-    document.title = 'Connections – Hitta Ord som Hör Ihop | PluggPaus';
+    document.title = 'Kopplingar – Hitta Ord som Hör Ihop | PluggPaus';
   }, []);
+
+  useEffect(() => {
+    if (gameState && (gameState.gameStatus === 'won' || gameState.gameStatus === 'lost')) {
+      const timer = setTimeout(() => setShowStats(true), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState?.gameStatus]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -24,120 +39,140 @@ function ConnectionsPage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner Placeholder */}
-      <AdBanner slot="5092040576" className="mb-8" />
-
-      {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Spela Connections - Hitta Sambanden
+      {/* Playable Game Card */}
+      <div className="pp-panel p-6 sm:p-10 mb-8">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">
+            Kopplingar
           </h1>
-          <div className="inline-block bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
+            Som Connections – fast på svenska. Hitta fyra grupper av fyra ord som hör ihop!
+          </p>
+          <div className="inline-block bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900/30 dark:to-pink-900/30 text-purple-800 dark:text-purple-200 px-4 py-2 rounded-full text-sm font-semibold">
             Nytt pussel varje dag
           </div>
         </div>
 
-        {/* Quick Stats Component */}
+        {gameState && (
+          <div className="max-w-2xl mx-auto">
+            <SolvedCategories categories={gameState.solvedCategories} />
+
+            {gameState.remainingWords.length > 0 && (
+              <WordGrid
+                words={gameState.remainingWords}
+                selectedWords={gameState.selectedWords}
+                shakingWords={gameState.shakingWords}
+                onWordClick={toggleWordSelection}
+                disabled={gameState.gameStatus !== 'playing'}
+              />
+            )}
+
+            {/* Mistakes remaining */}
+            {gameState.gameStatus === 'playing' && (
+              <div className="flex items-center justify-center gap-2 my-4 text-gray-700 dark:text-gray-300">
+                <span className="text-sm font-medium">Försök kvar:</span>
+                {Array.from({ length: 4 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className={`w-3 h-3 rounded-full ${i < gameState.mistakesRemaining
+                      ? 'bg-purple-600'
+                      : 'bg-gray-300 dark:bg-gray-600'
+                      }`}
+                  />
+                ))}
+              </div>
+            )}
+
+            {gameState.gameStatus === 'playing' && (
+              <GameControls
+                onShuffle={shuffleWords}
+                onDeselectAll={deselectAll}
+                onSubmit={submitGuess}
+                selectedCount={gameState.selectedWords.length}
+                disabled={gameState.gameStatus !== 'playing'}
+              />
+            )}
+
+            {gameState.gameStatus === 'won' && (
+              <p className="text-center text-green-600 dark:text-green-400 font-semibold mt-4">
+                Alla grupper lösta – snyggt jobbat! 🎉
+              </p>
+            )}
+            {gameState.gameStatus === 'lost' && (
+              <p className="text-center text-red-500 font-semibold mt-4">
+                Slut på försök – nytt pussel kommer imorgon!
+              </p>
+            )}
+
+            <div className="text-center mt-6">
+              <button
+                onClick={() => setShowStats(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+              >
+                📊 Min statistik
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Ad Banner */}
+      <AdBanner slot="5092040576" className="mb-8" />
+
+      {/* About the game */}
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Så spelar du Kopplingar
+        </h2>
         <QuickStats
           category="Mönsterigenkänning"
           difficulty="Medium"
           playtime="5-10 min"
           benefit="Kreativt tänkande"
         />
-
-        {/* Description */}
-        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+        <div className="space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed mt-6">
           <p>
-            <strong>Connections</strong> är New York Times ordpussel-sensation. Gruppera 16 ord i fyra kategorier om fyra ord och hitta de dolda sambanden.
+            Kopplingar är PluggPaus egen svenska version av kategoripusslet Connections. Gruppera 16
+            ord i fyra kategorier om fyra ord och hitta de dolda sambanden.
           </p>
           <p>
-            <strong>Hur det fungerar:</strong><br />
+            <strong>Så fungerar det:</strong><br />
             • Du ser 16 ord på skärmen<br />
-            • Hitta fyra grupper om fyra ord som hör ihop<br />
-            • Varje grupp har ett tema (ex. typer av musik, filmtitlar...)<br />
+            • Markera fyra ord som du tror hör ihop och tryck "Gissa"<br />
+            • Varje grupp har ett tema (t.ex. musikstilar, saker i köket...)<br />
             • Se upp – ord kan verka höra till flera grupper!<br />
             • Fyra felgissningar och spelet är slut
           </p>
           <p>
-            Tränar kreativt tänkande, mönsterigenkänning och mental gymnastik. Nytt pussel varje dag!
-          </p>
-        </div>
-
-        {/* Play Button */}
-        <div className="text-center">
-          <a
-            href="https://www.nytimes.com/games/connections"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-bold text-xl px-12 py-5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-          >
-            SPELA NU →
-          </a>
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            Öppnas på New York Times (gratis)
+            Tränar kreativt tänkande, mönsterigenkänning och mental flexibilitet. Nytt pussel varje dag!
           </p>
         </div>
       </div>
 
-      {/* Why Connections Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Varför är Connections perfekt för studenter?
-        </h2>
-        <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Kreativt tänkande</strong> - Tränar förmågan att se mönster och samband</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Mental gymnastik</strong> - Aktiverar olika delar av hjärnan samtidigt</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Snabbt & roligt</strong> - Ta en paus på 10 minuter och kom tillbaka fräschare</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-purple-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Utmanande</strong> - Varje pussel är unikt och ger känsla av prestation</span>
-          </li>
-        </ul>
-      </div>
-
-
-      {/* SEO Content - Tips & FAQ */}
+      {/* Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Connections</h2>
+        <div className="pp-panel p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Börja med den mest uppenbara gruppen</strong> – leta efter ord som tydligt hör ihop och lös dem först. Det minskar röran och gör resterande grupper tydligare.</li>
-            <li><strong>Akta dig för röda sillar</strong> – ord kan verka passa in i en grupp men egentligen tillhöra en annan. Connections är designat för att lura dig med överlappande teman.</li>
+            <li><strong>Akta dig för röda sillar</strong> – ord kan verka passa in i en grupp men egentligen tillhöra en annan. Pusslet är designat för att lura dig med överlappande teman.</li>
             <li><strong>Tänk på dubbla betydelser</strong> – ett ord kan vara ett adjektiv, ett substantiv och ett verb. Ofta är det ordets mindre uppenbara betydelse som är rätt.</li>
-            <li><strong>Spara lila gruppen till sist</strong> – den svåraste kategorin (lila) är alltid knepigast. Löser du de tre enklare grupperna först är lila kvar av sig själv.</li>
+            <li><strong>Spara den svåraste gruppen till sist</strong> – löser du de tre enklare grupperna först är den sista kvar av sig själv.</li>
             <li><strong>Läs alla ord innan du väljer</strong> – skumma igenom alla 16 ord och låt hjärnan jobba i bakgrunden innan du bestämmer dig.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Connections</h2>
+        <div className="pp-panel p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
+            <div><strong>Är Kopplingar samma sak som Connections?</strong><p className="mt-1">Kopplingar är inspirerat av NYT Connections men är PluggPaus egen version med svenska ord och egna pussel. Allt spelas direkt här på sidan.</p></div>
             <div><strong>Hur många grupper finns det?</strong><p className="mt-1">Det finns alltid exakt fyra grupper med fyra ord vardera – totalt 16 ord att sortera.</p></div>
-            <div><strong>Vad betyder färgerna?</strong><p className="mt-1">Gul är lättast, grön är medel, blå är svår och lila är svårast. Lila innehåller alltid en lömsk twist.</p></div>
             <div><strong>Hur många misstag tillåts?</strong><p className="mt-1">Du kan göra fyra misstag innan spelet tar slut. Använd dem klokt – spara dem till osäkra gissningar.</p></div>
-            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, ett nytt Connections-pussel publiceras dagligen med helt nya ord och kategorier.</p></div>
+            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, ett nytt pussel publiceras dagligen med helt nya ord och kategorier.</p></div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Ad Banner Placeholder */}
+      {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
@@ -152,6 +187,17 @@ function ConnectionsPage() {
           Se alla spel
         </Link>
       </div>
+
+      {gameState && (
+        <ConnectionsStatsModal
+          isOpen={showStats}
+          onClose={() => setShowStats(false)}
+          stats={stats}
+          gameStatus={gameState.gameStatus}
+          solvedCategories={gameState.solvedCategories}
+          mistakesRemaining={gameState.mistakesRemaining}
+        />
+      )}
     </main>
   );
 }

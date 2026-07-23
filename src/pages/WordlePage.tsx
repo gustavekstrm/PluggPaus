@@ -1,13 +1,28 @@
 import { Link } from 'react-router-dom';
 import AdBanner from '../components/AdBanner';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import QuickStats from '../components/QuickStats';
+import WordleGrid from '../components/wordle/WordleGrid';
+import Keyboard from '../components/wordle/Keyboard';
+import StatsModal from '../components/wordle/StatsModal';
+import { useWordle } from '../hooks/useWordle';
 
 function WordlePage() {
+  const { gameState, stats, answer, invalidWord, handleKeyPress, getKeyboardLetterStatus } = useWordle();
+  const [showStats, setShowStats] = useState(false);
+
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'wordle');
-    document.title = 'Wordle på Svenska – Gissa Dagens Ord | PluggPaus';
+    document.title = 'Orda – Wordle på Svenska | PluggPaus';
   }, []);
+
+  // Show stats automatically when the game ends
+  useEffect(() => {
+    if (gameState.gameStatus === 'won' || gameState.gameStatus === 'lost') {
+      const timer = setTimeout(() => setShowStats(true), 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [gameState.gameStatus]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -24,120 +39,119 @@ function WordlePage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner Placeholder */}
-      <AdBanner slot="5092040576" className="mb-8" />
-
-      {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Spela Wordle - Dagens Utmaning
+      {/* Playable Game Card */}
+      <div className="pp-panel p-6 sm:p-10 mb-8">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-2">
+            Orda
           </h1>
-          <div className="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-semibold mb-6">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
+            Som Wordle – fast på svenska. Gissa dagens ord på sex försök!
+          </p>
+          <div className="inline-block bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 px-4 py-2 rounded-full text-sm font-semibold">
             Nytt ord varje dag
           </div>
         </div>
 
-        {/* Quick Stats Component */}
+        <div className="max-w-md mx-auto">
+          <WordleGrid
+            guesses={gameState.guesses}
+            currentGuess={gameState.currentGuess}
+            evaluations={gameState.evaluations}
+            invalidWord={invalidWord}
+          />
+
+          {invalidWord && (
+            <p className="text-center text-red-500 font-semibold mt-3">
+              Ordet finns inte i ordlistan
+            </p>
+          )}
+
+          {gameState.gameStatus === 'lost' && (
+            <p className="text-center text-gray-700 dark:text-gray-300 font-semibold mt-4">
+              Dagens ord var: <span className="uppercase font-bold">{answer}</span>
+            </p>
+          )}
+          {gameState.gameStatus === 'won' && (
+            <p className="text-center text-green-600 dark:text-green-400 font-semibold mt-4">
+              Snyggt! Du klarade dagens ord 🎉
+            </p>
+          )}
+
+          <div className="mt-6">
+            <Keyboard onKeyPress={handleKeyPress} getLetterStatus={getKeyboardLetterStatus} />
+          </div>
+
+          <div className="text-center mt-6">
+            <button
+              onClick={() => setShowStats(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-medium text-sm bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            >
+              📊 Min statistik
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Ad Banner */}
+      <AdBanner slot="5092040576" className="mb-8" />
+
+      {/* About the game */}
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
+        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+          Så spelar du Orda
+        </h2>
         <QuickStats
           category="Ordspel"
           difficulty="Easy"
           playtime="5-10 min"
           benefit="Ordförråd & logik"
         />
-
-        {/* Description */}
-        <div className="max-w-2xl mx-auto mb-10 space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed">
+        <div className="space-y-4 text-gray-700 dark:text-gray-300 text-lg leading-relaxed mt-6">
           <p>
-            <strong>Wordle</strong> är det klassiska ordpusslet som tagit världen med storm. Gissa dagens femstaviga ord på sex försök och få feedback med färgkodade rutor.
+            Orda är PluggPaus egen svenska variant av det klassiska ordpusslet Wordle. Du har sex
+            försök på dig att lista ut dagens hemliga ord på fem bokstäver – och alla spelare får
+            samma ord samma dag.
           </p>
           <p>
-            <strong>Hur det fungerar:</strong><br />
-            • Gissa ett femstavigt ord<br />
-            • Grön = rätt bokstav på rätt plats<br />
-            • Gul = rätt bokstav, fel plats<br />
-            • Grå = bokstaven finns inte i ordet<br />
+            <strong>Så fungerar det:</strong><br />
+            • Gissa ett svenskt ord på fem bokstäver<br />
+            • Grön ruta = rätt bokstav på rätt plats<br />
+            • Gul ruta = rätt bokstav, fel plats<br />
+            • Grå ruta = bokstaven finns inte i ordet<br />
             • Du har 6 försök – kan du lösa det?
           </p>
           <p>
-            Nytt ord varje dag ger en daglig mental utmaning. Perfekt för snabba studiepauser som tränar ordförråd och logiskt tänkande.
-          </p>
-        </div>
-
-        {/* Play Button */}
-        <div className="text-center">
-          <a
-            href="https://www.nytimes.com/games/wordle/index.html"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-[#538d4e] hover:bg-[#4a7d46] text-white font-bold text-xl px-12 py-5 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
-          >
-            SPELA NU →
-          </a>
-          <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-            Öppnas på New York Times (gratis)
+            Ett nytt ord släpps varje dag vid midnatt svensk tid. Perfekt som snabb studiepaus som
+            tränar ordförråd, mönsterigenkänning och logiskt tänkande.
           </p>
         </div>
       </div>
 
-      {/* Why Wordle Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Varför är Wordle perfekt för studenter?
-        </h2>
-        <ul className="space-y-3 text-gray-700 dark:text-gray-300">
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Snabbt & effektivt</strong> - Tar bara 5-10 minuter, perfekt mellan föreläsningar</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Tränar hjärnan</strong> - Förbättrar ordförråd och logiskt tänkande</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Ingen stress</strong> - Ett pussel per dag, inget tidsbegränsning</span>
-          </li>
-          <li className="flex items-start">
-            <svg className="w-6 h-6 text-green-500 mr-3 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-            </svg>
-            <span><strong>Socialt</strong> - Dela ditt resultat och tävla med klasskamrater</span>
-          </li>
-        </ul>
-      </div>
-
-
-      {/* SEO Content - Tips & FAQ */}
+      {/* Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Wordle</h2>
+        <div className="pp-panel p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
-            <li><strong>Börja med vokalrika ord</strong> – ord som RAISE, AUDIO eller STARE avslöjar många bokstäver direkt och ger dig ett bra utgångsläge.</li>
+            <li><strong>Börja med vokalrika ord</strong> – startord som "salig", "toner" eller "raket" testar snabbt flera vanliga bokstäver samtidigt.</li>
             <li><strong>Undvik att återanvända grå bokstäver</strong> – varje gissning ska ge ny information. Grå bokstav = den finns inte i ordet.</li>
-            <li><strong>Gula bokstäver anger position</strong> – om en bokstav är gul vet du att den finns i ordet, men på fel plats. Testa den på andra positioner nästa gissning.</li>
+            <li><strong>Gula bokstäver anger position</strong> – bokstaven finns i ordet men på fel plats. Testa den på en annan position nästa gissning.</li>
             <li><strong>Tänk på ordstrukturer</strong> – svenska ord slutar ofta på -IG, -EN, -AR eller -ER. Utnyttja det i dina sista gissningar.</li>
-            <li><strong>Spara svåra positioner till sist</strong> – lås fast de gröna bokstäverna och fokusera på att lösa de okända platserna en i taget.</li>
+            <li><strong>Å, Ä och Ö räknas</strong> – den svenska ordlistan innehåller alla svenska tecken, till skillnad från engelska Wordle.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Wordle</h2>
+        <div className="pp-panel p-6 sm:p-8">
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
-            <div><strong>Hur många försök har man?</strong><p className="mt-1">Du har exakt 6 försök att gissa rätt ord. Varje gissning måste vara ett riktigt ord.</p></div>
-            <div><strong>Är det samma ord för alla?</strong><p className="mt-1">Ja, hela världen löser samma ord varje dag. Det gör det enkelt att jämföra resultat med vänner.</p></div>
-            <div><strong>Hur lång tid tar ett spel?</strong><p className="mt-1">Normalt 3–10 minuter beroende på erfarenhet. Perfekt för en kort studiepaus.</p></div>
-            <div><strong>Kan man spela flera gånger om dagen?</strong><p className="mt-1">Det finns bara ett nytt ord per dag, men det finns arkiv med gamla Wordle-pussel att lösa.</p></div>
+            <div><strong>Är Orda samma sak som Wordle?</strong><p className="mt-1">Orda är inspirerat av Wordle (som ägs av New York Times) men är PluggPaus egen version med svenska ord och svensk ordlista. Allt spelas direkt här på sidan.</p></div>
+            <div><strong>När kommer ett nytt ord?</strong><p className="mt-1">Varje dag vid midnatt, svensk tid. Alla spelare får samma ord samma dag.</p></div>
+            <div><strong>Sparas min statistik?</strong><p className="mt-1">Ja, din svit och gissningsfördelning sparas lokalt i din webbläsare – ingen inloggning behövs.</p></div>
+            <div><strong>Kostar det något?</strong><p className="mt-1">Nej, Orda är helt gratis och kräver ingen nedladdning eller registrering.</p></div>
           </div>
         </div>
       </div>
 
-      {/* Bottom Ad Banner Placeholder */}
+      {/* Bottom Ad Banner */}
       <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
@@ -152,6 +166,14 @@ function WordlePage() {
           Se alla spel
         </Link>
       </div>
+
+      <StatsModal
+        isOpen={showStats}
+        onClose={() => setShowStats(false)}
+        stats={stats}
+        gameStatus={gameState.gameStatus}
+        evaluations={gameState.evaluations}
+      />
     </main>
   );
 }

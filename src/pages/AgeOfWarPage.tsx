@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import AdBanner from '../components/AdBanner';
 import { Link } from 'react-router-dom';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function AgeOfWarPage() {
+  useNoIndex();
+
   useEffect(() => {
     document.title = 'Age of War – Klassiskt Strategispel | PluggPaus';
     localStorage.setItem('lastPlayedGame', 'ageofwar');
@@ -25,11 +27,9 @@ function AgeOfWarPage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela Age of War - Tidernas Krig
@@ -82,7 +82,7 @@ function AgeOfWarPage() {
       </div>
 
       {/* Why Age of War Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Age of War perfekt för studenter?
         </h2>
@@ -117,7 +117,7 @@ function AgeOfWarPage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Age of War</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Uppgradera torn strategiskt</strong> – torn är ditt viktigaste försvar i tidiga epoker. Uppgradera det första tornet maximalt innan du lägger pengar på enheter.</li>
@@ -127,7 +127,7 @@ function AgeOfWarPage() {
             <li><strong>Stenåldern är avgörande</strong> – de första minuterna sätter tonen. Spela aggressivt tidigt och försök driva tillbaka fienden innan de hinner bygga momentum.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Age of War</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Hur många tidsåldrar finns det?</strong><p className="mt-1">Det finns 5 tidsåldrar: Stenåldern, Forntiden, Medeltiden, Renässansen och Framtiden. Varje epok låser upp nya enheter och torn.</p></div>
@@ -138,8 +138,6 @@ function AgeOfWarPage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

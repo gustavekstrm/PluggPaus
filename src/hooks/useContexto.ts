@@ -65,13 +65,13 @@ export function useContexto() {
     const normalizedWord = word.toLowerCase().trim();
 
     if (!normalizedWord) {
-      setError('Please enter a word');
+      setError('Skriv ett ord');
       return;
     }
 
     // Check if already guessed
     if (gameState.guesses.some(g => g.word === normalizedWord)) {
-      setError('Already guessed!');
+      setError('Redan gissat!');
       setTimeout(() => setError(''), 2000);
       return;
     }
@@ -80,8 +80,8 @@ export function useContexto() {
     const rank = puzzle.rankings[normalizedWord];
 
     if (rank === undefined) {
-      setError('Word not in dictionary');
-      setTimeout(() => setError(''), 2000);
+      setError('Ordet finns inte i spelets ordlista – prova ett annat');
+      setTimeout(() => setError(''), 2500);
       return;
     }
 

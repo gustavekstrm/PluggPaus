@@ -21,34 +21,34 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://pluggpaus.se/mathler</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://pluggpaus.se/2048</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pluggpaus.se/geoguessr</loc>
+    <loc>https://pluggpaus.se/kaffehopp</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pluggpaus.se/wikigame</loc>
+    <loc>https://pluggpaus.se/pluggorm</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pluggpaus.se/redactle</loc>
+    <loc>https://pluggpaus.se/minne</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pluggpaus.se/mathler</loc>
+    <loc>https://pluggpaus.se/fargminne</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pluggpaus.se/timeguessr</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://pluggpaus.se/fifanostalgia</loc>
@@ -56,19 +56,9 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://pluggpaus.se/contextinho</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pluggpaus.se/statle</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://pluggpaus.se/ageofwar</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://pluggpaus.se/om-oss</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://pluggpaus.se/privacy-policy</loc>

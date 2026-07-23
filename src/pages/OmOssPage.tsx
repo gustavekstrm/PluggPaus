@@ -21,7 +21,7 @@ function OmOssPage() {
         </Link>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">Om PluggPaus</h1>
 
         <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">

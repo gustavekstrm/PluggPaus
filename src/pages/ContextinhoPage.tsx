@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import AdBanner from '../components/AdBanner';
 import { Link } from 'react-router-dom';
 import QuickStats from '../components/QuickStats';
+import { useNoIndex } from '../hooks/useNoIndex';
 
 function ContextinhoPage() {
+  useNoIndex();
+
   useEffect(() => {
     document.title = 'Contextinho – Hitta Dagens Fotbollsspelare | PluggPaus';
     localStorage.setItem('lastPlayedGame', 'contextinho');
@@ -25,11 +27,9 @@ function ContextinhoPage() {
         </Link>
       </div>
 
-      {/* Top Ad Banner */}
-      <AdBanner slot="5092040576" className="mb-8" />
 
       {/* Game Info Card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 mb-8">
+      <div className="pp-panel p-8 sm:p-12 mb-8">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Spela Contextinho - Fotboll & AI
@@ -82,7 +82,7 @@ function ContextinhoPage() {
       </div>
 
       {/* Why Contextinho Section */}
-      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-6 sm:p-8 mb-8">
+      <div className="pp-panel-soft p-6 sm:p-8 mb-8">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           Varför är Contextinho perfekt för studenter?
         </h2>
@@ -117,7 +117,7 @@ function ContextinhoPage() {
 
       {/* SEO Content - Tips & FAQ */}
       <div className="space-y-6 mb-8">
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Tips &amp; strategier för Contextinho</h2>
           <ul className="space-y-2 text-gray-700 dark:text-gray-300">
             <li><strong>Börja med stora stjärnor</strong> – gissa världskända spelare som Messi, Ronaldo och Neymar för att etablera en baslinje och se vilken era och stil som är relevant.</li>
@@ -127,7 +127,7 @@ function ContextinhoPage() {
             <li><strong>Testa klubbar som genväg</strong> – spelare från samma storklubbar (Barcelona, Real Madrid, Man City) hamnar ofta nära varandra i rankningen.</li>
           </ul>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-6 sm:p-8">
+        <div className="pp-panel p-6 sm:p-8">
           <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Vanliga frågor om Contextinho</h2>
           <div className="space-y-4 text-gray-700 dark:text-gray-300">
             <div><strong>Vad är det hemliga svaret?</strong><p className="mt-1">Det hemliga svaret är alltid en professionell fotbollsspelare. Spelet byter spelare varje dag.</p></div>
@@ -138,8 +138,6 @@ function ContextinhoPage() {
         </div>
       </div>
 
-      {/* Bottom Ad Banner */}
-      <AdBanner slot="2861993283" className="mb-8" />
 
       {/* Back to games link */}
       <div className="text-center">

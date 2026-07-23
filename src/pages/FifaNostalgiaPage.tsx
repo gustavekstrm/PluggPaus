@@ -312,7 +312,7 @@ function FifaNostalgiaPage() {
 
       {/* Start Screen */}
       {gameState === 'not-started' && (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 text-center">
+        <div className="pp-panel p-8 sm:p-12 text-center">
           <div className="mb-8">
             <div className="inline-block bg-gradient-to-r from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 text-yellow-800 dark:text-yellow-200 px-6 py-3 rounded-full text-lg font-semibold mb-6">
               🎮 FIFA Ultimate Team Quiz
@@ -392,7 +392,7 @@ function FifaNostalgiaPage() {
 
           {/* Card Display */}
           <div 
-            className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center relative transition-all duration-200 ${
+            className={`pp-panel p-8 text-center relative transition-all duration-200 ${
               showCorrect ? 'ring-4 ring-green-500' : showWrong ? 'ring-4 ring-red-500 animate-shake' : ''
             }`} 
             style={{ 
@@ -478,7 +478,7 @@ function FifaNostalgiaPage() {
 
       {/* End Screen */}
       {gameState === 'ended' && (
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 sm:p-12 text-center">
+        <div className="pp-panel p-8 sm:p-12 text-center">
           <div className="mb-8">
             <div className="text-6xl mb-4">🏆</div>
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
