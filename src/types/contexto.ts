@@ -26,6 +26,11 @@ export interface GameState {
 
 export interface ContextoData {
   lastPlayed: string;
+  /**
+   * Id för pusslet som gissningarna gäller (t.ex. 'p63'). Saknas i sparad data från
+   * äldre versioner – då kasseras spelläget, eftersom rangvärdena inte går att lita på.
+   */
+  puzzleId?: string;
   gameState: GameState;
   stats: GameStats;
 }

@@ -7,7 +7,7 @@ const STORAGE_KEY = 'contexto-data';
 // Rang som ges åt giltiga svenska ord som inte finns i pusslets rankning.
 // De registreras alltså (avvisas inte) men markeras som "långt bort". Måste ligga
 // över antalet förberäknade rangordnade ord (~13 000) så att de alltid hamnar sist.
-const FAR_RANK = 99999;
+export const FAR_RANK = 99999;
 
 const defaultStats: GameStats = {
   gamesPlayed: 0,
@@ -36,6 +36,8 @@ export function useContexto() {
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [puzzleId] = useState<string>(() => getTodaysPuzzleMeta().id);
+
   useEffect(() => {
     let cancelled = false;
 
@@ -59,8 +61,12 @@ export function useContexto() {
         const data: ContextoData = JSON.parse(saved);
         setStats(data.stats);
 
+        // Behåll bara spelläget om det gäller samma dag OCH samma pussel. Utan
+        // pusselkontrollen skulle gamla gissningar leva vidare med rangvärden från ett
+        // annat målord (t.ex. efter en deploy mitt på dagen, eller data från en äldre
+        // version som saknar puzzleId).
         const today = getTodayDateString();
-        if (data.lastPlayed === today) {
+        if (data.lastPlayed === today && data.puzzleId === puzzleId) {
           setGameState(data.gameState);
         }
       } catch (error) {
@@ -71,16 +77,17 @@ export function useContexto() {
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [puzzleId]);
 
   const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
     const data: ContextoData = {
       lastPlayed: getTodayDateString(),
+      puzzleId,
       gameState: newState,
       stats: newStats,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, []);
+  }, [puzzleId]);
 
   const makeGuess = useCallback((word: string) => {
     if (!puzzle || gameState.gameStatus !== 'playing') return;

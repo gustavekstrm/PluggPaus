@@ -1,18 +1,20 @@
 import type { Guess } from '../../types/contexto';
+import { FAR_RANK } from '../../hooks/useContexto';
 
 interface GuessesListProps {
   guesses: Guess[];
   targetWord: string;
 }
 
-const FAR_RANK = 9999;
-
+// Skalan är anpassad efter att pusslen numera rankar ~13 000 ord (tidigare ~200).
+// Rang 1000 är alltså inte längre botten på skalan utan ungefär mitten av fältet.
 function getRankColor(rank: number, isTarget: boolean) {
   if (isTarget) return 'bg-green-600 text-white';
   if (rank <= 10) return 'bg-green-500 text-white';
   if (rank <= 50) return 'bg-yellow-500 text-white';
-  if (rank <= 200) return 'bg-orange-500 text-white';
+  if (rank <= 250) return 'bg-orange-500 text-white';
   if (rank <= 1000) return 'bg-red-500 text-white';
+  if (rank < FAR_RANK) return 'bg-stone-600 text-white';
   return 'bg-gray-500 text-white';
 }
 
@@ -20,9 +22,11 @@ function getRankLabel(rank: number) {
   if (rank === 1) return '🎯 MÅLET';
   if (rank <= 10) return 'Mycket nära!';
   if (rank <= 50) return 'Nära';
-  if (rank <= 200) return 'Ljummen';
-  if (rank <= 1000) return 'Långt bort';
-  return 'Mycket långt bort';
+  if (rank <= 250) return 'Ljummen';
+  if (rank <= 1000) return 'Kall';
+  if (rank <= 4000) return 'Långt bort';
+  if (rank < FAR_RANK) return 'Mycket långt bort';
+  return 'Utanför ordlistan';
 }
 
 function Row({ guess, isTarget, highlight }: { guess: Guess; isTarget: boolean; highlight?: boolean }) {
@@ -33,7 +37,7 @@ function Row({ guess, isTarget, highlight }: { guess: Guess; isTarget: boolean; 
       }`}
     >
       <div className="flex items-center gap-3 flex-1 min-w-0">
-        <div className="font-bold text-lg whitespace-nowrap">{guess.rank >= FAR_RANK ? '>1000' : `#${guess.rank}`}</div>
+        <div className="font-bold text-lg whitespace-nowrap">{guess.rank >= FAR_RANK ? '–' : `#${guess.rank}`}</div>
         <div className="font-semibold uppercase text-lg truncate">{guess.word}</div>
       </div>
       <div className="text-sm font-medium whitespace-nowrap ml-2">{getRankLabel(guess.rank)}</div>
