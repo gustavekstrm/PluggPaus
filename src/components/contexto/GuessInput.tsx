@@ -25,7 +25,7 @@ function GuessInput({ onGuess, disabled, error }: GuessInputProps) {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           disabled={disabled}
-          placeholder="Enter your guess..."
+          placeholder="Skriv en gissning…"
           className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
           autoFocus
         />
@@ -34,7 +34,7 @@ function GuessInput({ onGuess, disabled, error }: GuessInputProps) {
           disabled={disabled || !input.trim()}
           className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          Guess
+          Gissa
         </button>
       </div>
       {error && (

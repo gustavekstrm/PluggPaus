@@ -4,6 +4,10 @@ import type { GameState, GameStats, ContextoData, Guess, ContextoPuzzle } from '
 
 const STORAGE_KEY = 'contexto-data';
 
+// Rang som ges åt giltiga svenska ord som inte finns i pusslets rankning.
+// De registreras alltså (avvisas inte) men markeras som "långt bort".
+const FAR_RANK = 9999;
+
 const defaultStats: GameStats = {
   gamesPlayed: 0,
   gamesWon: 0,
@@ -76,11 +80,17 @@ export function useContexto() {
       return;
     }
 
-    // Get rank from puzzle
-    const rank = puzzle.rankings[normalizedWord];
-
-    if (rank === undefined) {
-      setError('Ordet finns inte i spelets ordlista – prova ett annat');
+    // Hämta rang från pusslet. Ligger ordet inte i rankningen men ser ut som ett
+    // riktigt svenskt ord registrerar vi det ändå som "långt bort" – så räknas
+    // varje rimlig gissning i stället för att avvisas.
+    let rank: number;
+    const known = puzzle.rankings[normalizedWord];
+    if (known !== undefined) {
+      rank = known;
+    } else if (/^[a-zåäöé]{2,}$/.test(normalizedWord)) {
+      rank = FAR_RANK;
+    } else {
+      setError('Skriv ett riktigt svenskt ord');
       setTimeout(() => setError(''), 2500);
       return;
     }
