@@ -8,7 +8,7 @@ import ContextoStatsModal from '../components/contexto/ContextoStatsModal';
 import { useContexto } from '../hooks/useContexto';
 
 function ContextoPage() {
-  const { puzzle, gameState, stats, error, makeGuess, getHint, giveUp } = useContexto();
+  const { puzzle, gameState, stats, error, loading, makeGuess, getHint, giveUp } = useContexto();
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
@@ -55,9 +55,15 @@ function ContextoPage() {
         <div className="max-w-xl mx-auto">
           <GuessInput
             onGuess={makeGuess}
-            disabled={gameState.gameStatus !== 'playing'}
+            disabled={loading || gameState.gameStatus !== 'playing'}
             error={error}
           />
+
+          {loading && (
+            <p className="text-center text-gray-500 dark:text-gray-400 text-sm my-4">
+              Laddar dagens ord…
+            </p>
+          )}
 
           {gameState.gameStatus === 'won' && puzzle && (
             <p className="text-center text-green-600 dark:text-green-400 font-semibold my-4">

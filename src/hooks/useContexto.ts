@@ -1,12 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTodaysPuzzle } from '../data/contextoPuzzles';
+import { getTodaysPuzzleMeta, loadPuzzle } from '../data/contextoPuzzles';
 import type { GameState, GameStats, ContextoData, Guess, ContextoPuzzle } from '../types/contexto';
 
 const STORAGE_KEY = 'contexto-data';
 
 // Rang som ges åt giltiga svenska ord som inte finns i pusslets rankning.
-// De registreras alltså (avvisas inte) men markeras som "långt bort".
-const FAR_RANK = 9999;
+// De registreras alltså (avvisas inte) men markeras som "långt bort". Måste ligga
+// över antalet förberäknade rangordnade ord (~13 000) så att de alltid hamnar sist.
+const FAR_RANK = 99999;
 
 const defaultStats: GameStats = {
   gamesPlayed: 0,
@@ -33,10 +34,24 @@ export function useContexto() {
   const [gameState, setGameState] = useState<GameState>(defaultGameState);
   const [stats, setStats] = useState<GameStats>(defaultStats);
   const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const todayPuzzle = getTodaysPuzzle();
-    setPuzzle(todayPuzzle);
+    let cancelled = false;
+
+    // Rankningarna är förberäknade och laddas lazy (bara dagens pussel).
+    loadPuzzle(getTodaysPuzzleMeta())
+      .then(todayPuzzle => {
+        if (cancelled) return;
+        setPuzzle(todayPuzzle);
+        setLoading(false);
+      })
+      .catch(err => {
+        if (cancelled) return;
+        console.error('Failed to load puzzle rankings:', err);
+        setError('Kunde inte ladda dagens pussel. Ladda om sidan.');
+        setLoading(false);
+      });
 
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
@@ -52,6 +67,10 @@ export function useContexto() {
         console.error('Failed to load saved data:', error);
       }
     }
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
@@ -129,16 +148,26 @@ export function useContexto() {
   const getHint = useCallback(() => {
     if (!puzzle || gameState.gameStatus !== 'playing') return;
 
-    // Get words not yet guessed
+    // Ord som inte gissats än, sorterade närmast först. Böjningar och sammansättningar
+    // av målordet filtreras bort – de skulle i praktiken avslöja svaret.
     const guessedWords = new Set(gameState.guesses.map(g => g.word));
+    const target = puzzle.targetWord;
     const availableWords = Object.entries(puzzle.rankings)
-      .filter(([word]) => !guessedWords.has(word) && word !== puzzle.targetWord)
+      .filter(([word]) => !guessedWords.has(word) && word !== target)
+      .filter(([word]) => !word.includes(target) && !target.includes(word))
       .sort(([, rankA], [, rankB]) => rankA - rankB);
 
     if (availableWords.length === 0) return;
 
-    // Give a hint from the top 20 closest words
-    const hintWord = availableWords[Math.min(gameState.hintsUsed * 3, availableWords.length - 1)][0];
+    // Ge ett ord ungefär halvvägs mellan spelarens bästa gissning och målordet, så att
+    // tipset flyttar fram spelaren i stället för att servera svaret direkt.
+    const bestRank = gameState.guesses.length
+      ? Math.min(...gameState.guesses.map(g => g.rank))
+      : 1000;
+    const wantedRank = Math.min(1000, Math.max(2, Math.floor(bestRank / 2)));
+    let hintIndex = availableWords.findIndex(([, rank]) => rank >= wantedRank);
+    if (hintIndex === -1) hintIndex = availableWords.length - 1;
+    const hintWord = availableWords[hintIndex][0];
 
     const hintGuess: Guess = {
       word: hintWord,
@@ -188,6 +217,7 @@ export function useContexto() {
     gameState,
     stats,
     error,
+    loading,
     makeGuess,
     getHint,
     giveUp,
