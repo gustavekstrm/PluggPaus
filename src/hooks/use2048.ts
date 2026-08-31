@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { readNumber, writeNumber } from '../utils/safeStorage';
+import { isInteractiveTarget } from '../utils/keyboard';
 
 export type Board = number[][];
 const SIZE = 4;
@@ -91,12 +93,11 @@ function canMove(board: Board): boolean {
 export function use2048() {
   const [board, setBoard] = useState<Board>(() => addRandomTile(addRandomTile(emptyBoard())));
   const [score, setScore] = useState(0);
-  const [best, setBest] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 0;
-  });
+  const [best, setBest] = useState(() => readNumber(STORAGE_KEY));
   const [gameOver, setGameOver] = useState(false);
   const [won, setWon] = useState(false);
+  // Spelaren kan välja att fortsätta efter 2048 – sidans egen FAQ lovar det uttryckligen.
+  const [keepPlaying, setKeepPlaying] = useState(false);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
   const newGame = useCallback(() => {
@@ -104,7 +105,10 @@ export function use2048() {
     setScore(0);
     setGameOver(false);
     setWon(false);
+    setKeepPlaying(false);
   }, []);
+
+  const continueGame = useCallback(() => setKeepPlaying(true), []);
 
   const doMove = useCallback((direction: 'left' | 'right' | 'up' | 'down') => {
     if (gameOver) return;
@@ -116,7 +120,7 @@ export function use2048() {
         const newScore = s + gained;
         setBest(b => {
           const newBest = Math.max(b, newScore);
-          localStorage.setItem(STORAGE_KEY, String(newBest));
+          if (newBest !== b) writeNumber(STORAGE_KEY, newBest);
           return newBest;
         });
         return newScore;
@@ -136,6 +140,7 @@ export function use2048() {
         ArrowUp: 'up',
         ArrowDown: 'down',
       };
+      if (isInteractiveTarget(e.target)) return;
       const dir = map[e.key];
       if (dir) {
         e.preventDefault();
@@ -164,5 +169,16 @@ export function use2048() {
     }
   }, [doMove]);
 
-  return { board, score, best, gameOver, won, newGame, doMove, onTouchStart, onTouchEnd };
+  return {
+    board,
+    score,
+    best,
+    gameOver,
+    won: won && !keepPlaying,
+    newGame,
+    continueGame,
+    doMove,
+    onTouchStart,
+    onTouchEnd,
+  };
 }

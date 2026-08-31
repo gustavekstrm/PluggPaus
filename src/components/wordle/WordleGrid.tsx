@@ -18,7 +18,7 @@ function WordleGrid({ guesses, currentGuess, evaluations, invalidWord }: WordleG
       case 'correct':
         return 'bg-green-600 border-green-600 text-white';
       case 'present':
-        return 'bg-yellow-500 border-yellow-500 text-white';
+        return 'bg-yellow-500 border-yellow-500 text-gray-900';
       case 'absent':
         return 'bg-gray-500 border-gray-500 text-white dark:bg-gray-600 dark:border-gray-600';
       default:

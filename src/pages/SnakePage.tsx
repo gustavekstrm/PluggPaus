@@ -48,7 +48,7 @@ function SnakePage() {
       ]}
       faqTitle="Vanliga frågor om Pluggorm"
       faqs={[
-        { q: 'Går spelet snabbare med tiden?', a: 'Farten är konstant, men utmaningen ökar naturligt eftersom ormen blir längre och tar mer plats.' },
+        { q: 'Går spelet snabbare med tiden?', a: 'Ja – ormen rör sig snabbare för varje poäng du plockar, och blir dessutom längre. Utrymmet krymper alltså i två riktningar samtidigt.' },
         { q: 'Kan jag spela på mobilen?', a: 'Ja, svep i den riktning du vill styra, eller använd knapparna som visas under spelplanen.' },
         { q: 'Sparas mitt rekord?', a: 'Ja, ditt bästa resultat sparas lokalt i webbläsaren.' },
         { q: 'Kostar det något?', a: 'Nej, Pluggorm är helt gratis och spelas direkt i webbläsaren.' },

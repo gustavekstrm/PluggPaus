@@ -15,14 +15,14 @@ function GameControls({ onShuffle, onDeselectAll, onSubmit, selectedCount, disab
           disabled={disabled}
           className="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          Shuffle
+          Blanda
         </button>
         <button
           onClick={onDeselectAll}
           disabled={disabled || selectedCount === 0}
           className="px-6 py-3 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
-          Deselect All
+          Avmarkera alla
         </button>
       </div>
       <button
@@ -30,7 +30,7 @@ function GameControls({ onShuffle, onDeselectAll, onSubmit, selectedCount, disab
         disabled={disabled || selectedCount !== 4}
         className="px-8 py-3 bg-gray-900 dark:bg-gray-300 text-white dark:text-gray-900 rounded-lg font-bold hover:bg-gray-800 dark:hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
       >
-        Submit
+        Gissa
       </button>
     </div>
   );

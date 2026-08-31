@@ -612,27 +612,20 @@ body {
   animation: scaleIn 0.4s ease-out forwards;
 }
 
-/* Advertisement Banners */
+/* Annonsplatser.
+   Bakgrund och ram är medvetet borttagna: en ofylld plats ska inte se ut som en grå
+   innehållsruta – Google avråder från annonsytor som kan förväxlas med sidinnehåll,
+   och för en besökare med annonsblockerare blev det bara en tom låda mitt på sidan.
+   `min-height` i stället för `height`, eftersom enheterna är responsiva
+   (data-ad-format="auto") och en beskuren annons är en policyöverträdelse i sig. */
 .ad-banner-top {
   width: 100%;
   max-width: 728px;
-  height: 90px;
+  min-height: 90px;
   margin: 20px auto;
-  background-color: #e0e0e0;
-  border: 1px solid #ccc;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-  border-radius: 8px;
-}
-
-.dark .ad-banner-top {
-  background-color: #2a2a2a;
-  border-color: #444;
-  color: #999;
 }
 
 .ad-sticky-bottom {
@@ -640,22 +633,13 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60px;
-  z-index: 50;
-  background-color: #fff;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  min-height: 60px;
+  z-index: 40;
+  background: var(--surface);
+  border-top: 2px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #666;
-}
-
-.dark .ad-sticky-bottom {
-  background-color: #2a2a2a;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-  color: #999;
 }
 
 /* SEO Content Section */

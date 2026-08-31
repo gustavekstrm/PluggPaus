@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { readNumber, writeNumber } from '../../utils/safeStorage';
 
 const SYMBOLS = ['📚', '✏️', '☕', '🎓', '💡', '🔬', '🧮', '🗺️'];
 const STORAGE_KEY = 'memory-best-moves';
@@ -30,8 +31,7 @@ function MemoryGame() {
   const [moves, setMoves] = useState(0);
   const [locked, setLocked] = useState(false);
   const [best, setBest] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 0;
+    return readNumber(STORAGE_KEY);
   });
 
   const matchedCount = cards.filter((c) => c.matched).length;
@@ -41,7 +41,7 @@ function MemoryGame() {
     if (won) {
       setBest((b) => {
         const nb = b === 0 ? moves : Math.min(b, moves);
-        localStorage.setItem(STORAGE_KEY, String(nb));
+        writeNumber(STORAGE_KEY, Number(nb));
         return nb;
       });
     }

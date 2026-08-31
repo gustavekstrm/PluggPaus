@@ -5,16 +5,10 @@ import GameCard, { type Game } from '../components/GameCard';
 import { useAppState } from '../context/AppState';
 
 const GAMES: Game[] = [
-  // Originalen – överst
-  { id: 'connections-ext', title: 'Connections', desc: 'Det klassiska ordgruppspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/connections', color: '#7b3fe4', border: '#4f27a0', ink: '#fff' },
-  { id: 'wordle-ext', title: 'Wordle', desc: 'Det klassiska ordspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/wordle/index.html', color: '#3fb562', border: '#1f7a3c', ink: '#10241a' },
-  { id: 'contexto-ext', title: 'Contexto', desc: 'Det klassiska originalet – gissa ordet utifrån kontext.', href: 'https://contexto.me/', color: '#ef5a6f', border: '#b32f45', ink: '#fff' },
-
   // Våra egna svenska versioner
   { id: 'connections', title: 'Kopplingar', desc: 'Hitta fyra grupper av ord som hör ihop – på svenska.', to: '/connections', color: '#9b5cf0', border: '#6a34b8', ink: '#fff' },
   { id: 'wordle', title: 'Orda', desc: 'Gissa dagens svenska ord på sex försök.', to: '/wordle', color: '#2fb6ad', border: '#167a74', ink: '#08201f' },
   { id: 'contexto', title: 'Kontext', desc: 'Gissa dagens svenska ord utifrån kontext och likhet.', to: '/contexto', color: '#f0554a', border: '#b52f28', ink: '#fff' },
-
   // Nya egna spel
   { id: 'kaffehopp', title: 'Kaffehopp', desc: 'Hoppa över hindren i vårt eget arkadspel.', to: '/kaffehopp', badge: 'NYTT', color: '#6366f1', border: '#3b3fb0', ink: '#fff' },
   { id: 'pluggorm', title: 'Pluggorm', desc: 'Klassiska Snake – ät, väx och överlev.', to: '/pluggorm', badge: 'NYTT', color: '#2fb56a', border: '#167a45', ink: '#08201a' },
@@ -22,16 +16,11 @@ const GAMES: Game[] = [
   { id: 'fargminne', title: 'Färgminne', desc: 'Härma den växande färgsekvensen.', to: '/fargminne', badge: 'NYTT', color: '#e050c0', border: '#a52e8c', ink: '#fff' },
   { id: '2048', title: '2048', desc: 'Pussla ihop siffrorna för att nå 2048!', to: '/2048', color: '#f0972f', border: '#b56717', ink: '#241703' },
   { id: 'mathler', title: 'Mathler', desc: 'Wordle med matematik – hitta den dolda uträkningen.', to: '/mathler', color: '#7b5cf0', border: '#4f34b8', ink: '#fff' },
-  { id: 'fifanostalgia', title: 'Fifa Nostalgia', desc: 'Minns du de klassiska FUT-korten? Testa dina FIFA-minnen!', to: '/fifanostalgia', color: '#e6b84c', border: '#a5801f', ink: '#241703' },
 
-  // Externa spel vi rekommenderar
-  { id: 'geoguessr', title: 'GeoGuessr', desc: 'Utforska världen och gissa var du är.', to: '/geoguessr', color: '#2fa8b5', border: '#157681', ink: '#08201f' },
-  { id: 'wikigame', title: 'The Wiki Game', desc: 'Klicka dig mellan Wikipedia-artiklar så snabbt du kan.', to: '/wikigame', color: '#4b8ef0', border: '#245fb0', ink: '#fff' },
-  { id: 'redactle', title: 'Redactle', desc: 'Avslöja den dolda Wikipedia-artikeln ord för ord.', to: '/redactle', color: '#e05b5b', border: '#a53030', ink: '#fff' },
-  { id: 'timeguessr', title: 'Timeguessr', desc: 'Gissa var och när fotot togs.', to: '/timeguessr', color: '#6f8ff0', border: '#3f5bb8', ink: '#fff' },
-  { id: 'statle', title: 'Statle', desc: 'Pokémon-quiz – gissa vilken stat som är högst.', to: '/statle', color: '#8a7bf0', border: '#5340b8', ink: '#fff' },
-  { id: 'ageofwar', title: 'Age of War', desc: 'Strategispel genom fem tidsåldrar – bygg och besegra fienden.', to: '/ageofwar', color: '#d98a3f', border: '#a55f17', ink: '#241703' },
-  { id: 'contextinho', title: 'Contextinho', desc: 'Fotbolls-Contexto – gissa dagens hemliga fotbollsspelare.', to: '/contextinho', color: '#3fb58a', border: '#17805f', ink: '#08201f' },
+  // Originalen vi hämtat inspiration från – längst ned, tydligt märkta som externa.
+  { id: 'connections-ext', title: 'Connections', desc: 'Det klassiska ordgruppspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/connections', color: '#7b3fe4', border: '#4f27a0', ink: '#fff' },
+  { id: 'wordle-ext', title: 'Wordle', desc: 'Det klassiska ordspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/wordle/index.html', color: '#3fb562', border: '#1f7a3c', ink: '#10241a' },
+  { id: 'contexto-ext', title: 'Contexto', desc: 'Det klassiska originalet – gissa ordet utifrån kontext.', href: 'https://contexto.me/', color: '#ef5a6f', border: '#b32f45', ink: '#fff' },
 ];
 
 const MARQUEE = 'Insert coin ✦ 5 minuters paus ✦ ordspel ✦ minne ✦ arkad ✦ matte ✦ high score ✦ inget konto ✦ helt gratis ✦';
@@ -118,7 +107,7 @@ function Home() {
 
       {/* SEO Content Section */}
       <section id="seo-article-fixed" className="seo-content">
-        <h1>Varför din hjärna behöver en PluggPaus</h1>
+        <h2>Varför din hjärna behöver en PluggPaus</h2>
 
         <p>
           Under långa föreläsningar eller intensiva pluggpass är det lätt att tro att konstant fokus är nyckeln till framgång.
@@ -140,7 +129,7 @@ function Home() {
           <strong>Orda</strong> är PluggPaus egna svenska ordspel i samma anda som Wordle. Du har sex försök att gissa
           dagens femstaviga ord, och varje gissning ger ledtrådar genom färgkodade rutor: grön betyder rätt bokstav på
           rätt plats, gul betyder rätt bokstav men fel plats. Att spela dagligen tränar aktivt ditt <strong>ordförråd</strong>,
-          mönsterigenkänning och deduktiva förmåga. Föredrar du det engelska originalet finns Wordle länkat högst upp på sidan.
+          mönsterigenkänning och deduktiva förmåga. Föredrar du det engelska originalet finns Wordle länkat längst ned på sidan.
         </p>
 
         <h2>Kopplingar – Testa ditt associativa tänkande</h2>
@@ -148,7 +137,7 @@ function Home() {
           <strong>Kopplingar</strong> är PluggPaus eget kategoriseringsspel på svenska, inspirerat av Connections. Hitta fyra
           grupper av ord som hör ihop – men var vaksam, orden är ofta knepigt överlappande och ett ord kan verka passa i flera
           grupper! Spelet bygger på <strong>associativt tänkande</strong> och semantisk förståelse, vilket stärker din analytiska
-          förmåga. Vill du spela det engelska originalet hittar du Connections högst upp.
+          förmåga. Vill du spela det engelska originalet hittar du Connections längst ned.
         </p>
 
         <h2>2048 – Öva logiskt tänkande</h2>
@@ -182,16 +171,9 @@ function Home() {
           sekvensminne och koncentration. Alla spelas gratis direkt i webbläsaren – perfekt för en snabb paus mellan föreläsningarna.
         </p>
 
-        <h2>Fifa Nostalgia – Testa ditt fotbollsminne</h2>
-        <p>
-          <strong>Fifa Nostalgia</strong> är ett unikt quiz exklusivt för PluggPaus. Gissa spelarnas efternamn från klassiska
-          FIFA Ultimate Team-kort på 90 sekunder. Spelet testar <strong>korttidsminnet</strong> och visuell igenkänning – en rolig
-          utmaning för alla fotbollsfans. Hur många gamla FUT-legends minns du?
-        </p>
-
         <h2>Vetenskapliga fördelar med spelpauser</h2>
         <p>
-          Studier visar att korta <strong>hjärngymnastik-pauser</strong> kan öka produktiviteten med upp till 25 %. När du
+          Korta <strong>hjärngymnastik-pauser</strong> är själva idén bakom Pomodoro-tekniken. När du
           <strong>spelar gratis webbläsarspel</strong> aktiveras andra delar av hjärnan än de du använder för pluggande, vilket ger
           dina "studieområden" tid att återhämta sig och konsolidera ny information. Detta fenomen kallas för <strong>diffust tänkande</strong>
           och är lika viktigt som fokuserat lärande.

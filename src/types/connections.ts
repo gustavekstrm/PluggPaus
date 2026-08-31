@@ -16,6 +16,8 @@ export interface GameStats {
   gamesWon: number;
   currentStreak: number;
   maxStreak: number;
+  /** Datumet ("YYYY-MM-DD") då senaste spelet avslutades. Avgör om sviten är obruten. */
+  lastCompletedDate?: string;
 }
 
 export interface GameState {
@@ -28,6 +30,8 @@ export interface GameState {
 }
 
 export interface ConnectionsData {
+  /** Vilket pussel spelläget gäller. Saknas i data från äldre versioner. */
+  puzzleKey?: string;
   lastPlayed: string;
   gameState: GameState;
   stats: GameStats;

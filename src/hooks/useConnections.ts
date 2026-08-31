@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTodaysPuzzle } from '../data/connectionsPuzzles';
+import { PUZZLES, getTodaysPuzzle } from '../data/connectionsPuzzles';
+import { getTodayDateString, nextStreak, puzzleKey } from '../utils/dailyDate';
+import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, ConnectionsData, ConnectionsPuzzle } from '../types/connections';
 
 const MAX_MISTAKES = 4;
@@ -11,12 +13,6 @@ const defaultStats: GameStats = {
   currentStreak: 0,
   maxStreak: 0,
 };
-
-function getTodayDateString(): string {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
-  return swedenTime.toISOString().split('T')[0];
-}
 
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
@@ -37,20 +33,18 @@ export function useConnections() {
     const todayPuzzle = getTodaysPuzzle();
     setPuzzle(todayPuzzle);
 
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const data: ConnectionsData = JSON.parse(saved);
-        setStats(data.stats);
+    const data = readJSON<ConnectionsData>(STORAGE_KEY);
+    if (data) {
+      setStats({ ...defaultStats, ...data.stats });
 
-        const today = getTodayDateString();
-        if (data.lastPlayed === today) {
-          setGameState(data.gameState);
-        } else {
-          initializeNewGame(todayPuzzle);
-        }
-      } catch (error) {
-        console.error('Failed to load saved data:', error);
+      // Återuppta bara om både dag och pussel stämmer. Utan pusselkontrollen kunde
+      // gårdagens kvarvarande ord ligga kvar medan gissningarna matchades mot dagens
+      // kategorier – ingen kombination kunde då matcha och pusslet blev olösbart.
+      const today = getTodayDateString();
+      const key = puzzleKey(today, PUZZLES.length);
+      if (data.lastPlayed === today && data.puzzleKey === key && data.gameState) {
+        setGameState(data.gameState);
+      } else {
         initializeNewGame(todayPuzzle);
       }
     } else {
@@ -73,12 +67,14 @@ export function useConnections() {
   };
 
   const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
+    const today = getTodayDateString();
     const data: ConnectionsData = {
-      lastPlayed: getTodayDateString(),
+      lastPlayed: today,
+      puzzleKey: puzzleKey(today, PUZZLES.length),
       gameState: newState,
       stats: newStats,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    writeJSON(STORAGE_KEY, data);
   }, []);
 
   const toggleWordSelection = useCallback((word: string) => {
@@ -134,12 +130,14 @@ export function useConnections() {
       const newSolved = [...gameState.solvedCategories, matchedCategory];
       const isWin = newSolved.length === 4;
 
-      let newStats = { ...stats };
+      const newStats: GameStats = { ...stats };
       if (isWin) {
+        const today = getTodayDateString();
         newStats.gamesPlayed++;
         newStats.gamesWon++;
-        newStats.currentStreak++;
+        newStats.currentStreak = nextStreak(stats.currentStreak, stats.lastCompletedDate, today);
         newStats.maxStreak = Math.max(newStats.maxStreak, newStats.currentStreak);
+        newStats.lastCompletedDate = today;
       }
 
       const newState: GameState = {
@@ -159,10 +157,11 @@ export function useConnections() {
       const newMistakes = gameState.mistakesRemaining - 1;
       const isLoss = newMistakes === 0;
 
-      let newStats = { ...stats };
+      const newStats: GameStats = { ...stats };
       if (isLoss) {
         newStats.gamesPlayed++;
         newStats.currentStreak = 0;
+        newStats.lastCompletedDate = getTodayDateString();
       }
 
       const newState: GameState = {

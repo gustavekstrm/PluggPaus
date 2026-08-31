@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import type { GameStats, Category } from '../../types/connections';
 import { useCountdown } from '../../hooks/useCountdown';
+import { getTodayDateString, puzzleNumber } from '../../utils/dailyDate';
+import { shareResult } from '../../utils/share';
 
 interface ConnectionsStatsModalProps {
   isOpen: boolean;
@@ -19,6 +22,7 @@ function ConnectionsStatsModal({
   mistakesRemaining,
 }: ConnectionsStatsModalProps) {
   const countdown = useCountdown();
+  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
@@ -39,12 +43,16 @@ function ConnectionsStatsModal({
       .join('');
 
     const mistakes = 4 - mistakesRemaining;
-    const result = gameStatus === 'won' ? `${mistakes} ${mistakes === 1 ? 'mistake' : 'mistakes'}` : 'X';
+    const result = gameStatus === 'won' ? `${mistakes} ${mistakes === 1 ? 'miss' : 'missar'}` : 'X';
 
-    const text = `PluggPaus Connections\n${grid}\n${result}\n\nUtmana mig på pluggpaus.se`;
+    const nr = puzzleNumber(getTodayDateString());
+    const text = `Kopplingar #${nr}\n${grid}\n${result}\n\nSpela på pluggpaus.se`;
 
-    navigator.clipboard.writeText(text);
-    alert('Kopierat till urklipp!');
+    void shareResult(text).then((r) => {
+      if (r !== 'copied') return;
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
@@ -93,7 +101,7 @@ function ConnectionsStatsModal({
               onClick={generateShareText}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors"
             >
-              Dela resultat
+              {copied ? 'Kopierat ✓' : 'Dela resultat'}
             </button>
           </div>
         )}

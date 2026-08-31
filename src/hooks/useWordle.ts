@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTodaysWord } from '../data/swedishWords';
+import { ANSWER_WORDS, getTodaysWord } from '../data/swedishWords';
+import { getTodayDateString, nextStreak, puzzleKey } from '../utils/dailyDate';
+import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, WordleData, GuessLetter, LetterStatus } from '../types/wordle';
+import { isInteractiveTarget } from '../utils/keyboard';
 
 const MAX_GUESSES = 6;
 const WORD_LENGTH = 5;
@@ -21,10 +24,14 @@ const defaultGameState: GameState = {
   evaluations: [],
 };
 
-function getTodayDateString(): string {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
-  return swedenTime.toISOString().split('T')[0];
+/** Fyller på sparad statistik med standardvärden, så ofullständig data inte kraschar spelet. */
+function mergeStats(saved: unknown): GameStats {
+  const s = (saved ?? {}) as Partial<GameStats>;
+  return {
+    ...defaultStats,
+    ...s,
+    guessDistribution: { ...defaultStats.guessDistribution, ...(s.guessDistribution ?? {}) },
+  };
 }
 
 function evaluateGuess(guess: string, answer: string): GuessLetter[] {
@@ -68,32 +75,29 @@ export function useWordle() {
     const todayWord = getTodaysWord();
     setAnswer(todayWord);
 
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const data: WordleData = JSON.parse(saved);
-        setStats(data.stats);
+    const data = readJSON<WordleData>(STORAGE_KEY);
+    if (data) {
+      setStats(mergeStats(data.stats));
 
-        // Check if it's a new day
-        const today = getTodayDateString();
-        if (data.lastPlayed === today) {
-          // Continue today's game
-          setGameState(data.gameState);
-        }
-      } catch (error) {
-        console.error('Failed to load saved data:', error);
+      // Återuppta bara om det gäller samma dag OCH samma pussel. Utan pusselkontrollen kan
+      // gårdagens bräde återställas ovanpå ett nytt ord (t.ex. om ordlistan vuxit).
+      const today = getTodayDateString();
+      if (data.lastPlayed === today && data.puzzleKey === puzzleKey(today, ANSWER_WORDS.length) && data.gameState) {
+        setGameState({ ...defaultGameState, ...data.gameState });
       }
     }
   }, []);
 
   // Save game state
   const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
+    const today = getTodayDateString();
     const data: WordleData = {
-      lastPlayed: getTodayDateString(),
+      lastPlayed: today,
+      puzzleKey: puzzleKey(today, ANSWER_WORDS.length),
       gameState: newState,
       stats: newStats,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    writeJSON(STORAGE_KEY, data);
   }, []);
 
   // Handle key press
@@ -123,20 +127,25 @@ export function useWordle() {
       const isWin = gameState.currentGuess.toLowerCase() === answer.toLowerCase();
       const isLoss = newGuesses.length >= MAX_GUESSES && !isWin;
 
-      let newStats = { ...stats };
+      // Djup kopia av fördelningen – en grund spridning delar objektet med React-statet.
+      const newStats: GameStats = { ...stats, guessDistribution: { ...stats.guessDistribution } };
       let newStatus: 'playing' | 'won' | 'lost' = 'playing';
+      const today = getTodayDateString();
 
       if (isWin) {
         newStatus = 'won';
         newStats.gamesPlayed++;
         newStats.gamesWon++;
-        newStats.currentStreak++;
+        // Sviten fortsätter bara om förra spelet avslutades i går.
+        newStats.currentStreak = nextStreak(stats.currentStreak, stats.lastCompletedDate, today);
         newStats.maxStreak = Math.max(newStats.maxStreak, newStats.currentStreak);
+        newStats.lastCompletedDate = today;
         newStats.guessDistribution[newGuesses.length as keyof typeof newStats.guessDistribution]++;
       } else if (isLoss) {
         newStatus = 'lost';
         newStats.gamesPlayed++;
         newStats.currentStreak = 0;
+        newStats.lastCompletedDate = today;
       }
 
       const newState: GameState = {
@@ -170,6 +179,7 @@ export function useWordle() {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (isInteractiveTarget(e.target)) return;
 
       if (e.key === 'Enter' || e.key === 'Backspace') {
         e.preventDefault();

@@ -16,11 +16,16 @@ export interface GameStats {
   currentStreak: number;
   maxStreak: number;
   averageGuesses: number;
+  /** Summan av alla gissningar i vunna spel. Snittet räknas härifrån i stället för att
+   *  bakåträknas ur ett redan avrundat medelvärde, vilket ackumulerade fel. */
+  totalGuesses?: number;
+  /** Datumet ("YYYY-MM-DD") då senaste spelet avslutades. Avgör om sviten är obruten. */
+  lastCompletedDate?: string;
 }
 
 export interface GameState {
   guesses: Guess[];
-  gameStatus: 'playing' | 'won';
+  gameStatus: 'playing' | 'won' | 'gaveup';
   hintsUsed: number;
 }
 

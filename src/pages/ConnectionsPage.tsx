@@ -167,7 +167,7 @@ function ConnectionsPage() {
             <div><strong>Är Kopplingar samma sak som Connections?</strong><p className="mt-1">Kopplingar är inspirerat av NYT Connections men är PluggPaus egen version med svenska ord och egna pussel. Allt spelas direkt här på sidan.</p></div>
             <div><strong>Hur många grupper finns det?</strong><p className="mt-1">Det finns alltid exakt fyra grupper med fyra ord vardera – totalt 16 ord att sortera.</p></div>
             <div><strong>Hur många misstag tillåts?</strong><p className="mt-1">Du kan göra fyra misstag innan spelet tar slut. Använd dem klokt – spara dem till osäkra gissningar.</p></div>
-            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, ett nytt pussel publiceras dagligen med helt nya ord och kategorier.</p></div>
+            <div><strong>Är det ett nytt pussel varje dag?</strong><p className="mt-1">Ja, ett nytt pussel varje dag ur vår samling på 50 handskrivna svenska pussel. Samlingen växer efter hand.</p></div>
           </div>
         </div>
       </div>

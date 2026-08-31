@@ -1,3 +1,5 @@
+import { getDateString, getTodayDateString, puzzleIndexForDate } from '../utils/dailyDate';
+
 // Swedish 5-letter words for Orda (Wordle).
 // ANSWER_WORDS: curated, verified real 5-letter Swedish words used as daily answers.
 // Guess validation in useWordle is lenient (any 5 Swedish letters are accepted),
@@ -23,25 +25,16 @@ export const ANSWER_WORDS: string[] = [
 // Kept for backwards compatibility / potential future strict mode.
 export const VALID_WORDS: string[] = ANSWER_WORDS;
 
-// Function to get daily word based on date
-export function getDailyWord(date: Date): string {
-  // Use a consistent epoch as starting point (Jan 1, 2024)
-  const epoch = new Date('2024-01-01T00:00:00+01:00'); // Swedish timezone
-  const msPerDay = 86400000; // milliseconds in a day
-
-  // Calculate days since epoch
-  const daysSinceEpoch = Math.floor((date.getTime() - epoch.getTime()) / msPerDay);
-
-  // Use day index to select word from answer list
-  const wordIndex = ((daysSinceEpoch % ANSWER_WORDS.length) + ANSWER_WORDS.length) % ANSWER_WORDS.length;
-
-  return ANSWER_WORDS[wordIndex];
+// Dagens ord. Datum och pusselindex räknas via den delade dagsfunktionen, så att
+// datumnyckeln i localStorage och ordvalet alltid byter vid exakt samma tidpunkt.
+export function getWordForDate(dateString: string): string {
+  return ANSWER_WORDS[puzzleIndexForDate(dateString, ANSWER_WORDS.length)];
 }
 
-// Function to get today's word in Swedish timezone
-export function getTodaysWord(): string {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
+export function getDailyWord(date: Date): string {
+  return getWordForDate(getDateString(date));
+}
 
-  return getDailyWord(swedenTime);
+export function getTodaysWord(): string {
+  return getWordForDate(getTodayDateString());
 }

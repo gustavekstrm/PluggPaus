@@ -11,6 +11,8 @@ export interface GameStats {
   currentStreak: number;
   maxStreak: number;
   guessDistribution: Record<number, number>; // 1-6 guesses
+  /** Datumet ("YYYY-MM-DD") då senaste spelet avslutades. Avgör om sviten är obruten. */
+  lastCompletedDate?: string;
 }
 
 export interface GameState {
@@ -22,6 +24,8 @@ export interface GameState {
 
 export interface WordleData {
   lastPlayed: string; // ISO date string
+  /** Vilket pussel gissningarna gäller. Saknas i data från äldre versioner. */
+  puzzleKey?: string;
   gameState: GameState;
   stats: GameStats;
 }

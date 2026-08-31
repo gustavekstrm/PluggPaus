@@ -1,4 +1,5 @@
 import type { ContextoPuzzle } from '../types/contexto';
+import { getDateString, getTodayDateString, puzzleIndexForDate } from '../utils/dailyDate';
 import { PUZZLE_LOADERS } from './kontext';
 
 // Svenska Kontext-pussel.
@@ -158,18 +159,16 @@ export async function loadPuzzle(meta: PuzzleMeta): Promise<ContextoPuzzle> {
   return { date: meta.date, targetWord: meta.targetWord, rankings };
 }
 
+export function getPuzzleMetaForDate(dateString: string): PuzzleMeta {
+  return PUZZLES[puzzleIndexForDate(dateString, PUZZLES.length)];
+}
+
 export function getDailyPuzzleMeta(date: Date): PuzzleMeta {
-  const epoch = new Date('2024-01-01T00:00:00+01:00');
-  const msPerDay = 86400000;
-  const daysSinceEpoch = Math.floor((date.getTime() - epoch.getTime()) / msPerDay);
-  const puzzleIndex = ((daysSinceEpoch % PUZZLES.length) + PUZZLES.length) % PUZZLES.length;
-  return PUZZLES[puzzleIndex];
+  return getPuzzleMetaForDate(getDateString(date));
 }
 
 export function getTodaysPuzzleMeta(): PuzzleMeta {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
-  return getDailyPuzzleMeta(swedenTime);
+  return getPuzzleMetaForDate(getTodayDateString());
 }
 
 /**
@@ -182,7 +181,5 @@ export function getDailyPuzzle(date: Date): ContextoPuzzle {
 }
 
 export function getTodaysPuzzle(): ContextoPuzzle {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
-  return getDailyPuzzle(swedenTime);
+  return getDailyPuzzle(new Date());
 }

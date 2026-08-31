@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import type { GameStats, GuessLetter } from '../../types/wordle';
 import { useCountdown } from '../../hooks/useCountdown';
+import { getTodayDateString, puzzleNumber } from '../../utils/dailyDate';
+import { shareResult } from '../../utils/share';
 
 interface StatsModalProps {
   isOpen: boolean;
@@ -11,6 +14,7 @@ interface StatsModalProps {
 
 function StatsModal({ isOpen, onClose, stats, gameStatus, evaluations }: StatsModalProps) {
   const countdown = useCountdown();
+  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
@@ -39,10 +43,14 @@ function StatsModal({ isOpen, onClose, stats, gameStatus, evaluations }: StatsMo
       .join('\n');
 
     const attempts = gameStatus === 'won' ? evaluations.length : 'X';
-    const text = `PluggPaus Wordle ${attempts}/6\n\n${emoji}\n\nUtmana mig på pluggpaus.se`;
+    const nr = puzzleNumber(getTodayDateString());
+    const text = `Orda #${nr} ${attempts}/6\n\n${emoji}\n\nSpela på pluggpaus.se`;
 
-    navigator.clipboard.writeText(text);
-    alert('Kopierat till urklipp!');
+    void shareResult(text).then((result) => {
+      if (result !== 'copied') return;
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
@@ -111,7 +119,7 @@ function StatsModal({ isOpen, onClose, stats, gameStatus, evaluations }: StatsMo
               onClick={generateShareText}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors"
             >
-              Dela resultat
+              {copied ? 'Kopierat ✓' : 'Dela resultat'}
             </button>
           </div>
         )}

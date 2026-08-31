@@ -8,7 +8,7 @@ function PrivacyPolicy() {
           Integritetspolicy
         </h1>
 
-        <p>Senast uppdaterad: {new Date().toLocaleDateString('sv-SE')}</p>
+        <p>Senast uppdaterad: 2026-08-21</p>
 
         <h2>1. Inledning</h2>
         <p>

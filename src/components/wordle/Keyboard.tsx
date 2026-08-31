@@ -22,7 +22,7 @@ function Keyboard({ onKeyPress, getLetterStatus }: KeyboardProps) {
       case 'correct':
         return 'bg-green-600 hover:bg-green-700 text-white';
       case 'present':
-        return 'bg-yellow-500 hover:bg-yellow-600 text-white';
+        return 'bg-yellow-500 hover:bg-yellow-600 text-gray-900';
       case 'absent':
         return 'bg-gray-500 hover:bg-gray-600 text-white dark:bg-gray-700 dark:hover:bg-gray-600';
       default:

@@ -13,7 +13,7 @@ function Cookies() {
           Cookie-inställningar
         </h1>
 
-        <p>Senast uppdaterad: {new Date().toLocaleDateString('sv-SE')}</p>
+        <p>Senast uppdaterad: 2026-08-21</p>
 
         <h2>Vad är cookies?</h2>
         <p>
@@ -45,7 +45,7 @@ function Cookies() {
             <strong>cookiesAccepted:</strong> Sparar ditt val gällande cookies
           </li>
           <li style={{ marginBottom: '0.5rem' }}>
-            <strong>darkMode:</strong> Sparar ditt val av ljust/mörkt tema
+            <strong>theme:</strong> Sparar ditt val av ljust/mörkt tema
           </li>
         </ul>
 

@@ -1,28 +1,41 @@
+import { useState } from 'react';
 import type { GameStats } from '../../types/contexto';
 import { useCountdown } from '../../hooks/useCountdown';
+import { getTodayDateString, puzzleNumber } from '../../utils/dailyDate';
 
 interface ContextoStatsModalProps {
   isOpen: boolean;
   onClose: () => void;
   stats: GameStats;
-  gameStatus: 'playing' | 'won';
+  gameStatus: 'playing' | 'won' | 'gaveup';
   guessCount: number;
 }
 
 function ContextoStatsModal({ isOpen, onClose, stats, gameStatus, guessCount }: ContextoStatsModalProps) {
   const countdown = useCountdown();
+  const [copied, setCopied] = useState(false);
 
   if (!isOpen) return null;
 
   const winRate = stats.gamesPlayed > 0 ? Math.round((stats.gamesWon / stats.gamesPlayed) * 100) : 0;
 
-  const generateShareText = () => {
-    if (gameStatus === 'playing') return;
+  const generateShareText = async () => {
+    if (gameStatus !== 'won') return;
 
-    const text = `PluggPaus Contexto\n🎯 Found in ${guessCount} guesses!\n\nUtmana mig på pluggpaus.se`;
+    const nr = puzzleNumber(getTodayDateString());
+    const text = `Kontext #${nr}\n🎯 Löst på ${guessCount} gissningar\n\nSpela på pluggpaus.se`;
 
-    navigator.clipboard.writeText(text);
-    alert('Kopierat till urklipp!');
+    try {
+      if (navigator.share) {
+        await navigator.share({ text });
+        return;
+      }
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* spelaren avbröt delningen, eller så nekades urklippet – inget att göra */
+    }
   };
 
   return (
@@ -71,7 +84,7 @@ function ContextoStatsModal({ isOpen, onClose, stats, gameStatus, guessCount }: 
               onClick={generateShareText}
               className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg transition-colors"
             >
-              Dela resultat
+              {copied ? 'Kopierat ✓' : 'Dela resultat'}
             </button>
           </div>
         )}

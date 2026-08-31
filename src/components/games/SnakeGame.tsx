@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { readNumber, writeNumber } from '../../utils/safeStorage';
+import { isInteractiveTarget } from '../../utils/keyboard';
 
 type Status = 'idle' | 'running' | 'over';
 type Dir = 'up' | 'down' | 'left' | 'right';
@@ -41,8 +43,7 @@ function SnakeGame() {
   const [status, setStatus] = useState<Status>('idle');
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 0;
+    return readNumber(STORAGE_KEY);
   });
 
   const s = useRef({
@@ -93,12 +94,14 @@ function SnakeGame() {
         ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right',
         w: 'up', s: 'down', a: 'left', d: 'right', W: 'up', S: 'down', A: 'left', D: 'right',
       };
+      if (isInteractiveTarget(e.target)) return;
       const dir = map[e.key];
-      if (dir) {
-        e.preventDefault();
-        if (s.current.status !== 'running') start();
-        setDirection(dir);
-      }
+      if (!dir) return;
+      // Blockera bara sidans scroll medan spelet faktiskt är igång. Tidigare kapades
+      // piltangenterna och w/a/s/d på hela sidan så länge spelet var monterat.
+      if (s.current.status === 'running') e.preventDefault();
+      if (s.current.status !== 'running') start();
+      setDirection(dir);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
@@ -118,7 +121,7 @@ function SnakeGame() {
       setBest((b) => {
         if (g.score > b) {
           g.newRecord = true;
-          localStorage.setItem(STORAGE_KEY, String(g.score));
+          writeNumber(STORAGE_KEY, Number(g.score));
           return g.score;
         }
         return b;
@@ -134,8 +137,16 @@ function SnakeGame() {
       if (g.dir === 'left') head.x -= 1;
       if (g.dir === 'right') head.x += 1;
 
+      // Svansspetsen flyttar sig samma tick, så rutan den lämnar är ledig när huvudet
+      // landar där – utom när ormen växer, då den blir kvar. Att testa mot hela ormen
+      // dödade spelaren för ett drag som är lagligt i vanlig Snake.
+      const willGrow =
+        (head.x === g.food.x && head.y === g.food.y) ||
+        (g.bonus != null && head.x === g.bonus.x && head.y === g.bonus.y);
+      const body = willGrow ? g.snake : g.snake.slice(0, -1);
+
       if (head.x < 0 || head.x >= COLS || head.y < 0 || head.y >= ROWS ||
-        g.snake.some((c) => c.x === head.x && c.y === head.y)) {
+        body.some((c) => c.x === head.x && c.y === head.y)) {
         endGame();
         return;
       }

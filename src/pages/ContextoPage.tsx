@@ -17,7 +17,7 @@ function ContextoPage() {
   }, []);
 
   useEffect(() => {
-    if (gameState.gameStatus === 'won') {
+    if (gameState.gameStatus === 'won' || gameState.gameStatus === 'gaveup') {
       const timer = setTimeout(() => setShowStats(true), 1200);
       return () => clearTimeout(timer);
     }
@@ -68,6 +68,12 @@ function ContextoPage() {
           {gameState.gameStatus === 'won' && puzzle && (
             <p className="text-center text-green-600 dark:text-green-400 font-semibold my-4">
               Ordet var "{puzzle.targetWord}" – klarat på {gameState.guesses.length} gissningar! 🎉
+            </p>
+          )}
+
+          {gameState.gameStatus === 'gaveup' && puzzle && (
+            <p className="text-center text-gray-600 dark:text-gray-300 font-semibold my-4">
+              Ordet var "{puzzle.targetWord}". Nytt ord i morgon.
             </p>
           )}
 
@@ -183,7 +189,7 @@ function ContextoPage() {
         isOpen={showStats}
         onClose={() => setShowStats(false)}
         stats={stats}
-        gameStatus={gameState.gameStatus === 'won' ? 'won' : 'playing'}
+        gameStatus={gameState.gameStatus}
         guessCount={gameState.guesses.length}
       />
     </main>

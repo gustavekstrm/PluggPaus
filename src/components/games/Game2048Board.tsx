@@ -26,7 +26,8 @@ function fontSize(v: number): string {
 }
 
 function Game2048Board() {
-  const { board, score, best, gameOver, won, newGame, doMove, onTouchStart, onTouchEnd } = use2048();
+  const { board, score, best, gameOver, won, newGame, continueGame, doMove, onTouchStart, onTouchEnd } =
+    use2048();
 
   return (
     <div className="max-w-md mx-auto">
@@ -70,12 +71,26 @@ function Game2048Board() {
             <p className="text-2xl font-bold text-gray-900 dark:text-white mb-3">
               {won ? 'Du nådde 2048! 🎉' : 'Spelet är slut'}
             </p>
-            <button
-              onClick={newGame}
-              className="px-6 py-2.5 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 transition-all shadow-md active:scale-95"
-            >
-              Spela igen
-            </button>
+            <div className="flex flex-wrap justify-center gap-2">
+              {won && !gameOver && (
+                <button
+                  onClick={continueGame}
+                  className="px-6 py-2.5 rounded-lg font-semibold text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 transition-all shadow-md active:scale-95"
+                >
+                  Fortsätt spela
+                </button>
+              )}
+              <button
+                onClick={newGame}
+                className={`px-6 py-2.5 rounded-lg font-semibold transition-all shadow-md active:scale-95 ${
+                  won && !gameOver
+                    ? 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-600'
+                    : 'text-white bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600'
+                }`}
+              >
+                {won && !gameOver ? 'Börja om' : 'Spela igen'}
+              </button>
+            </div>
           </div>
         )}
       </div>

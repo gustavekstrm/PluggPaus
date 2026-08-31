@@ -11,8 +11,8 @@ interface GuessesListProps {
 function getRankColor(rank: number, isTarget: boolean) {
   if (isTarget) return 'bg-green-600 text-white';
   if (rank <= 10) return 'bg-green-500 text-white';
-  if (rank <= 50) return 'bg-yellow-500 text-white';
-  if (rank <= 250) return 'bg-orange-500 text-white';
+  if (rank <= 50) return 'bg-yellow-500 text-gray-900';
+  if (rank <= 250) return 'bg-orange-500 text-gray-900';
   if (rank <= 1000) return 'bg-red-500 text-white';
   if (rank < FAR_RANK) return 'bg-stone-600 text-white';
   return 'bg-gray-500 text-white';

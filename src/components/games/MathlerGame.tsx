@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
+import { getTodayDateString, puzzleIndexForDate } from '../../utils/dailyDate';
+import { isInteractiveTarget } from '../../utils/keyboard';
 
 type Mark = 'correct' | 'present' | 'absent' | 'empty';
 type Status = 'playing' | 'won' | 'lost';
@@ -86,10 +88,17 @@ function grade(guess: string, solution: string): Mark[] {
   return res;
 }
 
+/** Sant när två uttryck består av exakt samma tecken, bara i annan ordning. */
+function isCommutativeVariant(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  const sort = (s: string) => s.split('').sort().join('');
+  return sort(a) === sort(b);
+}
+
 function dailyPuzzle(): string {
-  const epoch = Date.UTC(2026, 0, 1);
-  const day = Math.floor((Date.now() - epoch) / 86400000);
-  return PUZZLES[((day % PUZZLES.length) + PUZZLES.length) % PUZZLES.length];
+  // Använder samma dagsgräns som Orda, Kopplingar och Kontext. Tidigare räknade Mathler
+  // i ren UTC och bytte pussel vid ett annat klockslag än resten av sajten.
+  return PUZZLES[puzzleIndexForDate(getTodayDateString(), PUZZLES.length)];
 }
 
 const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '/'];
@@ -137,7 +146,10 @@ function MathlerGame() {
     const newMarks = [...marks, m];
     setGuesses(newGuesses);
     setMarks(newMarks);
-    if (current === solution) setStatus('won');
+    // Kommutativa varianter räknas som samma lösning: samma tecken, annan ordning,
+    // samma resultat. 5*3+12 godtas alltså när facit är 12+5*3 – vilket är vad
+    // spelsidans FAQ lovar, och hur Mathler fungerar i original.
+    if (current === solution || isCommutativeVariant(current, solution)) setStatus('won');
     else if (newGuesses.length >= MAX_GUESSES) setStatus('lost');
     setCurrent('');
   }, [current, guesses, marks, solution, status, target]);
@@ -163,6 +175,7 @@ function MathlerGame() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (isInteractiveTarget(e.target)) return;
       if (e.key === 'Enter') {
         e.preventDefault();
         press('Enter');

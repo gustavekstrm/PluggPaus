@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { getTodaysPuzzleMeta, loadPuzzle } from '../data/contextoPuzzles';
+import { getTodayDateString, nextStreak } from '../utils/dailyDate';
+import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, ContextoData, Guess, ContextoPuzzle } from '../types/contexto';
 
 const STORAGE_KEY = 'contexto-data';
@@ -22,12 +24,6 @@ const defaultGameState: GameState = {
   gameStatus: 'playing',
   hintsUsed: 0,
 };
-
-function getTodayDateString(): string {
-  const now = new Date();
-  const swedenTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Stockholm' }));
-  return swedenTime.toISOString().split('T')[0];
-}
 
 export function useContexto() {
   const [puzzle, setPuzzle] = useState<ContextoPuzzle | null>(null);
@@ -55,22 +51,19 @@ export function useContexto() {
         setLoading(false);
       });
 
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) {
-      try {
-        const data: ContextoData = JSON.parse(saved);
-        setStats(data.stats);
+    const data = readJSON<ContextoData>(STORAGE_KEY);
+    if (data) {
+      {
+        setStats({ ...defaultStats, ...data.stats });
 
         // Behåll bara spelläget om det gäller samma dag OCH samma pussel. Utan
         // pusselkontrollen skulle gamla gissningar leva vidare med rangvärden från ett
         // annat målord (t.ex. efter en deploy mitt på dagen, eller data från en äldre
         // version som saknar puzzleId).
         const today = getTodayDateString();
-        if (data.lastPlayed === today && data.puzzleId === puzzleId) {
-          setGameState(data.gameState);
+        if (data.lastPlayed === today && data.puzzleId === puzzleId && data.gameState) {
+          setGameState({ ...defaultGameState, ...data.gameState });
         }
-      } catch (error) {
-        console.error('Failed to load saved data:', error);
       }
     }
 
@@ -86,7 +79,7 @@ export function useContexto() {
       gameState: newState,
       stats: newStats,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    writeJSON(STORAGE_KEY, data);
   }, [puzzleId]);
 
   const makeGuess = useCallback((word: string) => {
@@ -130,14 +123,19 @@ export function useContexto() {
     const newGuesses = [...gameState.guesses, newGuess].sort((a, b) => a.rank - b.rank);
     const isWin = rank === 1;
 
-    let newStats = { ...stats };
+    const newStats: GameStats = { ...stats };
     if (isWin) {
-      const totalGuesses = stats.gamesPlayed * stats.averageGuesses + newGuesses.length;
+      const today = getTodayDateString();
+      // Ledtrådar läggs till som gissningar i listan men ska inte räknas som spelarens egna.
+      const ownGuesses = Math.max(1, newGuesses.length - gameState.hintsUsed);
+      const totalGuesses = (stats.totalGuesses ?? 0) + ownGuesses;
       newStats.gamesPlayed++;
       newStats.gamesWon++;
-      newStats.currentStreak++;
+      newStats.currentStreak = nextStreak(stats.currentStreak, stats.lastCompletedDate, today);
       newStats.maxStreak = Math.max(newStats.maxStreak, newStats.currentStreak);
-      newStats.averageGuesses = Math.round(totalGuesses / newStats.gamesPlayed);
+      newStats.lastCompletedDate = today;
+      newStats.totalGuesses = totalGuesses;
+      newStats.averageGuesses = Math.round(totalGuesses / newStats.gamesWon);
     }
 
     const newState: GameState = {
@@ -197,9 +195,14 @@ export function useContexto() {
   const giveUp = useCallback(() => {
     if (!puzzle || gameState.gameStatus !== 'playing') return;
 
-    const newStats = {
+    // Att ge upp är inte en vinst. Tidigare sattes status till 'won', vilket fick sidan att
+    // gratulera spelaren, delningstexten att påstå en lösning, och gjorde vinstprocenten
+    // låst vid 100 % eftersom gamesPlayed bara räknades upp i vinstgrenen.
+    const newStats: GameStats = {
       ...stats,
+      gamesPlayed: stats.gamesPlayed + 1,
       currentStreak: 0,
+      lastCompletedDate: getTodayDateString(),
     };
 
     const targetGuess: Guess = {
@@ -210,7 +213,7 @@ export function useContexto() {
 
     const newState: GameState = {
       guesses: [...gameState.guesses, targetGuess].sort((a, b) => a.rank - b.rank),
-      gameStatus: 'won',
+      gameStatus: 'gaveup',
       hintsUsed: gameState.hintsUsed,
     };
 

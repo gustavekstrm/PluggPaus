@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
+import { readNumber, writeNumber } from '../../utils/safeStorage';
 
 type Pad = 0 | 1 | 2 | 3;
 type Phase = 'idle' | 'showing' | 'input' | 'over';
@@ -18,8 +19,7 @@ function SimonGame() {
   const [active, setActive] = useState<Pad | null>(null);
   const [round, setRound] = useState(0);
   const [best, setBest] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 0;
+    return readNumber(STORAGE_KEY);
   });
 
   const inputIndex = useRef(0);
@@ -79,7 +79,7 @@ function SimonGame() {
       setBest((b) => {
         const score = sequence.length - 1;
         const nb = Math.max(b, score);
-        localStorage.setItem(STORAGE_KEY, String(nb));
+        writeNumber(STORAGE_KEY, Number(nb));
         return nb;
       });
       return;

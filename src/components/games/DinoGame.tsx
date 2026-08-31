@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { readNumber, writeNumber } from '../../utils/safeStorage';
+import { isInteractiveTarget } from '../../utils/keyboard';
 
 type Status = 'idle' | 'running' | 'over';
 type ObType = 'ground' | 'over';
@@ -49,8 +51,7 @@ function DinoGame() {
   const [, setStatus] = useState<Status>('idle');
   const [score, setScore] = useState(0);
   const [best, setBest] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? parseInt(saved, 10) : 0;
+    return readNumber(STORAGE_KEY);
   });
 
   const s = useRef({
@@ -107,13 +108,18 @@ function DinoGame() {
 
   const setDuck = useCallback((v: boolean) => {
     const g = s.current;
+    // Villkoret `!g.ducking` är viktigt: keydown repeterar ~30 ggr/sekund när tangenten
+    // hålls nere, och utan det lades snabbfallet på en gång per repetition.
+    if (v && !g.ducking && !g.onGround) g.vy += 4; // fast-fall
     g.ducking = v;
-    if (v && !g.onGround) g.vy += 4; // fast-fall
   }, []);
 
   // keyboard
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
+      // Rör inte tangenttryck som hör hemma i en knapp, länk eller ett fält – annars går
+      // det varken att scrolla sidan eller aktivera fokuserade kontroller.
+      if (isInteractiveTarget(e.target)) return;
       if (e.code === 'Space' || e.code === 'ArrowUp' || e.key === 'ArrowUp' || e.key === ' ') {
         e.preventDefault();
         jump();
@@ -456,7 +462,7 @@ function DinoGame() {
       setBest((b) => {
         if (finalScore > b) {
           g.newRecord = true;
-          localStorage.setItem(STORAGE_KEY, String(finalScore));
+          writeNumber(STORAGE_KEY, Number(finalScore));
           return finalScore;
         }
         return b;
