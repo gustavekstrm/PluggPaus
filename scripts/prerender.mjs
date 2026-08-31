@@ -34,6 +34,7 @@ const gamesList = `
           <li><a href="/kaffehopp">Kaffehopp</a> – vårt eget arkadspel: hoppa över och ducka för hindren.</li>
           <li><a href="/pluggorm">Pluggorm</a> – den klassiska ormen, samla kaffebönor och böcker.</li>
           <li><a href="/minne">Minne</a> – vänd korten och hitta alla par.</li>
+          <li><a href="/tajming">Tajming</a> – tvåspelarduell om tidskänsla: stoppa den osynliga klockan.</li>
           <li><a href="/fargminne">Färgminne</a> – härma den allt längre färgsekvensen.</li>
           <li><a href="/2048">2048</a> – pussla ihop siffrorna för att nå 2048.</li>
           <li><a href="/mathler">Mathler</a> – Wordle med matematik: hitta den dolda uträkningen.</li>
@@ -58,7 +59,7 @@ const ROUTES = [
     desc: 'Ta en smart studiepaus! PluggPaus erbjuder gratis hjärntränande webbspel som Orda (svensk Wordle), Kopplingar, Kontext, 2048 och Mathler. Perfekt mellan föreläsningar.',
     html: wrap(
       `<h1 style="font-size:2rem;margin:0 0 12px">PluggPaus – gratis hjärntränande spel för din studiepaus</h1>
-        <p>PluggPaus är ett litet svenskt hjärngym för studiepauser. Här hittar du snabba, gratis webbspel som tränar ordförråd, logik, minne och reflexer – perfekt för en femminuterspaus mellan föreläsningar eller pluggpass. De flesta spelen har vi byggt själva och de spelas direkt i webbläsaren, utan konto och utan nedladdning.</p>${gamesList}
+        <p>PluggPaus är ett litet svenskt hjärngym för studiepauser. Här hittar du snabba, gratis webbspel som tränar ordförråd, logik, minne och reflexer – perfekt för en femminuterspaus mellan föreläsningar eller pluggpass. Alla spel har vi byggt själva och de spelas direkt i webbläsaren, utan konto och utan nedladdning.</p>${gamesList}
         <h2 style="font-size:1.4rem;margin:28px 0 8px">Varför en studiepaus är bra för hjärnan</h2>
         <p>Korta, regelbundna pauser är grunden i Pomodoro-tekniken: tjugofem minuters fokuserat arbete följt av fem minuters avbrott. Poängen med avbrottet är inte att göra ingenting, utan att göra något som belastar hjärnan på ett annat sätt. När du växlar från att läsa in ny fakta till att lösa ett ordpussel får de områden du nyss pressat tid att bearbeta det du läst, i stället för att bara fortsätta ta emot.</p>
         <p>Det är också därför en paus i telefonens flöde sällan känns som en paus. Ett spel med en tydlig början och ett tydligt slut ger en avgränsad vila – du vet när den är slut och kan gå tillbaka. Alla dagliga spel här tar under tio minuter och byts vid midnatt, så pausen har en naturlig gräns inbyggd.</p>
@@ -268,6 +269,29 @@ const ROUTES = [
     ),
   },
   {
+    path: '/tajming',
+    title: 'Tajming – Tvåspelarspel om Tidskänsla | PluggPaus',
+    desc: 'Spela Tajming, PluggPaus duellspel för två spelare vid samma dator. Stoppa den osynliga klockan närmast måltiden. Först till fem vinner.',
+    html: page(
+      'Tajming – vem har bäst tidskänsla?',
+      [
+        '<strong>Tajming</strong> är PluggPaus duellspel för två personer vid samma dator. Varje runda lottas en måltid mellan 0,5 och 10 sekunder fram, och båda spelarna ska stoppa klockan så nära den tiden som möjligt.',
+        'Det som gör spelet svårt är att <strong>klockan är osynlig medan den går</strong>. Du startar den med mellanslag, och trycker igen när du tror att tiden passerat – först då får du se hur nära du kom. Närmast måltiden tar rundan, och först till fem poäng vinner matchen.',
+      ],
+      tips('Tips för bättre tidskänsla', [
+        '<strong>Räkna i takt</strong> – "ett tusen, två tusen" ligger nära en sekund styck.',
+        '<strong>Använd kroppen</strong> – många blir jämnare av att trumma med foten i stadig takt.',
+        '<strong>Blunda</strong> – skärmen ger inga ledtrådar ändå, och utan synintryck blir många mer precisa.',
+      ]) +
+      faq([
+        ['Ser jag verkligen ingen klocka?', 'Nej. Både klockan och måltiden döljs medan tiden går, så du inte kan jämföra under tiden. Din tid visas direkt efter att du stoppat.'],
+        ['Får båda spelarna samma måltid?', 'Ja, inom en runda gäller samma tid för båda. En ny tid lottas först när rundan är avgjord.'],
+        ['Kan man spela ensam?', 'Spelet är gjort för två spelare vid samma tangentbord, men du kan spela båda sidorna och tävla mot dig själv.'],
+        ['Varför är det så svårt?', 'Hjärnan har ingen egen klocka att läsa av, utan uppskattar tid genom att räkna eller känna rytm. Den förmågan blir mätbart sämre när man är stressad eller trött – vilket gör spelet till en ärlig temperaturmätare efter ett långt pluggpass.'],
+      ])
+    ),
+  },
+  {
     path: '/om-oss',
     title: 'Om oss & Kontakt | PluggPaus',
     desc: 'Om PluggPaus – en kuraterad samling gratis hjärntränande spel för studenter. Kontakta oss på pluggpaus@gmail.com.',
@@ -275,7 +299,7 @@ const ROUTES = [
       'Om PluggPaus',
       [
         '<strong>PluggPaus</strong> är en svensk sajt med snabba, hjärntränande webbspel för studenter. Idén kom ur ett konkret problem: pauser mellan pluggpass blir lätt en halvtimme i ett socialt flöde som varken vilar hjärnan eller känns avslutad. Ett spel med tydlig början och tydligt slut gör pausen till en paus.',
-        'Alla spel vi listar under Våra spel har vi byggt själva och de körs direkt i webbläsaren. Ordspelen bygger på svenskt material från grunden – <a href="/wordle">Orda</a> har en kurerad lista med svenska fembokstavsord, <a href="/connections">Kopplingar</a> har handskrivna kategorier med svensk slang och svenska uttryck, och <a href="/contexto">Kontext</a> rankar omkring 13 000 svenska ord efter betydelse med hjälp av en svensk ordvektormodell. Ingenting är översatt.',
+        'Alla spel på PluggPaus har vi byggt själva och de körs direkt i webbläsaren. Ordspelen bygger på svenskt material från grunden – <a href="/wordle">Orda</a> har en kurerad lista med svenska fembokstavsord, <a href="/connections">Kopplingar</a> har handskrivna kategorier med svensk slang och svenska uttryck, och <a href="/contexto">Kontext</a> rankar omkring 13 000 svenska ord efter betydelse med hjälp av en svensk ordvektormodell. Ingenting är översatt.',
         'Sajten är gratis och finansieras med annonser. Du behöver inget konto, och dina resultat sparas bara i din egen webbläsare – vi har ingen databas med spelare.',
         'Har du feedback, hittat ett fel eller förslag på ett spel? Hör av dig till <a href="mailto:pluggpaus@gmail.com">pluggpaus@gmail.com</a>. Vi läser allt.',
       ]

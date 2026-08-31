@@ -46,6 +46,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://pluggpaus.se/tajming</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://pluggpaus.se/fargminne</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>

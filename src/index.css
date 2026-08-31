@@ -1124,3 +1124,347 @@ body {
   opacity: 1 !important;
   -webkit-text-fill-color: #ffffff !important;
 }
+/* ============================================================
+   Tajming – tvåspelarspel om tidskänsla
+   ============================================================ */
+.tj-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+/* ---- Namninmatning ---- */
+.tj-setup {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+  text-align: center;
+}
+.tj-setup-title {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -.02em;
+}
+.tj-setup-lead {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--ink-muted);
+}
+.tj-setup-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  width: 100%;
+}
+.tj-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  flex: 1 1 200px;
+  max-width: 260px;
+}
+.tj-field-label {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.tj-input {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  width: 100%;
+}
+.tj-input::placeholder { color: var(--ink-muted); opacity: .7; }
+.tj-rules {
+  max-width: 52ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-muted);
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+.tj-rules strong { color: var(--ink); }
+.tj-start { margin-top: 2px; }
+
+/* ---- Ställning ---- */
+.tj-score {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 26px;
+}
+.tj-score-side {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: .55;
+  transition: opacity .2s ease;
+}
+.tj-score-side:last-of-type { align-items: flex-end; }
+.tj-score-active { opacity: 1; }
+.tj-score-name {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  max-width: 14ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tj-round {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.tj-dots { display: flex; gap: 5px; }
+.tj-score-side:last-of-type .tj-dots { flex-direction: row-reverse; }
+.tj-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+}
+.tj-dot-on { background: var(--accent); }
+.tj-dot-b.tj-dot-on { background: var(--accent2); }
+
+/* ---- Arena ---- */
+.tj-arena {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(10px, 4vw, 32px);
+}
+.tj-station {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.tj-station-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink-muted);
+  max-width: 11ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tj-station-name-on { color: var(--ink); }
+
+/* Signallampa – visar vems tur det är */
+.tj-lamp {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--surface2);
+  transition: background .18s ease, box-shadow .18s ease;
+}
+.tj-lamp-on {
+  background: #f5c542;
+  box-shadow: 0 0 12px 2px rgba(245, 197, 66, .65);
+}
+.tj-lamp-live {
+  background: #46d17f;
+  box-shadow: 0 0 14px 3px rgba(70, 209, 127, .7);
+  animation: tj-pulse 1s ease-in-out infinite;
+}
+@keyframes tj-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+
+/* Arkadknapp */
+.tj-button {
+  width: clamp(78px, 20vw, 116px);
+  height: clamp(78px, 20vw, 116px);
+  border-radius: 50%;
+  border: 3px solid var(--border);
+  background: #7d1a12;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 7px 0 var(--border);
+  transition: transform .07s ease, box-shadow .07s ease, filter .2s ease;
+}
+.tj-button-face {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 28%, #ff7a63 0%, #e23b26 46%, #a81f12 100%);
+  border: 2px solid rgba(0, 0, 0, .35);
+}
+.tj-button:not(:disabled):hover { filter: brightness(1.08); }
+.tj-button:not(:disabled):active,
+.tj-button-down {
+  transform: translateY(7px);
+  box-shadow: 0 0 0 var(--border);
+}
+.tj-button-down .tj-button-face {
+  background: radial-gradient(circle at 34% 28%, #ff9d8a 0%, #f04a33 46%, #b8240f 100%);
+}
+.tj-button:disabled {
+  cursor: default;
+  filter: grayscale(.55) brightness(.72);
+}
+
+/* ---- Mittendisplay ---- */
+.tj-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 16px;
+  min-height: 210px;
+  justify-content: center;
+}
+.tj-display-label {
+  font-size: 11px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.tj-target {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: clamp(2.1rem, 8vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -.02em;
+}
+.tj-target-hidden {
+  color: var(--ink-muted);
+  letter-spacing: .18em;
+}
+.tj-status {
+  margin: 6px 0 0;
+  font-size: 14px;
+  color: var(--ink-muted);
+  max-width: 30ch;
+}
+.tj-hint {
+  margin: 0;
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  color: var(--ink-muted);
+  opacity: .8;
+}
+.tj-hint-live { color: #46d17f; opacity: 1; }
+
+/* Eget resultat */
+.tj-result { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+.tj-result-time {
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.tj-result-miss { font-size: 13px; color: var(--ink-muted); }
+
+/* Rundans facit */
+.tj-tally {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  width: 100%;
+}
+.tj-tally-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 8px 10px;
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+.tj-tally-win { border-color: var(--accent); }
+.tj-tally-name { font-size: 13px; font-weight: 700; color: var(--ink); }
+.tj-tally-time { font-size: 15px; color: var(--ink); }
+.tj-tally-miss { font-size: 12px; color: var(--ink-muted); }
+
+.tj-next { margin-top: 22px; text-align: center; }
+
+/* ---- Slutskärm ---- */
+.tj-over {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+  padding: 12px 0;
+}
+.tj-trophy { font-size: 3rem; line-height: 1; }
+.tj-over-title {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -.02em;
+}
+.tj-over-score {
+  margin: 0;
+  font-family: 'Space Mono', ui-monospace, monospace;
+  font-size: 1.15rem;
+  color: var(--accent);
+}
+.tj-over-sub { margin: 0; font-size: 14px; color: var(--ink-muted); }
+.tj-over-actions { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 8px; }
+.tj-ghost {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface2);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 18px;
+  cursor: pointer;
+}
+.tj-ghost:hover { background: var(--surface); }
+
+/* På telefon får knapparna inte plats bredvid displayen – stapla i stället, med
+   displayen överst och de två knapparna sida vid sida under. */
+@media (max-width: 560px) {
+  .tj-arena {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 10px;
+  }
+  .tj-display {
+    grid-column: 1 / -1;
+    grid-row: 1;
+    padding: 16px 12px;
+    min-height: 0;
+  }
+  .tj-status { font-size: 13px; }
+  .tj-button { width: min(34vw, 132px); height: min(34vw, 132px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tj-lamp-live { animation: none; }
+  .tj-button { transition: none; }
+}

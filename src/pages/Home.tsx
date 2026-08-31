@@ -13,14 +13,10 @@ const GAMES: Game[] = [
   { id: 'kaffehopp', title: 'Kaffehopp', desc: 'Hoppa över hindren i vårt eget arkadspel.', to: '/kaffehopp', badge: 'NYTT', color: '#6366f1', border: '#3b3fb0', ink: '#fff' },
   { id: 'pluggorm', title: 'Pluggorm', desc: 'Klassiska Snake – ät, väx och överlev.', to: '/pluggorm', badge: 'NYTT', color: '#2fb56a', border: '#167a45', ink: '#08201a' },
   { id: 'minne', title: 'Minne', desc: 'Vänd korten och hitta alla par.', to: '/minne', badge: 'NYTT', color: '#3b9ef0', border: '#1f6cb5', ink: '#fff' },
+  { id: 'tajming', title: 'Tajming', desc: 'Tvåspelarduell: stoppa den osynliga klockan närmast måltiden.', to: '/tajming', badge: 'NYTT', color: '#e2452f', border: '#a3220f', ink: '#fff' },
   { id: 'fargminne', title: 'Färgminne', desc: 'Härma den växande färgsekvensen.', to: '/fargminne', badge: 'NYTT', color: '#e050c0', border: '#a52e8c', ink: '#fff' },
   { id: '2048', title: '2048', desc: 'Pussla ihop siffrorna för att nå 2048!', to: '/2048', color: '#f0972f', border: '#b56717', ink: '#241703' },
   { id: 'mathler', title: 'Mathler', desc: 'Wordle med matematik – hitta den dolda uträkningen.', to: '/mathler', color: '#7b5cf0', border: '#4f34b8', ink: '#fff' },
-
-  // Originalen vi hämtat inspiration från – längst ned, tydligt märkta som externa.
-  { id: 'connections-ext', title: 'Connections', desc: 'Det klassiska ordgruppspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/connections', color: '#7b3fe4', border: '#4f27a0', ink: '#fff' },
-  { id: 'wordle-ext', title: 'Wordle', desc: 'Det klassiska ordspelet – originalet från New York Times.', href: 'https://www.nytimes.com/games/wordle/index.html', color: '#3fb562', border: '#1f7a3c', ink: '#10241a' },
-  { id: 'contexto-ext', title: 'Contexto', desc: 'Det klassiska originalet – gissa ordet utifrån kontext.', href: 'https://contexto.me/', color: '#ef5a6f', border: '#b32f45', ink: '#fff' },
 ];
 
 const MARQUEE = 'Insert coin ✦ 5 minuters paus ✦ ordspel ✦ minne ✦ arkad ✦ matte ✦ high score ✦ inget konto ✦ helt gratis ✦';
@@ -60,8 +56,8 @@ function Home() {
         <h1 className="pp-h1">PluggPaus</h1>
         <p className="pp-sub">Snabba hjärntränande spel för din studiepaus</p>
         <p className="pp-lead">
-          Ladda om hjärnan med ett snabbt spel mellan föreläsningarna. Många spelar du direkt här på sidan,
-          andra öppnas hos våra favoritsajter – välj ett nedan och kör igång.
+          Ladda om hjärnan med ett snabbt spel mellan föreläsningarna. Allt spelas direkt här på sidan,
+          utan konto och utan nedladdning – välj ett nedan och kör igång.
         </p>
         <div className="pp-chips">
           <span className="pp-chip"><span className="pp-chip-check" aria-hidden="true">✓</span><span>Helt gratis</span></span>
@@ -119,9 +115,9 @@ function Home() {
 
         <p>
           Här på PluggPaus samlar vi <strong>gratis onlinespel</strong> som är perfekta för just detta ändamål.
-          Många av spelen har vi byggt själva och de spelas direkt i webbläsaren utan nedladdning – dessutom länkar vi
-          till några av världens mest populära pusselspel. Tillsammans fungerar de som <strong>hjärngympa för studenter</strong>
-          genom att träna olika kognitiva förmågor som ordförråd, logiskt tänkande och minne.
+          Alla spel har vi byggt själva och de spelas direkt i webbläsaren, utan konto och utan nedladdning.
+          Tillsammans fungerar de som <strong>hjärngympa för studenter</strong> genom att träna olika kognitiva
+          förmågor som ordförråd, logiskt tänkande och minne.
         </p>
 
         <h2>Orda – Träna ditt ordförråd</h2>
@@ -129,7 +125,7 @@ function Home() {
           <strong>Orda</strong> är PluggPaus egna svenska ordspel i samma anda som Wordle. Du har sex försök att gissa
           dagens femstaviga ord, och varje gissning ger ledtrådar genom färgkodade rutor: grön betyder rätt bokstav på
           rätt plats, gul betyder rätt bokstav men fel plats. Att spela dagligen tränar aktivt ditt <strong>ordförråd</strong>,
-          mönsterigenkänning och deduktiva förmåga. Föredrar du det engelska originalet finns Wordle länkat längst ned på sidan.
+          mönsterigenkänning och deduktiva förmåga.
         </p>
 
         <h2>Kopplingar – Testa ditt associativa tänkande</h2>
@@ -137,7 +133,7 @@ function Home() {
           <strong>Kopplingar</strong> är PluggPaus eget kategoriseringsspel på svenska, inspirerat av Connections. Hitta fyra
           grupper av ord som hör ihop – men var vaksam, orden är ofta knepigt överlappande och ett ord kan verka passa i flera
           grupper! Spelet bygger på <strong>associativt tänkande</strong> och semantisk förståelse, vilket stärker din analytiska
-          förmåga. Vill du spela det engelska originalet hittar du Connections längst ned.
+          förmåga.
         </p>
 
         <h2>2048 – Öva logiskt tänkande</h2>
