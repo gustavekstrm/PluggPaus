@@ -13,6 +13,7 @@ import SnakePage from './pages/SnakePage';
 import MemoryPage from './pages/MemoryPage';
 import FargminnePage from './pages/FargminnePage';
 import TajmingPage from './pages/TajmingPage';
+import StartordPage from './pages/StartordPage';
 import OmOssPage from './pages/OmOssPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Header from './components/Header';
@@ -39,6 +40,7 @@ function App() {
           <Route path="/minne" element={<MemoryPage />} />
           <Route path="/fargminne" element={<FargminnePage />} />
           <Route path="/tajming" element={<TajmingPage />} />
+          <Route path="/basta-startord" element={<StartordPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/om-oss" element={<OmOssPage />} />

@@ -138,6 +138,7 @@ function WordlePage() {
             <li><strong>Gula bokstäver anger position</strong> – bokstaven finns i ordet men på fel plats. Testa den på en annan position nästa gissning.</li>
             <li><strong>Tänk på ordstrukturer</strong> – svenska ord slutar ofta på -IG, -EN, -AR eller -ER. Utnyttja det i dina sista gissningar.</li>
             <li><strong>Å, Ä och Ö räknas</strong> – den svenska ordlistan innehåller alla svenska tecken, till skillnad från engelska Wordle.</li>
+            <li><strong>Välj startord på statistik</strong> – vi räknade ut vilka ord som ger mest information över 11 012 svenska fembokstavsord. Läs <Link to="/basta-startord" className="underline">bästa startordet i svensk Wordle</Link>.</li>
           </ul>
         </div>
         <div className="pp-panel p-6 sm:p-8">

@@ -125,7 +125,8 @@ function Home() {
           <strong>Orda</strong> är PluggPaus egna svenska ordspel i samma anda som Wordle. Du har sex försök att gissa
           dagens femstaviga ord, och varje gissning ger ledtrådar genom färgkodade rutor: grön betyder rätt bokstav på
           rätt plats, gul betyder rätt bokstav men fel plats. Att spela dagligen tränar aktivt ditt <strong>ordförråd</strong>,
-          mönsterigenkänning och deduktiva förmåga.
+          mönsterigenkänning och deduktiva förmåga. Undrar du vilket ord som lönar sig bäst att öppna med?
+          Vi räknade ut det: <Link to="/basta-startord">bästa startordet i svensk Wordle</Link>.
         </p>
 
         <h2>Kopplingar – Testa ditt associativa tänkande</h2>

@@ -38,6 +38,10 @@ const gamesList = `
           <li><a href="/fargminne">Färgminne</a> – härma den allt längre färgsekvensen.</li>
           <li><a href="/2048">2048</a> – pussla ihop siffrorna för att nå 2048.</li>
           <li><a href="/mathler">Mathler</a> – Wordle med matematik: hitta den dolda uträkningen.</li>
+        </ul>
+        <h2 style="font-size:1.4rem;margin:28px 0 8px">Läsvärt</h2>
+        <ul>
+          <li><a href="/basta-startord">Bästa startordet i svensk Wordle</a> – vi räknade på 11 012 ord.</li>
         </ul>`;
 
 const page = (h1, paras, extra = '') =>
@@ -289,6 +293,46 @@ const ROUTES = [
         ['Kan man spela ensam?', 'Spelet är gjort för två spelare vid samma tangentbord, men du kan spela båda sidorna och tävla mot dig själv.'],
         ['Varför är det så svårt?', 'Hjärnan har ingen egen klocka att läsa av, utan uppskattar tid genom att räkna eller känna rytm. Den förmågan blir mätbart sämre när man är stressad eller trött – vilket gör spelet till en ärlig temperaturmätare efter ett långt pluggpass.'],
       ])
+    ),
+  },
+  {
+    path: '/basta-startord',
+    title: 'Bästa Startordet i Svensk Wordle – Vi Räknade på 11 012 Ord | PluggPaus',
+    desc: 'Vilket startord ger mest information i svensk Wordle? Vi beräknade entropin för varje tänkbart öppningsord över 11 012 svenska fembokstavsord. Resultat, bästa par och metod.',
+    html: page(
+      'Bästa startordet i svensk Wordle',
+      [
+        'Det finns gott om tyckande om vilket ord man ska öppna med. Vi tyckte ingenting – vi räknade i stället ut hur mycket information varje tänkbart startord faktiskt ger, över 11 012 svenska fembokstavsord.',
+        '<strong>Kort svar:</strong> <strong>SAKER</strong> är det statistiskt bästa enskilda startordet. Det ger i genomsnitt 5,80 bitar information och krymper fältet från 2 000 möjliga svar till ungefär 59. Skillnaden mot RENSA (5,79), SATIR (5,79) och LETAR (5,75) är så liten att valet mellan dem i praktiken saknar betydelse. Spelar du två fasta öppningsord är <strong>RIKTA + SOLEN</strong> starkast: tillsammans lämnar de i snitt fem kandidater kvar.',
+        '<strong>Vad "bäst" betyder här.</strong> Ett bra startord är inte det som oftast råkar vara rätt, utan det som delar upp möjligheterna jämnast. Tänk på det som tjugo frågor: den bästa frågan är den där du inte kan gissa svaret i förväg, eftersom den då skiljer flest fall åt. Måttet heter entropi och mäts i bitar. Ett startord som ger 5,8 bitar halverar fältet knappt sex gånger om; ett svagt startord med ovanliga bokstäver ger under fyra bitar och lämnar flera hundra kandidater kvar.',
+      ],
+      tips('Topp tio startord, med informationsvinst i bitar', [
+        '<strong>SAKER</strong> – 5,80', '<strong>RENSA</strong> – 5,79', '<strong>SATIR</strong> – 5,79',
+        '<strong>LETAR</strong> – 5,75', '<strong>RESAN</strong> – 5,74', '<strong>SNART</strong> – 5,73',
+        '<strong>SAKEN</strong> – 5,71', '<strong>SLANT</strong> – 5,67', '<strong>SLITA</strong> – 5,66',
+        '<strong>TANKE</strong> – 5,65',
+      ]) +
+      '<h2 style="font-size:1.3rem;margin:24px 0 8px">Varför just de här orden?</h2>' +
+      '<p>De består nästan uteslutande av de bokstäver som är vanligast i svenska fembokstavsord. Räknat på de 2 000 vanligaste orden förekommer A i 52 procent, R i 36, E i 35, T i 35, S i 32 och N i 31 procent. A är i särklass – drygt hälften av alla svenska fembokstavsord innehåller minst ett A, vilket förklarar varför ett startord utan A nästan alltid presterar sämre.</p>' +
+      '<h2 style="font-size:1.3rem;margin:24px 0 8px">Bokstävernas plats i ordet</h2>' +
+      '<p>Var en bokstav sitter spelar lika stor roll som om den finns. Vanligast på position 1 är S (15 %), på position 2 A (14 %), på position 3 R (10 %), på position 4 E (17 %) och på position 5 A (25 %). Slutpositionen är den mest förutsägbara i hela ordet: en fjärdedel av orden slutar på A, och räknar man in T, R och N täcker fyra bokstäver drygt 60 procent av alla slut.</p>' +
+      tips('Bästa paren att öppna med – tio olika bokstäver', [
+        '<strong>RIKTA + SOLEN</strong> – 9,37 bitar, ≈ 4,9 ord kvar',
+        '<strong>LITER + SÄNKA</strong> – 9,32 bitar, ≈ 5,0 ord kvar',
+        '<strong>KARTA + SOLEN</strong> – 9,29 bitar, ≈ 4,9 ord kvar',
+        '<strong>LITER + SAKNA</strong> – 9,25 bitar, ≈ 5,4 ord kvar',
+        '<strong>KRONA + LÄSTE</strong> – 9,17 bitar, ≈ 5,5 ord kvar',
+      ]) +
+      '<h2 style="font-size:1.3rem;margin:24px 0 8px">Så räknade vi</h2>' +
+      '<p>Underlaget är en frekvensordlista över svenska, filtrerad till ord på exakt fem bokstäver skrivna med svenska tecken. Efter att ord som är klart vanligare på engelska sorterats bort återstod 11 012 ord. De 2 000 vanligaste används som svarsmängd, eftersom lösningen i den här typen av spel alltid är ett ord folk känner igen.</p>' +
+      '<p>För varje kandidatstartord jämförs ordet mot samtliga 2 000 tänkbara svar, och färgmönstret beräknas precis som spelet gör det – inklusive den kluriga hanteringen av dubbla bokstäver. Svaren grupperas sedan efter vilket mönster de skulle ge. Ett startord som sprider svaren över många små grupper får hög entropi; ett som lämnar en enda stor grupp får låg. Beräkningen rangordnar alltså inte hur bra orden känns, utan hur mycket de faktiskt avslöjar. Samma metod används för engelska Wordle, men eftersom svenskans bokstavsfördelning ser annorlunda ut blir svaren andra än de engelska listorna ger.</p>' +
+      faq([
+        ['Fungerar listan för alla svenska Wordle-varianter?', 'I stort sett, men ordlistan avgör. Ett spel som tillåter böjningsformer har en annan svarsfördelning än ett med bara grundformer, och då förskjuts topplistan något. Bokstavsstatistiken håller oavsett variant.'],
+        ['Spelar det stor roll vilket av topporden jag väljer?', 'Nej. Skillnaden mellan det bästa och det tionde bästa är några hundradels bitar. Skillnaden mellan att spela andra gissningen genomtänkt eller slarvigt är betydligt större.'],
+        ['Är det verkligen bäst att spela samma ord varje dag?', 'Statistiskt ja, praktiskt kanske inte. Att skriva samma ord varje dag är effektivt och en aning trist. Många spelar hellre med ett nytt öppningsord varje gång och tar den halva extra gissningen det kostar.'],
+        ['Varför skiljer sig svaren från engelska listor?', 'Svenskans bokstavsfördelning är en annan. A dominerar kraftigt, Å, Ä och Ö tillkommer, och de vanliga ordsluten ser annorlunda ut. Ett ord som är optimalt på engelska är sällan det på svenska.'],
+      ]) +
+      '<p style="margin-top:22px"><a href="/wordle"><strong>Testa teorin i Orda</strong></a> – vårt svenska ordspel med nytt ord varje dag.</p>'
     ),
   },
   {
