@@ -14,17 +14,17 @@ const KEYBOARD_ROWS = [
 function Keyboard({ onKeyPress, getLetterStatus }: KeyboardProps) {
   const getKeyClass = (key: string) => {
     if (key === 'Enter' || key === 'Backspace') {
-      return 'bg-gray-400 hover:bg-gray-500 text-white dark:bg-gray-600 dark:hover:bg-gray-500';
+      return 'bg-gray-500 hover:bg-gray-600 text-white dark:bg-gray-600 dark:hover:bg-gray-500';
     }
 
     const status = getLetterStatus(key);
     switch (status) {
       case 'correct':
-        return 'bg-green-600 hover:bg-green-700 text-white';
+        return 'bg-green-700 hover:bg-green-800 text-white';
       case 'present':
         return 'bg-yellow-500 hover:bg-yellow-600 text-gray-900';
       case 'absent':
-        return 'bg-gray-500 hover:bg-gray-600 text-white dark:bg-gray-700 dark:hover:bg-gray-600';
+        return 'bg-gray-700 hover:bg-gray-800 text-white dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-400';
       default:
         return 'bg-gray-300 hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 text-gray-900 dark:text-white';
     }
@@ -33,7 +33,7 @@ function Keyboard({ onKeyPress, getLetterStatus }: KeyboardProps) {
   const getKeyLabel = (key: string) => {
     if (key === 'Backspace') {
       return (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-6 h-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -47,13 +47,14 @@ function Keyboard({ onKeyPress, getLetterStatus }: KeyboardProps) {
   };
 
   return (
-    <div className="w-full max-w-lg mx-auto px-2">
+    <div className="w-full max-w-lg mx-auto px-2" role="group" aria-label="Tangentbord">
       {KEYBOARD_ROWS.map((row, i) => (
         <div key={i} className="flex justify-center gap-1 mb-2">
           {row.map((key) => (
             <button
               key={key}
               onClick={() => onKeyPress(key)}
+              aria-label={key === 'Backspace' ? 'Radera' : key === 'Enter' ? 'Skicka gissning' : undefined}
               className={`${
                 key === 'Enter' || key === 'Backspace'
                   ? 'px-3 sm:px-4 min-w-[60px] sm:min-w-[65px]'

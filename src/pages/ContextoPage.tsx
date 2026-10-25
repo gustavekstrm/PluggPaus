@@ -13,7 +13,7 @@ function ContextoPage() {
 
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'contexto');
-    document.title = 'Kontext – Gissa Ordet via Ledtrådar | PluggPaus';
+    document.title = 'Kontext – Contexto på Svenska | PluggPaus';
   }, []);
 
   useEffect(() => {

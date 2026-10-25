@@ -5,8 +5,7 @@ export interface Game {
   id: string;
   title: string;
   desc: string;
-  to?: string;
-  href?: string;
+  to: string;
   badge?: string;
   /** Button fill colour */
   color: string;
@@ -20,12 +19,9 @@ function GameCard({ game }: { game: Game }) {
   const navigate = useNavigate();
   const { isFavorite, toggleFavorite } = useAppState();
   const fav = isFavorite(game.id);
-  const external = !!game.href;
-
-  const activate = () => {
-    if (game.href) window.open(game.href, '_blank', 'noopener,noreferrer');
-    else if (game.to) navigate(game.to);
-  };
+  // Hela kortet är klickbart med mus; för tangentbord och skärmläsare är det
+  // länken "Spela nu" som är det fokuserbara elementet.
+  const activate = () => navigate(game.to);
 
   const btnStyle = { color: game.ink, background: game.color, borderColor: game.border };
 
@@ -37,7 +33,8 @@ function GameCard({ game }: { game: Game }) {
           e.stopPropagation();
           toggleFavorite(game.id);
         }}
-        aria-label={fav ? 'Ta bort favorit' : 'Lägg till favorit'}
+        aria-label={fav ? `Ta bort ${game.title} från favoriter` : `Lägg till ${game.title} i favoriter`}
+        aria-pressed={fav}
         style={{ color: fav ? 'var(--accent)' : 'var(--ink-muted)' }}
       >
         <span aria-hidden="true">{fav ? '♥' : '♡'}</span>
@@ -47,24 +44,15 @@ function GameCard({ game }: { game: Game }) {
 
       <h3 className="pp-card-title">{game.title}</h3>
       <p className="pp-card-desc">{game.desc}</p>
-      {external && <div className="pp-extern">Öppnas på extern sida ↗</div>}
-
-      {external ? (
-        <a
-          className="pp-play"
-          href={game.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
-          style={btnStyle}
-        >
-          Spela nu <span aria-hidden="true">→</span>
-        </a>
-      ) : (
-        <Link className="pp-play" to={game.to ?? '/'} onClick={(e) => e.stopPropagation()} style={btnStyle}>
-          Spela nu <span aria-hidden="true">→</span>
-        </Link>
-      )}
+      <Link
+        className="pp-play"
+        to={game.to}
+        onClick={(e) => e.stopPropagation()}
+        style={btnStyle}
+        aria-label={`Spela ${game.title}`}
+      >
+        Spela nu <span aria-hidden="true">→</span>
+      </Link>
     </div>
   );
 }

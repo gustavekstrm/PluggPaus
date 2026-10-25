@@ -376,8 +376,8 @@ function SnakeGame() {
         </div>
         <button
           onClick={start}
-          className="px-5 py-2.5 rounded-lg font-semibold text-white"
-          style={{ background: '#e07a4f', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
+          className="px-5 py-2.5 rounded-lg font-semibold"
+          style={{ background: 'var(--accent)', color: 'var(--on-accent)', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
         >
           {status === 'running' ? 'Börja om' : status === 'over' ? 'Spela igen' : 'Starta'}
         </button>

@@ -26,19 +26,24 @@ function GuessInput({ onGuess, disabled, error }: GuessInputProps) {
           onChange={(e) => setInput(e.target.value)}
           disabled={disabled}
           placeholder="Skriv en gissning…"
-          className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 dark:focus:border-blue-400 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed"
+          aria-label="Din gissning"
+          aria-invalid={!!error}
+          aria-describedby={error ? 'kontext-fel' : undefined}
+          autoComplete="off"
+          autoCapitalize="none"
+          className="flex-1 px-4 py-3 rounded-lg border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:border-blue-500 dark:focus:border-blue-400 disabled:opacity-50 disabled:cursor-not-allowed"
           autoFocus
         />
         <button
           type="submit"
           disabled={disabled || !input.trim()}
-          className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-bold rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
         >
           Gissa
         </button>
       </div>
       {error && (
-        <div className="mt-2 text-red-600 dark:text-red-400 text-sm text-center">
+        <div id="kontext-fel" role="alert" className="mt-2 text-red-700 dark:text-red-400 text-sm text-center">
           {error}
         </div>
       )}

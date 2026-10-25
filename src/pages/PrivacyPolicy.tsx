@@ -115,8 +115,7 @@ function PrivacyPolicy() {
         <div style={{ marginTop: '3rem', textAlign: 'center' }}>
           <Link
             to="/"
-            className="inline-block px-8 py-3 rounded-full font-semibold text-white transition-all duration-300 hover:shadow-lg"
-            style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
+            className="pp-cta"
           >
             ← Tillbaka till hem
           </Link>

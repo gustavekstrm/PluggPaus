@@ -14,7 +14,7 @@ function ConnectionsPage() {
 
   useEffect(() => {
     localStorage.setItem('lastPlayedGame', 'connections');
-    document.title = 'Kopplingar – Hitta Ord som Hör Ihop | PluggPaus';
+    document.title = 'Kopplingar – Connections på Svenska | PluggPaus';
   }, []);
 
   useEffect(() => {

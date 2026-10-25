@@ -14,6 +14,8 @@ import MemoryPage from './pages/MemoryPage';
 import FargminnePage from './pages/FargminnePage';
 import TajmingPage from './pages/TajmingPage';
 import StartordPage from './pages/StartordPage';
+import BikupanPage from './pages/BikupanPage';
+import LandskapetPage from './pages/LandskapetPage';
 import OmOssPage from './pages/OmOssPage';
 import NotFoundPage from './pages/NotFoundPage';
 import Header from './components/Header';
@@ -27,7 +29,9 @@ function App() {
         <ScrollToTop />
         <div className="pp-app">
           <div className="pp-gridbg" aria-hidden="true" />
+          <a href="#innehall" className="pp-skip">Hoppa till innehållet</a>
           <Header />
+          <div id="innehall" tabIndex={-1} style={{ outline: 'none' }}>
           <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/wordle" element={<WordlePage />} />
@@ -40,12 +44,15 @@ function App() {
           <Route path="/minne" element={<MemoryPage />} />
           <Route path="/fargminne" element={<FargminnePage />} />
           <Route path="/tajming" element={<TajmingPage />} />
+          <Route path="/bikupan" element={<BikupanPage />} />
+          <Route path="/landskapet" element={<LandskapetPage />} />
           <Route path="/basta-startord" element={<StartordPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/om-oss" element={<OmOssPage />} />
           <Route path="*" element={<NotFoundPage />} />
           </Routes>
+          </div>
           <Footer />
         </div>
       </Router>

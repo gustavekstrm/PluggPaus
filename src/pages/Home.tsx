@@ -3,20 +3,24 @@ import { Link } from 'react-router-dom';
 import AdBanner from '../components/AdBanner';
 import GameCard, { type Game } from '../components/GameCard';
 import { useAppState } from '../context/AppState';
+import { readString, writeString } from '../utils/safeStorage';
 
+// Knappfärger kontrollerade mot WCAG AA (≥4,5:1 mellan text och knappfärg).
 const GAMES: Game[] = [
-  // Våra egna svenska versioner
-  { id: 'connections', title: 'Kopplingar', desc: 'Hitta fyra grupper av ord som hör ihop – på svenska.', to: '/connections', color: '#9b5cf0', border: '#6a34b8', ink: '#fff' },
+  // Dagliga ordspel
+  { id: 'connections', title: 'Kopplingar', desc: 'Hitta fyra grupper av ord som hör ihop – på svenska.', to: '/connections', color: '#7c3aed', border: '#5b21b6', ink: '#fff' },
   { id: 'wordle', title: 'Orda', desc: 'Gissa dagens svenska ord på sex försök.', to: '/wordle', color: '#2fb6ad', border: '#167a74', ink: '#08201f' },
-  { id: 'contexto', title: 'Kontext', desc: 'Gissa dagens svenska ord utifrån kontext och likhet.', to: '/contexto', color: '#f0554a', border: '#b52f28', ink: '#fff' },
-  // Nya egna spel
-  { id: 'kaffehopp', title: 'Kaffehopp', desc: 'Hoppa över hindren i vårt eget arkadspel.', to: '/kaffehopp', badge: 'NYTT', color: '#6366f1', border: '#3b3fb0', ink: '#fff' },
-  { id: 'pluggorm', title: 'Pluggorm', desc: 'Klassiska Snake – ät, väx och överlev.', to: '/pluggorm', badge: 'NYTT', color: '#2fb56a', border: '#167a45', ink: '#08201a' },
-  { id: 'minne', title: 'Minne', desc: 'Vänd korten och hitta alla par.', to: '/minne', badge: 'NYTT', color: '#3b9ef0', border: '#1f6cb5', ink: '#fff' },
-  { id: 'tajming', title: 'Tajming', desc: 'Tvåspelarduell: stoppa den osynliga klockan närmast måltiden.', to: '/tajming', badge: 'NYTT', color: '#e2452f', border: '#a3220f', ink: '#fff' },
-  { id: 'fargminne', title: 'Färgminne', desc: 'Härma den växande färgsekvensen.', to: '/fargminne', badge: 'NYTT', color: '#e050c0', border: '#a52e8c', ink: '#fff' },
+  { id: 'contexto', title: 'Kontext', desc: 'Gissa dagens svenska ord utifrån kontext och likhet.', to: '/contexto', color: '#f0554a', border: '#b52f28', ink: '#1a1613' },
+  { id: 'bikupan', title: 'Bikupan', desc: 'Sju bokstäver – hur många svenska ord hittar du?', to: '/bikupan', badge: 'NYTT', color: '#f5b82e', border: '#b5810f', ink: '#241703' },
+  { id: 'landskapet', title: 'Landskapet', desc: 'Känn igen dagens svenska landskap på konturen.', to: '/landskapet', badge: 'NYTT', color: '#4ba86a', border: '#2c6e42', ink: '#0b1f12' },
+  // Arkad, minne och logik
+  { id: 'kaffehopp', title: 'Kaffehopp', desc: 'Hoppa över hindren i vårt eget arkadspel.', to: '/kaffehopp', color: '#4f46e5', border: '#3730a3', ink: '#fff' },
+  { id: 'pluggorm', title: 'Pluggorm', desc: 'Klassiska Snake – ät, väx och överlev.', to: '/pluggorm', color: '#2fb56a', border: '#167a45', ink: '#08201a' },
+  { id: 'minne', title: 'Minne', desc: 'Vänd korten och hitta alla par.', to: '/minne', color: '#3b9ef0', border: '#1f6cb5', ink: '#0b1a2b' },
+  { id: 'tajming', title: 'Tajming', desc: 'Tvåspelarduell: stoppa den osynliga klockan närmast måltiden.', to: '/tajming', color: '#c2341f', border: '#8a1f0f', ink: '#fff' },
+  { id: 'fargminne', title: 'Färgminne', desc: 'Härma den växande färgsekvensen.', to: '/fargminne', color: '#e050c0', border: '#a52e8c', ink: '#1a1613' },
   { id: '2048', title: '2048', desc: 'Pussla ihop siffrorna för att nå 2048!', to: '/2048', color: '#f0972f', border: '#b56717', ink: '#241703' },
-  { id: 'mathler', title: 'Mathler', desc: 'Wordle med matematik – hitta den dolda uträkningen.', to: '/mathler', color: '#7b5cf0', border: '#4f34b8', ink: '#fff' },
+  { id: 'mathler', title: 'Mathler', desc: 'Wordle med matematik – hitta den dolda uträkningen.', to: '/mathler', color: '#6d4ee6', border: '#4f34b8', ink: '#fff' },
 ];
 
 const MARQUEE = 'Insert coin ✦ 5 minuters paus ✦ ordspel ✦ minne ✦ arkad ✦ matte ✦ high score ✦ inget konto ✦ helt gratis ✦';
@@ -27,16 +31,15 @@ function Home() {
 
   useEffect(() => {
     document.title = 'PluggPaus – Gratis Hjärntränande Spel för Studenter';
-    const cookieChoice = localStorage.getItem('cookiesAccepted');
-    if (!cookieChoice) setShowCookieBanner(true);
+    if (!readString('cookiesAccepted')) setShowCookieBanner(true);
   }, []);
 
   const acceptCookies = () => {
-    localStorage.setItem('cookiesAccepted', 'accepted');
+    writeString('cookiesAccepted', 'accepted');
     setShowCookieBanner(false);
   };
   const declineCookies = () => {
-    localStorage.setItem('cookiesAccepted', 'declined');
+    writeString('cookiesAccepted', 'declined');
     setShowCookieBanner(false);
   };
 
@@ -45,7 +48,7 @@ function Home() {
   const isEmpty = favsOnly && visible.length === 0;
 
   return (
-    <>
+    <main>
       {/* Hero */}
       <section className="pp-hero">
         <div className="pp-kicker">
@@ -129,6 +132,21 @@ function Home() {
           Vi räknade ut det: <Link to="/basta-startord">bästa startordet i svensk Wordle</Link>.
         </p>
 
+        <h2>Bikupan – svensk Spelling Bee</h2>
+        <p>
+          I <strong>Bikupan</strong> får du sju bokstäver ordnade som en bikaka. Bilda så många svenska ord du kan – varje ord
+          måste innehålla bokstaven i mitten och vara minst fyra bokstäver långt. Ett ord som använder alla sju kallas
+          <strong> pangram</strong> och ger bonuspoäng. Spelet tränar <strong>ordförråd och böjningsformer</strong> och har ett
+          nytt bikupe-pussel varje dag. <Link to="/bikupan">Spela Bikupan</Link>.
+        </p>
+
+        <h2>Landskapet – kan du Sveriges karta?</h2>
+        <p>
+          <strong>Landskapet</strong> visar konturen av ett av Sveriges 25 landskap. Du har sex gissningar, och efter varje fel
+          gissning får du veta hur långt bort du är och åt vilket håll rätt landskap ligger. Ett nytt landskap varje dag, plus
+          övningsläge när du vill köra fler. <Link to="/landskapet">Spela Landskapet</Link>.
+        </p>
+
         <h2>Kopplingar – Testa ditt associativa tänkande</h2>
         <p>
           <strong>Kopplingar</strong> är PluggPaus eget kategoriseringsspel på svenska, inspirerat av Connections. Hitta fyra
@@ -199,7 +217,7 @@ function Home() {
           </div>
         </div>
       )}
-    </>
+    </main>
   );
 }
 

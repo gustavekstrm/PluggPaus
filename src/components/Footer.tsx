@@ -14,6 +14,8 @@ function Footer() {
           <div className="pp-footer-h">Spel</div>
           <div className="pp-footer-links">
             <Link to="/wordle">Ordspel</Link>
+            <Link to="/bikupan">Bikupan</Link>
+            <Link to="/landskapet">Geografi</Link>
             <Link to="/minne">Minne</Link>
             <Link to="/kaffehopp">Arkad</Link>
             <Link to="/mathler">Matte</Link>

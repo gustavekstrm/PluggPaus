@@ -46,7 +46,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const root = document.documentElement;
     root.setAttribute('data-theme', theme);
     root.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
+    try {
+      localStorage.setItem('theme', theme);
+    } catch {
+      /* blockerad lagring – temat gäller ändå för sessionen */
+    }
   }, [theme]);
 
   const toggleTheme = useCallback(() => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), []);
@@ -54,7 +58,11 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const toggleFavorite = useCallback((id: string) => {
     setFavorites((prev) => {
       const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
-      localStorage.setItem('favoriteGames', JSON.stringify(next));
+      try {
+        localStorage.setItem('favoriteGames', JSON.stringify(next));
+      } catch {
+        /* ignoreras */
+      }
       return next;
     });
   }, []);

@@ -31,6 +31,8 @@ const gamesList = `
           <li><a href="/wordle">Orda</a> – gissa dagens svenska ord på sex försök (svensk Wordle).</li>
           <li><a href="/connections">Kopplingar</a> – hitta fyra grupper av ord som hör ihop, på svenska.</li>
           <li><a href="/contexto">Kontext</a> – gissa det dolda ordet utifrån hur nära i betydelse dina gissningar är.</li>
+          <li><a href="/bikupan">Bikupan</a> – bilda så många svenska ord du kan av sju bokstäver (svensk Spelling Bee).</li>
+          <li><a href="/landskapet">Landskapet</a> – känn igen dagens svenska landskap på konturen.</li>
           <li><a href="/kaffehopp">Kaffehopp</a> – vårt eget arkadspel: hoppa över och ducka för hindren.</li>
           <li><a href="/pluggorm">Pluggorm</a> – den klassiska ormen, samla kaffebönor och böcker.</li>
           <li><a href="/minne">Minne</a> – vänd korten och hitta alla par.</li>
@@ -50,8 +52,10 @@ const page = (h1, paras, extra = '') =>
 const tips = (title, items) =>
   `<h2 style="font-size:1.3rem;margin:24px 0 8px">${title}</h2><ul>${items.map((i) => `<li>${i}</li>`).join('')}</ul>`;
 
+// FAQ-frågorna bäddas även in som en markör som prerender() gör om till FAQPage-JSON-LD
+// och sedan tar bort ur HTML:en. Så finns frågorna på ett enda ställe.
 const faq = (items) =>
-  `<h2 style="font-size:1.3rem;margin:24px 0 8px">Vanliga frågor</h2>${items
+  `<!--faq:${Buffer.from(JSON.stringify(items)).toString('base64')}--><h2 style="font-size:1.3rem;margin:24px 0 8px">Vanliga frågor</h2>${items
     .map(([q, a]) => `<h3 style="font-size:1.05rem;margin:16px 0 4px">${q}</h3><p>${a}</p>`)
     .join('')}`;
 
@@ -60,7 +64,7 @@ const ROUTES = [
   {
     path: '/',
     title: 'PluggPaus – Gratis Hjärntränande Spel för Studenter',
-    desc: 'Ta en smart studiepaus! PluggPaus erbjuder gratis hjärntränande webbspel som Orda (svensk Wordle), Kopplingar, Kontext, 2048 och Mathler. Perfekt mellan föreläsningar.',
+    desc: 'Gratis svenska ordspel och hjärnträning för studiepausen: Orda (svensk Wordle), Kopplingar, Kontext, Bikupan, Landskapet, 2048 och fler. Inget konto, spela direkt.',
     html: wrap(
       `<h1 style="font-size:2rem;margin:0 0 12px">PluggPaus – gratis hjärntränande spel för din studiepaus</h1>
         <p>PluggPaus är ett litet svenskt hjärngym för studiepauser. Här hittar du snabba, gratis webbspel som tränar ordförråd, logik, minne och reflexer – perfekt för en femminuterspaus mellan föreläsningar eller pluggpass. Alla spel har vi byggt själva och de spelas direkt i webbläsaren, utan konto och utan nedladdning.</p>${gamesList}
@@ -97,7 +101,7 @@ const ROUTES = [
   },
   {
     path: '/connections',
-    title: 'Kopplingar – Hitta Ord som Hör Ihop | PluggPaus',
+    title: 'Kopplingar – Connections på Svenska | PluggPaus',
     desc: 'Spela Kopplingar, PluggPaus svenska version av Connections. Gruppera 16 ord i fyra kategorier. Ett nytt pussel varje dag ur vår svenska samling.',
     html: page(
       'Kopplingar – svensk Connections',
@@ -120,7 +124,7 @@ const ROUTES = [
   },
   {
     path: '/contexto',
-    title: 'Kontext – Gissa Ordet via Ledtrådar | PluggPaus',
+    title: 'Kontext – Contexto på Svenska | PluggPaus',
     desc: 'Spela Kontext, PluggPaus svenska ordspel där du gissar det hemliga ordet utifrån hur nära i betydelse dina gissningar ligger.',
     html: page(
       'Kontext – gissa ordet via betydelse',
@@ -208,7 +212,7 @@ const ROUTES = [
   },
   {
     path: '/pluggorm',
-    title: 'Pluggorm – Klassiska Snake | PluggPaus',
+    title: 'Pluggorm – Klassiska Snake-spelet | PluggPaus',
     desc: 'Spela Pluggorm, PluggPaus version av Snake. Ät kaffebönor, fånga den gyllene boken och undvik dig själv. Gratis i webbläsaren.',
     html: page(
       'Pluggorm – den klassiska ormen',
@@ -230,7 +234,7 @@ const ROUTES = [
   },
   {
     path: '/minne',
-    title: 'Minne – Memory / Vänd Par | PluggPaus',
+    title: 'Minne – Memory / Vänd par | PluggPaus',
     desc: 'Spela Minne, ett klassiskt memoryspel. Vänd korten och hitta alla par på så få drag som möjligt. Tränar arbetsminnet.',
     html: page(
       'Minne – memoryspelet',
@@ -273,8 +277,60 @@ const ROUTES = [
     ),
   },
   {
+    path: '/bikupan',
+    title: 'Bikupan – Spelling Bee på Svenska | PluggPaus',
+    desc: 'Spela Bikupan, PluggPaus svenska Spelling Bee. Bilda så många ord du kan av sju bokstäver – mittbokstaven måste vara med. Ny bikupa varje dag, gratis.',
+    kind: 'game',
+    name: 'Bikupan',
+    html: page(
+      'Bikupan – Spelling Bee på svenska',
+      [
+        '<strong>Bikupan</strong> är PluggPaus svenska version av ordpusslet Spelling Bee. Du får sju bokstäver ordnade som en bikaka – en i mitten och sex runt om – och ska bilda så många svenska ord som möjligt.',
+        'Varje ord måste innehålla <strong>mittbokstaven</strong> och vara minst fyra bokstäver långt. Bokstäverna får användas flera gånger, och böjningsformer som <em>sorg</em>, <em>sorgen</em> och <em>sorger</em> räknas som egna ord. Ett ord på fyra bokstäver ger en poäng, längre ord en poäng per bokstav. Ett <strong>pangram</strong> – ett ord med alla sju bokstäverna – ger sju bonuspoäng.',
+        'När poängen växer klättrar du från Ägg och Larv via Arbetsbi och Honungssamlare till Drottning. Ranggränserna räknas i procent av dagens maxpoäng. En ny bikupa släpps varje dag vid midnatt, och gårdagens svar kan du se direkt under spelet.',
+      ],
+      tips('Tips för fler ord', [
+        '<strong>Leta efter ändelser</strong> – -en, -et, -er, -ar och -or gör ett ord till flera.',
+        '<strong>Jaga pangrammet tidigt</strong> – det ger flest poäng och avslöjar ofta ordets stam.',
+        '<strong>Tänk sammansättningar</strong> – två korta ord ur kupan blir ofta ett långt och poängrikt.',
+      ]) +
+      faq([
+        ['Varför godkänns inte mitt ord?', 'Ordlistan bygger på vanliga svenska ord som också finns i en svensk stavningsordbok. Väldigt ovanliga ord, egennamn och engelska lånord är bortrensade, så pusslet ska gå att klara utan ordbok.'],
+        ['Vad är ett pangram?', 'Ett ord som använder alla sju bokstäverna minst en gång. Det finns alltid minst ett i varje bikupa och det ger 7 bonuspoäng.'],
+        ['När kommer en ny bikupa?', 'Vid midnatt svensk tid. Alla spelare får samma bokstäver samma dag.'],
+        ['Hur fungerar sviten?', 'Sviten ökar för varje dag i rad du når rangen Arbetsbi. Missar du en dag börjar den om.'],
+      ])
+    ),
+  },
+  {
+    path: '/landskapet',
+    title: 'Landskapet – Gissa Sveriges Landskap | PluggPaus',
+    desc: 'Känner du igen Sveriges landskap på konturen? Gissa dagens landskap på sex försök med avstånd och riktning som ledtråd. Gratis geografispel för alla 25 landskap.',
+    kind: 'game',
+    name: 'Landskapet',
+    html: page(
+      'Landskapet – gissa dagens svenska landskap',
+      [
+        '<strong>Landskapet</strong> är ett dagligt geografispel om Sveriges 25 landskap. Du ser konturen av ett landskap – utan namn, grannar eller städer – och har sex försök på dig att gissa vilket det är.',
+        'Efter varje fel gissning får du veta hur många kilometer bort rätt landskap ligger, åt vilket håll du ska leta och hur nära du är i procent. Efter tre missar avslöjas om landskapet ligger i Götaland, Svealand eller Norrland. När rundan är slut visas hela Sverigekartan med svaret markerat.',
+        'Götaland har tio landskap, Svealand sex och Norrland nio. Störst är Lappland och minst är Öland. Landskapen har ingen förvaltning i dag – det sköter länen – men lever kvar i dialekter, landskapsdjur och i hur vi berättar var vi kommer ifrån.',
+      ],
+      tips('Tips för att känna igen landskapen', [
+        '<strong>Kusten avslöjar mest</strong> – en flikig skärgårdskust pekar mot östkusten eller Bohuslän.',
+        '<strong>Följ pilen</strong> – två gissningar i olika riktning ringar in svaret snabbt.',
+        '<strong>Öva på de små</strong> – Gästrikland, Medelpad, Närke och Blekinge lurar flest.',
+      ]) +
+      faq([
+        ['Hur många landskap har Sverige?', 'Sverige har 25 landskap: tio i Götaland, sex i Svealand och nio i Norrland. Alla finns med i spelet.'],
+        ['Vad är skillnaden mellan landskap och län?', 'Landskapen är historiska och kulturella indelningar utan förvaltning. Länen är de administrativa regionerna, och gränserna stämmer sällan helt överens.'],
+        ['Hur räknas avståndet?', 'Som fågelvägen mellan landskapens mittpunkter. 100 % betyder rätt svar.'],
+        ['Finns det ett övningsläge?', 'Ja. När dagens runda är klar kan du spela slumpade landskap som inte påverkar statistiken.'],
+      ])
+    ),
+  },
+  {
     path: '/tajming',
-    title: 'Tajming – Tvåspelarspel om Tidskänsla | PluggPaus',
+    title: 'Tajming – Tvåspelarspel om tidskänsla | PluggPaus',
     desc: 'Spela Tajming, PluggPaus duellspel för två spelare vid samma dator. Stoppa den osynliga klockan närmast måltiden. Först till fem vinner.',
     html: page(
       'Tajming – vem har bäst tidskänsla?',
@@ -297,7 +353,7 @@ const ROUTES = [
   },
   {
     path: '/basta-startord',
-    title: 'Bästa Startordet i Svensk Wordle – Vi Räknade på 11 012 Ord | PluggPaus',
+    title: 'Bästa startordet i svensk Wordle – vi räknade på 11 012 ord | PluggPaus',
     desc: 'Vilket startord ger mest information i svensk Wordle? Vi beräknade entropin för varje tänkbart öppningsord över 11 012 svenska fembokstavsord. Resultat, bästa par och metod.',
     html: page(
       'Bästa startordet i svensk Wordle',
@@ -383,6 +439,80 @@ const ROUTES = [
   },
 ];
 
+const SITE = 'https://pluggpaus.se';
+const GAME_PATHS = new Set([
+  '/wordle', '/connections', '/contexto', '/bikupan', '/landskapet', '/2048', '/mathler',
+  '/kaffehopp', '/pluggorm', '/minne', '/fargminne', '/tajming',
+]);
+const ARTICLES = { '/basta-startord': { published: '2026-09-16' } };
+
+const shortName = (route) => route.title.split(' – ')[0].split(' | ')[0];
+const stripTags = (h) => h.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&').replace(/\s+/g, ' ').trim();
+const escAttr = (t) => t.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+
+/** Strukturerad data (JSON-LD) per sida – hjälper både Google och AI-sökmotorer att förstå sidan. */
+function schemaFor(route, canon, faqs) {
+  const org = { '@type': 'Organization', '@id': `${SITE}/#org`, name: 'PluggPaus', url: `${SITE}/`, logo: `${SITE}/icon-512.png`, email: 'pluggpaus@gmail.com' };
+  const graph = [];
+  if (route.path === '/') {
+    graph.push(
+      { '@type': 'WebSite', '@id': `${SITE}/#website`, url: `${SITE}/`, name: 'PluggPaus', inLanguage: 'sv-SE', description: route.desc, publisher: { '@id': `${SITE}/#org` } },
+      org,
+      {
+        '@type': 'ItemList',
+        name: 'Spel på PluggPaus',
+        itemListElement: ROUTES.filter((r) => GAME_PATHS.has(r.path)).map((r, i) => ({
+          '@type': 'ListItem', position: i + 1, url: `${SITE}${r.path}`, name: shortName(r),
+        })),
+      }
+    );
+  } else {
+    graph.push({
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'PluggPaus', item: `${SITE}/` },
+        { '@type': 'ListItem', position: 2, name: shortName(route), item: canon },
+      ],
+    });
+  }
+  if (GAME_PATHS.has(route.path)) {
+    graph.push({
+      '@type': 'WebApplication',
+      name: shortName(route),
+      url: canon,
+      description: route.desc,
+      applicationCategory: 'GameApplication',
+      operatingSystem: 'Webbläsare',
+      inLanguage: 'sv-SE',
+      isAccessibleForFree: true,
+      offers: { '@type': 'Offer', price: '0', priceCurrency: 'SEK' },
+      publisher: { '@id': `${SITE}/#org` },
+    });
+  }
+  if (ARTICLES[route.path]) {
+    graph.push({
+      '@type': 'Article',
+      headline: shortName(route),
+      description: route.desc,
+      inLanguage: 'sv-SE',
+      datePublished: ARTICLES[route.path].published,
+      mainEntityOfPage: canon,
+      author: { '@id': `${SITE}/#org` },
+      publisher: { '@id': `${SITE}/#org` },
+    });
+  }
+  if (route.path !== '/' && !graph.some((g) => g['@id'] === `${SITE}/#org`)) graph.push(org);
+  if (faqs.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: stripTags(q), acceptedAnswer: { '@type': 'Answer', text: stripTags(a) } })),
+    });
+  }
+  // "<" escapas så att text i JSON aldrig kan stänga script-taggen.
+  const json = JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c');
+  return `<script type="application/ld+json">${json}</script>`;
+}
+
 function prerender() {
   const templatePath = join(DIST, 'index.html');
   const template = readFileSync(templatePath, 'utf8');
@@ -403,13 +533,30 @@ function prerender() {
     html = html.replace(/<link rel="canonical" href="[\s\S]*?"\s*\/>/, `<link rel="canonical" href="${canon}" />`);
     // Replace og:url så delningar pekar på rätt sida
     html = html.replace(/<meta property="og:url" content="[\s\S]*?"\s*\/>/, `<meta property="og:url" content="${canon}" />`);
+    // Titel och beskrivning även för delningar (Open Graph / Twitter)
+    html = html.replace(/<meta property="og:title" content="[\s\S]*?"\s*\/>/, `<meta property="og:title" content="${escAttr(route.title)}" />`);
+    html = html.replace(/<meta property="og:description" content="[\s\S]*?"\s*\/>/, `<meta property="og:description" content="${escAttr(route.desc)}" />`);
+    html = html.replace(/<meta name="twitter:title" content="[\s\S]*?"\s*\/>/, `<meta name="twitter:title" content="${escAttr(route.title)}" />`);
+    html = html.replace(/<meta name="twitter:description" content="[\s\S]*?"\s*\/>/, `<meta name="twitter:description" content="${escAttr(route.desc)}" />`);
+    if (ARTICLES[route.path]) html = html.replace('<meta property="og:type" content="website" />', '<meta property="og:type" content="article" />');
+
+    // Plocka ut FAQ-markörerna, gör om dem till JSON-LD och ta bort dem ur HTML:en.
+    const faqs = [];
+    const body = route.html.replace(/<!--faq:([A-Za-z0-9+/=]+)-->/g, (_, b64) => {
+      faqs.push(...JSON.parse(Buffer.from(b64, 'base64').toString('utf8')));
+      return '';
+    });
+    const beforeSchema = html;
+    html = html.replace('</head>', `  ${schemaFor(route, canon, faqs)}\n  </head>`);
+    if (html === beforeSchema) throw new Error(`kunde inte lägga in JSON-LD för ${route.path}`);
+
     // Injicera innehållet i #root.
     // OBS: ankaret måste vara </body>, INTE <script>. I käll-index.html ligger
     // entry-scriptet efter #root, men Vite flyttar det till <head> vid bygge — så i
     // dist följs </div> av </body>. Med fel ankare matchar regexen inte, replace
     // returnerar strängen oförändrad utan att kasta, och alla sidor blir identiska.
     const beforeInject = html;
-    html = html.replace(/(<div id="root">)[\s\S]*?(<\/div>\s*<\/body>)/, `$1\n      ${route.html}\n    $2`);
+    html = html.replace(/(<div id="root">)[\s\S]*?(<\/div>\s*<\/body>)/, `$1\n      ${body}\n    $2`);
     if (html === beforeInject) {
       throw new Error(`kunde inte injicera innehåll för ${route.path} – #root-ankaret matchade inte`);
     }

@@ -106,11 +106,11 @@ const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+', '-', '*', '
 function tileClasses(mark: Mark): string {
   switch (mark) {
     case 'correct':
-      return 'bg-green-500 text-white border-green-500';
+      return 'bg-green-700 text-white border-green-700';
     case 'present':
-      return 'bg-yellow-500 text-white border-yellow-500';
+      return 'bg-yellow-500 text-gray-900 border-yellow-500';
     case 'absent':
-      return 'bg-gray-400 dark:bg-gray-600 text-white border-gray-400 dark:border-gray-600';
+      return 'bg-gray-600 text-white border-gray-600';
     default:
       return 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white border-gray-300 dark:border-gray-500';
   }

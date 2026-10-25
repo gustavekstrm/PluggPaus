@@ -16,7 +16,7 @@ function WordleGrid({ guesses, currentGuess, evaluations, invalidWord }: WordleG
   const getTileClass = (status: string) => {
     switch (status) {
       case 'correct':
-        return 'bg-green-600 border-green-600 text-white';
+        return 'bg-green-700 border-green-700 text-white';
       case 'present':
         return 'bg-yellow-500 border-yellow-500 text-gray-900';
       case 'absent':

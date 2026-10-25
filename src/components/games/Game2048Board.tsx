@@ -34,11 +34,11 @@ function Game2048Board() {
       <div className="flex items-center justify-between mb-4">
         <div className="flex gap-3">
           <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-4 py-2 text-center min-w-[72px]">
-            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Poäng</div>
+            <div className="text-xs text-gray-600 dark:text-gray-300 uppercase tracking-wide">Poäng</div>
             <div className="text-lg font-bold text-gray-900 dark:text-white">{score}</div>
           </div>
           <div className="bg-gray-100 dark:bg-gray-700 rounded-lg px-4 py-2 text-center min-w-[72px]">
-            <div className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wide">Bäst</div>
+            <div className="text-xs text-gray-600 dark:text-gray-300 uppercase tracking-wide">Bäst</div>
             <div className="text-lg font-bold text-gray-900 dark:text-white">{best}</div>
           </div>
         </div>
