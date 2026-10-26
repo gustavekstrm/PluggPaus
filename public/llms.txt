@@ -1,0 +1,34 @@
+# PluggPaus
+
+> PluggPaus (pluggpaus.se) är en svensk sajt med gratis webbspel för studiepauser: dagliga ordspel på svenska, ett geografispel om Sveriges landskap samt arkad-, minnes- och logikspel. Allt spelas direkt i webbläsaren utan konto eller nedladdning. Resultat sparas bara lokalt i besökarens webbläsare. Google Analytics och personanpassade annonser används bara efter besökarens samtycke.
+
+Alla spel är byggda av PluggPaus själva. De dagliga spelen byter pussel vid midnatt svensk tid och alla spelare får samma pussel samma dag.
+
+## Dagliga ordspel
+- [Orda – Wordle på svenska](https://pluggpaus.se/wordle): Gissa dagens svenska ord på fem bokstäver på sex försök. Å, Ä och Ö ingår.
+- [Kopplingar – Connections på svenska](https://pluggpaus.se/connections): Dela in 16 svenska ord i fyra grupper som hör ihop. Fyra felgissningar tillåts.
+- [Kontext – Contexto på svenska](https://pluggpaus.se/contexto): Gissa det dolda ordet; varje gissning rankas efter hur nära i betydelse den ligger.
+- [Bikupan – Spelling Bee på svenska](https://pluggpaus.se/bikupan): Bilda ord av sju bokstäver där mittbokstaven måste vara med, minst fyra bokstäver per ord. Pangram (alla sju bokstäver) ger bonus.
+
+## Geografi
+- [Landskapet – gissa Sveriges landskap](https://pluggpaus.se/landskapet): Känn igen dagens landskap (av Sveriges 25) på konturen. Sex försök; fel gissningar ger avstånd i km, riktning och närhet i procent.
+
+## Arkad, minne och logik
+- [Mathler](https://pluggpaus.se/mathler): Wordle med matematik – hitta den dolda uträkningen.
+- [2048](https://pluggpaus.se/2048): Slå ihop sifferbrickor tills du når 2048.
+- [Kaffehopp](https://pluggpaus.se/kaffehopp): Hoppspel i stil med webbläsarens dinosaurie-spel.
+- [Pluggorm](https://pluggpaus.se/pluggorm): Klassiska Snake.
+- [Minne](https://pluggpaus.se/minne): Memory – vänd kort och hitta par.
+- [Färgminne](https://pluggpaus.se/fargminne): Härma en allt längre färgsekvens (Simon).
+- [Tajming](https://pluggpaus.se/tajming): Tvåspelarduell om tidskänsla – stoppa en osynlig klocka.
+
+## Arkiv
+- [Pusselarkiv](https://pluggpaus.se/arkiv): Spela de senaste 30 dagarnas pussel i Orda, Kopplingar, Kontext, Bikupan och Landskapet. Räknas inte i statistiken.
+
+## Artiklar
+- [Bästa startordet i svensk Wordle](https://pluggpaus.se/basta-startord): Entropianalys över 11 012 svenska fembokstavsord. Bästa enskilda startord: SAKER; bästa par: RIKTA + SOLEN.
+
+## Om sajten
+- [Om oss och kontakt](https://pluggpaus.se/om-oss)
+- [Integritetspolicy](https://pluggpaus.se/privacy-policy)
+- [Cookies](https://pluggpaus.se/cookies)

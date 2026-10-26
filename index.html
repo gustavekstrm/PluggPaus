@@ -4,36 +4,57 @@
     <!-- Dark mode: apply before first paint to prevent flash -->
     <script>
       (function() {
-        var t = localStorage.getItem('theme');
-        if (!t) {
-          var dm = localStorage.getItem('darkMode');
-          t = (dm === null || JSON.parse(dm)) ? 'dark' : 'light';
-        }
+        var t = 'dark';
+        try {
+          var saved = localStorage.getItem('theme');
+          if (saved === 'light' || saved === 'dark') t = saved;
+        } catch (e) { /* blockerad lagring – använd standardtemat */ }
         document.documentElement.setAttribute('data-theme', t);
         if (t === 'dark') document.documentElement.classList.add('dark');
       })();
     </script>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZKLZ9LXV6"></script>
+    <!-- Samtycke: måste köras FÖRE Googles skript.
+         Consent Mode står på "denied" och AdSense ombeds om icke-personanpassade annonser
+         tills besökaren godkänt. Google Analytics laddas bara efter godkännande
+         (src/utils/consent.ts sköter valet när det görs). -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HZKLZ9LXV6');
+      (function() {
+        var choice = null;
+        try { choice = localStorage.getItem('cookiesAccepted'); } catch (e) { /* blockerad lagring = inget samtycke */ }
+        var ok = choice === 'accepted';
+        var v = ok ? 'granted' : 'denied';
+        gtag('consent', 'default', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+        (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = ok ? 0 : 1;
+        window.ppLoadAnalytics = function() {
+          if (window.ppAnalyticsLoaded) return;
+          window.ppAnalyticsLoaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HZKLZ9LXV6';
+          document.head.appendChild(s);
+          gtag('js', new Date());
+          gtag('config', 'G-HZKLZ9LXV6');
+        };
+        if (ok) window.ppLoadAnalytics();
+      })();
     </script>
+
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4690812143168699" crossorigin="anonymous"></script>
     
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1a1613" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- SEO -->
     <title>PluggPaus – Gratis Hjärntränande Spel för Studenter</title>
-    <meta name="description" content="Ta en smart studiepaus! PluggPaus erbjuder gratis hjärntränande webbspel som Orda (svensk Wordle), Kopplingar, Kontext och 2048. Perfekt för studenter mellan föreläsningar." />
-    <meta name="keywords" content="pluggpaus, studiepaus, gratis spel, wordle svenska, connections, 2048, student spel, hjärngympa, onlinespel" />
+    <meta name="description" content="Ta en smart studiepaus! PluggPaus erbjuder gratis hjärntränande webbspel som Orda (svensk Wordle), Kopplingar, Kontext, Bikupan och Landskapet. Perfekt för studenter mellan föreläsningar." />
     <meta name="author" content="PluggPaus" />
     <link rel="canonical" href="https://pluggpaus.se/" />
 
@@ -44,11 +65,17 @@
     <meta property="og:description" content="Ta en smart studiepaus! Gratis hjärntränande webbspel som Wordle på svenska, Connections och 2048. Tränar ordförråd, logik och minne på 5 minuter." />
     <meta property="og:locale" content="sv_SE" />
     <meta property="og:site_name" content="PluggPaus" />
+    <meta property="og:image" content="https://pluggpaus.se/og.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="PluggPaus – svenska ordspel och hjärnträning för studiepausen" />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://pluggpaus.se/og.png" />
     <meta name="twitter:title" content="PluggPaus – Gratis Hjärntränande Spel för Studenter" />
     <meta name="twitter:description" content="Ta en smart studiepaus! Gratis hjärntränande webbspel för studenter." />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM-sammanfattning" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,6 +113,8 @@
           <li><a href="/wordle">Orda</a> – gissa dagens svenska ord på sex försök (svensk Wordle).</li>
           <li><a href="/connections">Kopplingar</a> – hitta fyra grupper av ord som hör ihop, på svenska.</li>
           <li><a href="/contexto">Kontext</a> – gissa det dolda ordet utifrån hur nära i betydelse dina gissningar är.</li>
+          <li><a href="/bikupan">Bikupan</a> – bilda så många svenska ord du kan av sju bokstäver (svensk Spelling Bee).</li>
+          <li><a href="/landskapet">Landskapet</a> – känn igen dagens svenska landskap på konturen.</li>
           <li><a href="/kaffehopp">Kaffehopp</a> – vårt eget arkadspel: hoppa över och ducka för hindren.</li>
           <li><a href="/pluggorm">Pluggorm</a> – den klassiska ormen, samla kaffebönor och böcker.</li>
           <li><a href="/minne">Minne</a> – vänd korten och hitta alla par.</li>

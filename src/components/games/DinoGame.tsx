@@ -503,8 +503,8 @@ function DinoGame() {
         <button
           onMouseDown={jump}
           onTouchStart={(e) => { e.preventDefault(); jump(); }}
-          className="py-4 rounded-xl font-bold text-white"
-          style={{ background: '#e07a4f', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
+          className="py-4 rounded-xl font-bold"
+          style={{ background: 'var(--accent)', color: 'var(--on-accent)', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
         >
           ↑ Hoppa
         </button>

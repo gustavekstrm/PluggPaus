@@ -343,15 +343,17 @@ function SnakeGame() {
     else setDirection(dy > 0 ? 'down' : 'up');
   };
 
-  const DirBtn = ({ d, label }: { d: Dir; label: string }) => (
+  const press = (d: Dir) => {
+    if (s.current.status !== 'running') start();
+    setDirection(d);
+  };
+  const dirBtn = (d: Dir, label: string) => (
     <button
-      onClick={() => {
-        if (s.current.status !== 'running') start();
-        setDirection(d);
-      }}
+      key={d}
+      onClick={() => press(d)}
       className="w-14 h-14 rounded-xl font-bold text-xl flex items-center justify-center active:scale-95"
       style={{ background: 'var(--surface2)', color: 'var(--ink)', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
-      aria-label={`Styr ${d}`}
+      aria-label={`Styr ${({ up: 'uppåt', down: 'nedåt', left: 'åt vänster', right: 'åt höger' } as Record<Dir, string>)[d]}`}
     >
       {label}
     </button>
@@ -376,8 +378,8 @@ function SnakeGame() {
         </div>
         <button
           onClick={start}
-          className="px-5 py-2.5 rounded-lg font-semibold text-white"
-          style={{ background: '#e07a4f', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
+          className="px-5 py-2.5 rounded-lg font-semibold"
+          style={{ background: 'var(--accent)', color: 'var(--on-accent)', border: '2px solid var(--border)', boxShadow: '3px 3px 0 var(--shadow)' }}
         >
           {status === 'running' ? 'Börja om' : status === 'over' ? 'Spela igen' : 'Starta'}
         </button>
@@ -385,11 +387,11 @@ function SnakeGame() {
 
       <div className="mt-5 grid grid-cols-3 gap-2 w-max mx-auto sm:hidden">
         <div />
-        <DirBtn d="up" label="↑" />
+        {dirBtn('up', '↑')}
         <div />
-        <DirBtn d="left" label="←" />
-        <DirBtn d="down" label="↓" />
-        <DirBtn d="right" label="→" />
+        {dirBtn('left', '←')}
+        {dirBtn('down', '↓')}
+        {dirBtn('right', '→')}
       </div>
       <p className="mt-3 text-center pp-mono text-sm" style={{ color: 'var(--ink-muted)' }}>
         Piltangenter, WASD eller svep. Ät kaffebönor (+1) och fånga den gyllene boken (+3) innan den försvinner!

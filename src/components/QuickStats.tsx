@@ -44,9 +44,9 @@ function TrendingUpIcon({ className }: { className?: string }) {
 
 function QuickStats({ category, difficulty, playtime, benefit }: QuickStatsProps) {
   const difficultyColor = {
-    Easy: 'text-green-600 dark:text-green-400',
-    Medium: 'text-yellow-600 dark:text-yellow-400',
-    Hard: 'text-red-600 dark:text-red-400',
+    Easy: 'text-green-800 dark:text-green-400',
+    Medium: 'text-yellow-800 dark:text-yellow-400',
+    Hard: 'text-red-700 dark:text-red-400',
   };
 
   const difficultyLabel = {

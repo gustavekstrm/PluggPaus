@@ -30,7 +30,7 @@ function Header() {
             <span className="pp-heart-accent" aria-hidden="true">♥</span>
             <span>{favLabel}</span>
           </button>
-          <button className="pp-iconbtn" onClick={toggleTheme} aria-label="Byt tema">
+          <button className="pp-iconbtn" onClick={toggleTheme} aria-label={theme === 'dark' ? 'Byt till ljust tema' : 'Byt till mörkt tema'}>
             <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
           </button>
         </div>

@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import ArchiveBanner from '../components/ArchiveBanner';
+import { usePuzzleDate, type PuzzleDate } from '../utils/archive';
+import { writeString } from '../utils/safeStorage';
 import AdBanner from '../components/AdBanner';
 import { useEffect, useState } from 'react';
 import QuickStats from '../components/QuickStats';
@@ -7,13 +10,13 @@ import GuessesList from '../components/contexto/GuessesList';
 import ContextoStatsModal from '../components/contexto/ContextoStatsModal';
 import { useContexto } from '../hooks/useContexto';
 
-function ContextoPage() {
-  const { puzzle, gameState, stats, error, loading, makeGuess, getHint, giveUp } = useContexto();
+function ContextoPageGame({ date, isArchive }: PuzzleDate) {
+  const { puzzle, gameState, stats, error, loading, makeGuess, getHint, giveUp } = useContexto(date, isArchive);
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('lastPlayedGame', 'contexto');
-    document.title = 'Kontext – Gissa Ordet via Ledtrådar | PluggPaus';
+    writeString('lastPlayedGame', 'contexto');
+    document.title = 'Kontext – Contexto på Svenska | PluggPaus';
   }, []);
 
   useEffect(() => {
@@ -25,6 +28,7 @@ function ContextoPage() {
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {isArchive && <ArchiveBanner date={date} path="/contexto" />}
       {/* Back button */}
       <div className="mb-6">
         <Link
@@ -112,6 +116,12 @@ function ContextoPage() {
         </div>
       </div>
 
+      {!isArchive && (
+        <p className="text-center mb-8 text-sm" style={{ color: 'var(--ink-muted)' }}>
+          Missat en dag? <Link to="/arkiv" className="underline">Spela tidigare pussel i arkivet</Link>.
+        </p>
+      )}
+
       {/* Ad Banner */}
       <AdBanner slot="5092040576" className="mb-8" />
 
@@ -186,6 +196,7 @@ function ContextoPage() {
       </div>
 
       <ContextoStatsModal
+        date={date}
         isOpen={showStats}
         onClose={() => setShowStats(false)}
         stats={stats}
@@ -194,6 +205,12 @@ function ContextoPage() {
       />
     </main>
   );
+}
+
+/** Läser ?datum= och monterar om spelet när datumet byts, så allt läge börjar om rent. */
+function ContextoPage() {
+  const pd = usePuzzleDate();
+  return <ContextoPageGame key={pd.date} {...pd} />;
 }
 
 export default ContextoPage;

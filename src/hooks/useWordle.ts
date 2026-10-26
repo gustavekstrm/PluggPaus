@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ANSWER_WORDS, getTodaysWord } from '../data/swedishWords';
-import { getTodayDateString, nextStreak, puzzleKey } from '../utils/dailyDate';
+import { readArchive, writeArchive } from '../utils/archive';
+import { ANSWER_WORDS, getWordForDate } from '../data/swedishWords';
+import { nextStreak, puzzleKey } from '../utils/dailyDate';
 import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, WordleData, GuessLetter, LetterStatus } from '../types/wordle';
 import { isInteractiveTarget } from '../utils/keyboard';
@@ -64,41 +65,49 @@ function evaluateGuess(guess: string, answer: string): GuessLetter[] {
   return result;
 }
 
-export function useWordle() {
-  const [answer, setAnswer] = useState('');
-  const [gameState, setGameState] = useState<GameState>(defaultGameState);
-  const [stats, setStats] = useState<GameStats>(defaultStats);
+/** Läser sparat läge synkront, så första renderingen redan visar rätt bräde. */
+function loadInitial(date: string, isArchive: boolean): { gameState: GameState; stats: GameStats } {
+  const data = readJSON<WordleData>(STORAGE_KEY);
+  const stats = mergeStats(data?.stats);
+  if (isArchive) {
+    const saved = readArchive<GameState>('wordle', date);
+    return { stats, gameState: saved ? { ...defaultGameState, ...saved, currentGuess: '' } : defaultGameState };
+  }
+  // Återuppta bara om det gäller samma dag OCH samma pussel. Utan pusselkontrollen kan
+  // gårdagens bräde återställas ovanpå ett nytt ord (t.ex. om ordlistan vuxit).
+  if (data && data.lastPlayed === date && data.puzzleKey === puzzleKey(date, ANSWER_WORDS.length) && data.gameState) {
+    return { stats, gameState: { ...defaultGameState, ...data.gameState } };
+  }
+  return { stats, gameState: defaultGameState };
+}
+
+/**
+ * @param date      vilket dagspussel som spelas (YYYY-MM-DD, svensk tid)
+ * @param isArchive sant för ett äldre pussel från arkivet – sparas separat och rör inte statistiken
+ */
+export function useWordle(date: string, isArchive = false) {
+  const [initial] = useState(() => loadInitial(date, isArchive));
+  const [answer] = useState(() => getWordForDate(date));
+  const [gameState, setGameState] = useState<GameState>(initial.gameState);
+  const [stats, setStats] = useState<GameStats>(initial.stats);
   const [invalidWord, setInvalidWord] = useState(false);
 
-  // Load saved data
-  useEffect(() => {
-    const todayWord = getTodaysWord();
-    setAnswer(todayWord);
-
-    const data = readJSON<WordleData>(STORAGE_KEY);
-    if (data) {
-      setStats(mergeStats(data.stats));
-
-      // Återuppta bara om det gäller samma dag OCH samma pussel. Utan pusselkontrollen kan
-      // gårdagens bräde återställas ovanpå ett nytt ord (t.ex. om ordlistan vuxit).
-      const today = getTodayDateString();
-      if (data.lastPlayed === today && data.puzzleKey === puzzleKey(today, ANSWER_WORDS.length) && data.gameState) {
-        setGameState({ ...defaultGameState, ...data.gameState });
+  const saveGameState = useCallback(
+    (newState: GameState, newStats: GameStats) => {
+      if (isArchive) {
+        writeArchive('wordle', date, newState);
+        return;
       }
-    }
-  }, []);
-
-  // Save game state
-  const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
-    const today = getTodayDateString();
-    const data: WordleData = {
-      lastPlayed: today,
-      puzzleKey: puzzleKey(today, ANSWER_WORDS.length),
-      gameState: newState,
-      stats: newStats,
-    };
-    writeJSON(STORAGE_KEY, data);
-  }, []);
+      const data: WordleData = {
+        lastPlayed: date,
+        puzzleKey: puzzleKey(date, ANSWER_WORDS.length),
+        gameState: newState,
+        stats: newStats,
+      };
+      writeJSON(STORAGE_KEY, data);
+    },
+    [date, isArchive]
+  );
 
   // Handle key press
   const handleKeyPress = useCallback((key: string) => {
@@ -130,10 +139,14 @@ export function useWordle() {
       // Djup kopia av fördelningen – en grund spridning delar objektet med React-statet.
       const newStats: GameStats = { ...stats, guessDistribution: { ...stats.guessDistribution } };
       let newStatus: 'playing' | 'won' | 'lost' = 'playing';
-      const today = getTodayDateString();
+      const today = date;
 
-      if (isWin) {
-        newStatus = 'won';
+      if (isWin) newStatus = 'won';
+      else if (isLoss) newStatus = 'lost';
+
+      if (isArchive) {
+        // Arkivomgångar räknas inte i statistiken.
+      } else if (isWin) {
         newStats.gamesPlayed++;
         newStats.gamesWon++;
         // Sviten fortsätter bara om förra spelet avslutades i går.
@@ -142,7 +155,6 @@ export function useWordle() {
         newStats.lastCompletedDate = today;
         newStats.guessDistribution[newGuesses.length as keyof typeof newStats.guessDistribution]++;
       } else if (isLoss) {
-        newStatus = 'lost';
         newStats.gamesPlayed++;
         newStats.currentStreak = 0;
         newStats.lastCompletedDate = today;
@@ -173,7 +185,7 @@ export function useWordle() {
         }));
       }
     }
-  }, [gameState, answer, stats, saveGameState]);
+  }, [gameState, answer, stats, saveGameState, date, isArchive]);
 
   // Keyboard event listener
   useEffect(() => {

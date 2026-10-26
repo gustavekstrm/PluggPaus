@@ -21,7 +21,7 @@ export default {
           200: '#dccfbe',
           300: '#c2b4a2',
           400: '#9c8e7e',
-          500: '#786b5e',
+          500: '#6b5f54', // mörkad från #786b5e så dämpad text klarar 4,5:1 på ljusa ytor
           600: '#574d42',
           700: '#38302a',
           800: '#26201c',

@@ -45,3 +45,20 @@ export function writeNumber(key: string, value: number): void {
     /* ignoreras med flit */
   }
 }
+
+/** Läser en sträng. Ger null om nyckeln saknas eller lagringen är blockerad. */
+export function readString(key: string): string | null {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+export function writeString(key: string, value: string): void {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    /* ignoreras med flit */
+  }
+}

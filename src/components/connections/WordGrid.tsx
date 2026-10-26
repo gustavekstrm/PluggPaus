@@ -11,11 +11,12 @@ function WordGrid({ words, selectedWords, shakingWords, onWordClick, disabled }:
   const isShaking = (word: string) => shakingWords.includes(word);
 
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="grid grid-cols-4 gap-2" role="group" aria-label="Ord att gruppera">
       {words.map((word) => (
         <button
           key={word}
           onClick={() => onWordClick(word)}
+          aria-pressed={isSelected(word)}
           disabled={disabled}
           className={`
             h-20 sm:h-24 rounded-lg font-bold text-sm sm:text-base uppercase

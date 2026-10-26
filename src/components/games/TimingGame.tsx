@@ -50,7 +50,11 @@ function ScoreDots({ score, side }: { score: number; side: 0 | 1 }) {
 
 function TimingGame() {
   const [phase, setPhase] = useState<Phase>('setup');
-  const [names, setNames] = useState<[string, string]>(['', '']);
+  // Kom ihåg namnen till nästa gång – två personer som spelar en gång spelar ofta igen.
+  const [names, setNames] = useState<[string, string]>(() => {
+    const saved = readJSON<SavedNames>(STORAGE_KEY);
+    return saved?.names?.length === 2 ? [saved.names[0] ?? '', saved.names[1] ?? ''] : ['', ''];
+  });
   const [scores, setScores] = useState<[number, number]>([0, 0]);
   const [target, setTarget] = useState<number>(() => randomTarget());
   const [turn, setTurn] = useState<0 | 1>(0);
@@ -60,11 +64,6 @@ function TimingGame() {
 
   const startedAt = useRef<number>(0);
 
-  // Kom ihåg namnen till nästa gång – två personer som spelar en gång spelar ofta igen.
-  useEffect(() => {
-    const saved = readJSON<SavedNames>(STORAGE_KEY);
-    if (saved?.names?.length === 2) setNames([saved.names[0] ?? '', saved.names[1] ?? '']);
-  }, []);
 
   const displayName = useCallback(
     (i: 0 | 1) => (names[i].trim() ? names[i].trim() : `Spelare ${i + 1}`),
