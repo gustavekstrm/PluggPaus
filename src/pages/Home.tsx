@@ -189,8 +189,9 @@ function Home() {
         </p>
       </section>
 
-      {/* Sticky Bottom Ad Bar */}
-      <AdBanner slot="2861993283" className="ad-sticky-bottom" />
+      {/* Annons efter innehållet. Låg i flödet – tidigare en fast list i nederkanten
+          som med responsiv storlek kunde täcka stora delar av mobilskärmen. */}
+      <AdBanner slot="2861993283" className="ad-banner-bottom" />
 
     </main>
   );

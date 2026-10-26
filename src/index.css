@@ -50,7 +50,6 @@ body {
   font-family: 'Space Grotesk', system-ui, sans-serif;
   background-color: var(--bg);
   color: var(--ink);
-  padding-bottom: 80px;
   transition: background-color .25s, color .25s;
 }
 
@@ -627,18 +626,12 @@ body {
   justify-content: center;
 }
 
-.ad-sticky-bottom {
-  position: fixed;
-  bottom: 0;
-  left: 0;
+.ad-banner-bottom {
   width: 100%;
-  min-height: 60px;
-  z-index: 40;
-  background: var(--surface);
-  border-top: 2px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 728px;
+  min-height: 90px;
+  margin: 32px auto 0;
+  padding: 0 16px;
 }
 
 /* SEO Content Section */
