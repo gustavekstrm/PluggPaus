@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { getTodaysPuzzleMeta, loadPuzzle } from '../data/contextoPuzzles';
-import { getTodayDateString, nextStreak } from '../utils/dailyDate';
+import { getPuzzleMetaForDate, loadPuzzle } from '../data/contextoPuzzles';
+import { nextStreak } from '../utils/dailyDate';
+import { readArchive, writeArchive } from '../utils/archive';
 import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, ContextoData, Guess, ContextoPuzzle } from '../types/contexto';
 
@@ -25,62 +26,74 @@ const defaultGameState: GameState = {
   hintsUsed: 0,
 };
 
-export function useContexto() {
+/** Läser sparat läge synkront, så första renderingen redan visar rätt gissningar. */
+function loadInitial(date: string, isArchive: boolean, puzzleId: string) {
+  const data = readJSON<ContextoData>(STORAGE_KEY);
+  const stats: GameStats = { ...defaultStats, ...(data?.stats ?? {}) };
+  if (isArchive) {
+    const saved = readArchive<GameState>('contexto', date);
+    return { stats, gameState: saved ? { ...defaultGameState, ...saved } : defaultGameState };
+  }
+  // Behåll bara spelläget om det gäller samma dag OCH samma pussel. Utan
+  // pusselkontrollen skulle gamla gissningar leva vidare med rangvärden från ett
+  // annat målord (t.ex. efter en deploy mitt på dagen, eller data från en äldre
+  // version som saknar puzzleId).
+  if (data && data.lastPlayed === date && data.puzzleId === puzzleId && data.gameState) {
+    return { stats, gameState: { ...defaultGameState, ...data.gameState } };
+  }
+  return { stats, gameState: defaultGameState };
+}
+
+/**
+ * @param date      vilket dagspussel som spelas (YYYY-MM-DD, svensk tid)
+ * @param isArchive sant för ett äldre pussel från arkivet – sparas separat och rör inte statistiken
+ */
+export function useContexto(date: string, isArchive = false) {
+  const [meta] = useState(() => getPuzzleMetaForDate(date));
+  const puzzleId = meta.id;
+  const [initial] = useState(() => loadInitial(date, isArchive, puzzleId));
   const [puzzle, setPuzzle] = useState<ContextoPuzzle | null>(null);
-  const [gameState, setGameState] = useState<GameState>(defaultGameState);
-  const [stats, setStats] = useState<GameStats>(defaultStats);
+  const [gameState, setGameState] = useState<GameState>(initial.gameState);
+  const [stats, setStats] = useState<GameStats>(initial.stats);
   const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
-  const [puzzleId] = useState<string>(() => getTodaysPuzzleMeta().id);
-
   useEffect(() => {
     let cancelled = false;
-
-    // Rankningarna är förberäknade och laddas lazy (bara dagens pussel).
-    loadPuzzle(getTodaysPuzzleMeta())
-      .then(todayPuzzle => {
+    // Rankningarna är förberäknade och laddas lazy (bara det pussel som spelas).
+    loadPuzzle(meta)
+      .then((p) => {
         if (cancelled) return;
-        setPuzzle(todayPuzzle);
+        setPuzzle(p);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         if (cancelled) return;
         console.error('Failed to load puzzle rankings:', err);
-        setError('Kunde inte ladda dagens pussel. Ladda om sidan.');
+        setError('Kunde inte ladda pusslet. Ladda om sidan.');
         setLoading(false);
       });
-
-    const data = readJSON<ContextoData>(STORAGE_KEY);
-    if (data) {
-      {
-        setStats({ ...defaultStats, ...data.stats });
-
-        // Behåll bara spelläget om det gäller samma dag OCH samma pussel. Utan
-        // pusselkontrollen skulle gamla gissningar leva vidare med rangvärden från ett
-        // annat målord (t.ex. efter en deploy mitt på dagen, eller data från en äldre
-        // version som saknar puzzleId).
-        const today = getTodayDateString();
-        if (data.lastPlayed === today && data.puzzleId === puzzleId && data.gameState) {
-          setGameState({ ...defaultGameState, ...data.gameState });
-        }
-      }
-    }
-
     return () => {
       cancelled = true;
     };
-  }, [puzzleId]);
+  }, [meta]);
 
-  const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
-    const data: ContextoData = {
-      lastPlayed: getTodayDateString(),
-      puzzleId,
-      gameState: newState,
-      stats: newStats,
-    };
-    writeJSON(STORAGE_KEY, data);
-  }, [puzzleId]);
+  const saveGameState = useCallback(
+    (newState: GameState, newStats: GameStats) => {
+      if (isArchive) {
+        writeArchive('contexto', date, newState);
+        return;
+      }
+      const data: ContextoData = {
+        lastPlayed: date,
+        puzzleId,
+        gameState: newState,
+        stats: newStats,
+      };
+      writeJSON(STORAGE_KEY, data);
+    },
+    [puzzleId, date, isArchive]
+  );
 
   const makeGuess = useCallback((word: string) => {
     if (!puzzle || gameState.gameStatus !== 'playing') return;
@@ -124,8 +137,8 @@ export function useContexto() {
     const isWin = rank === 1;
 
     const newStats: GameStats = { ...stats };
-    if (isWin) {
-      const today = getTodayDateString();
+    if (isWin && !isArchive) {
+      const today = date;
       // Ledtrådar läggs till som gissningar i listan men ska inte räknas som spelarens egna.
       const ownGuesses = Math.max(1, newGuesses.length - gameState.hintsUsed);
       const totalGuesses = (stats.totalGuesses ?? 0) + ownGuesses;
@@ -148,7 +161,7 @@ export function useContexto() {
     setStats(newStats);
     saveGameState(newState, newStats);
     setError('');
-  }, [puzzle, gameState, stats, saveGameState]);
+  }, [puzzle, gameState, stats, saveGameState, date, isArchive]);
 
   const getHint = useCallback(() => {
     if (!puzzle || gameState.gameStatus !== 'playing') return;
@@ -198,12 +211,14 @@ export function useContexto() {
     // Att ge upp är inte en vinst. Tidigare sattes status till 'won', vilket fick sidan att
     // gratulera spelaren, delningstexten att påstå en lösning, och gjorde vinstprocenten
     // låst vid 100 % eftersom gamesPlayed bara räknades upp i vinstgrenen.
-    const newStats: GameStats = {
-      ...stats,
-      gamesPlayed: stats.gamesPlayed + 1,
-      currentStreak: 0,
-      lastCompletedDate: getTodayDateString(),
-    };
+    const newStats: GameStats = isArchive
+      ? stats
+      : {
+          ...stats,
+          gamesPlayed: stats.gamesPlayed + 1,
+          currentStreak: 0,
+          lastCompletedDate: date,
+        };
 
     const targetGuess: Guess = {
       word: puzzle.targetWord,
@@ -220,7 +235,7 @@ export function useContexto() {
     setGameState(newState);
     setStats(newStats);
     saveGameState(newState, newStats);
-  }, [puzzle, gameState, stats, saveGameState]);
+  }, [puzzle, gameState, stats, saveGameState, date, isArchive]);
 
   return {
     puzzle,

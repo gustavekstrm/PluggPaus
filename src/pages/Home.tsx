@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AdBanner from '../components/AdBanner';
 import GameCard, { type Game } from '../components/GameCard';
 import { useAppState } from '../context/AppState';
-import { readString, writeString } from '../utils/safeStorage';
 
 // Knappfärger kontrollerade mot WCAG AA (≥4,5:1 mellan text och knappfärg).
 const GAMES: Game[] = [
@@ -27,21 +26,10 @@ const MARQUEE = 'Insert coin ✦ 5 minuters paus ✦ ordspel ✦ minne ✦ arkad
 
 function Home() {
   const { isFavorite, favsOnly } = useAppState();
-  const [showCookieBanner, setShowCookieBanner] = useState(false);
 
   useEffect(() => {
     document.title = 'PluggPaus – Gratis Hjärntränande Spel för Studenter';
-    if (!readString('cookiesAccepted')) setShowCookieBanner(true);
   }, []);
-
-  const acceptCookies = () => {
-    writeString('cookiesAccepted', 'accepted');
-    setShowCookieBanner(false);
-  };
-  const declineCookies = () => {
-    writeString('cookiesAccepted', 'declined');
-    setShowCookieBanner(false);
-  };
 
   const visible = favsOnly ? GAMES.filter((g) => isFavorite(g.id)) : GAMES;
   const heading = favsOnly ? 'Dina favoriter' : 'Välj ett spel';
@@ -204,19 +192,6 @@ function Home() {
       {/* Sticky Bottom Ad Bar */}
       <AdBanner slot="2861993283" className="ad-sticky-bottom" />
 
-      {/* Cookie Banner */}
-      {showCookieBanner && (
-        <div className="cookie-banner">
-          <p>
-            Vi använder cookies för analys och annonser. Du väljer själv om du vill godkänna eller avvisa icke-nödvändiga cookies.
-          </p>
-          <div className="cookie-banner-buttons">
-            <button onClick={acceptCookies} className="cookie-accept-btn">Godkänn alla</button>
-            <button onClick={declineCookies} className="cookie-decline-btn">Avvisa</button>
-            <Link to="/cookies" className="cookie-link">Läs mer</Link>
-          </div>
-        </div>
-      )}
     </main>
   );
 }

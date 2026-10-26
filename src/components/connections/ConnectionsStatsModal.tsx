@@ -7,6 +7,8 @@ import { shareResult } from '../../utils/share';
 
 interface ConnectionsStatsModalProps {
   isOpen: boolean;
+  /** Pusslets datum – styr numret i delningstexten (arkivomgångar har äldre nummer). */
+  date?: string;
   onClose: () => void;
   stats: GameStats;
   gameStatus: 'playing' | 'won' | 'lost';
@@ -16,6 +18,7 @@ interface ConnectionsStatsModalProps {
 
 function ConnectionsStatsModal({
   isOpen,
+  date,
   onClose,
   stats,
   gameStatus,
@@ -45,7 +48,7 @@ function ConnectionsStatsModal({
     const mistakes = 4 - mistakesRemaining;
     const result = gameStatus === 'won' ? `${mistakes} ${mistakes === 1 ? 'miss' : 'missar'}` : 'X';
 
-    const nr = puzzleNumber(getTodayDateString());
+    const nr = puzzleNumber(date ?? getTodayDateString());
     const text = `Kopplingar #${nr}\n${grid}\n${result}\n\nSpela på pluggpaus.se`;
 
     void shareResult(text).then((r) => {

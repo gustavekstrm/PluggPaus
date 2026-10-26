@@ -1,9 +1,13 @@
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import GamePageShell from '../components/GamePageShell';
 import LandskapetGame from '../components/games/LandskapetGame';
 import { writeString } from '../utils/safeStorage';
+import { usePuzzleDate } from '../utils/archive';
+import ArchiveBanner from '../components/ArchiveBanner';
 
 function LandskapetPage() {
+  const { date, isArchive } = usePuzzleDate();
   useEffect(() => {
     writeString('lastPlayedGame', 'landskapet');
     document.title = 'Landskapet – Gissa Sveriges Landskap | PluggPaus';
@@ -77,7 +81,13 @@ function LandskapetPage() {
         },
       ]}
     >
-      <LandskapetGame />
+      {isArchive && <ArchiveBanner date={date} path="/landskapet" />}
+      <LandskapetGame key={date} date={date} isArchive={isArchive} />
+      {!isArchive && (
+        <p className="text-center mt-6 text-sm" style={{ color: 'var(--ink-muted)' }}>
+          Missat en dag? <Link to="/arkiv" className="underline">Spela tidigare pussel i arkivet</Link>.
+        </p>
+      )}
     </GamePageShell>
   );
 }

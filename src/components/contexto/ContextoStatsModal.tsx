@@ -6,13 +6,15 @@ import { getTodayDateString, puzzleNumber } from '../../utils/dailyDate';
 
 interface ContextoStatsModalProps {
   isOpen: boolean;
+  /** Pusslets datum – styr numret i delningstexten (arkivomgångar har äldre nummer). */
+  date?: string;
   onClose: () => void;
   stats: GameStats;
   gameStatus: 'playing' | 'won' | 'gaveup';
   guessCount: number;
 }
 
-function ContextoStatsModal({ isOpen, onClose, stats, gameStatus, guessCount }: ContextoStatsModalProps) {
+function ContextoStatsModal({ isOpen, date, onClose, stats, gameStatus, guessCount }: ContextoStatsModalProps) {
   const countdown = useCountdown();
   const [copied, setCopied] = useState(false);
 
@@ -22,7 +24,7 @@ function ContextoStatsModal({ isOpen, onClose, stats, gameStatus, guessCount }: 
   const generateShareText = async () => {
     if (gameStatus !== 'won') return;
 
-    const nr = puzzleNumber(getTodayDateString());
+    const nr = puzzleNumber(date ?? getTodayDateString());
     const text = `Kontext #${nr}\n🎯 Löst på ${guessCount} gissningar\n\nSpela på pluggpaus.se`;
 
     try {

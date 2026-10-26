@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import ArchiveBanner from '../components/ArchiveBanner';
+import { usePuzzleDate, type PuzzleDate } from '../utils/archive';
+import { writeString } from '../utils/safeStorage';
 import AdBanner from '../components/AdBanner';
 import { useEffect, useState } from 'react';
 import QuickStats from '../components/QuickStats';
@@ -8,24 +11,26 @@ import SolvedCategories from '../components/connections/SolvedCategories';
 import ConnectionsStatsModal from '../components/connections/ConnectionsStatsModal';
 import { useConnections } from '../hooks/useConnections';
 
-function ConnectionsPage() {
-  const { gameState, stats, toggleWordSelection, deselectAll, shuffleWords, submitGuess } = useConnections();
+function ConnectionsPageGame({ date, isArchive }: PuzzleDate) {
+  const { gameState, stats, toggleWordSelection, deselectAll, shuffleWords, submitGuess } = useConnections(date, isArchive);
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('lastPlayedGame', 'connections');
+    writeString('lastPlayedGame', 'connections');
     document.title = 'Kopplingar – Connections på Svenska | PluggPaus';
   }, []);
 
+  const status = gameState?.gameStatus;
   useEffect(() => {
-    if (gameState && (gameState.gameStatus === 'won' || gameState.gameStatus === 'lost')) {
+    if (status === 'won' || status === 'lost') {
       const timer = setTimeout(() => setShowStats(true), 1200);
       return () => clearTimeout(timer);
     }
-  }, [gameState?.gameStatus]);
+  }, [status]);
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {isArchive && <ArchiveBanner date={date} path="/connections" />}
       {/* Back button */}
       <div className="mb-6">
         <Link
@@ -116,6 +121,12 @@ function ConnectionsPage() {
         )}
       </div>
 
+      {!isArchive && (
+        <p className="text-center mb-8 text-sm" style={{ color: 'var(--ink-muted)' }}>
+          Missat en dag? <Link to="/arkiv" className="underline">Spela tidigare pussel i arkivet</Link>.
+        </p>
+      )}
+
       {/* Ad Banner */}
       <AdBanner slot="5092040576" className="mb-8" />
 
@@ -190,6 +201,7 @@ function ConnectionsPage() {
 
       {gameState && (
         <ConnectionsStatsModal
+          date={date}
           isOpen={showStats}
           onClose={() => setShowStats(false)}
           stats={stats}
@@ -200,6 +212,12 @@ function ConnectionsPage() {
       )}
     </main>
   );
+}
+
+/** Läser ?datum= och monterar om spelet när datumet byts, så allt läge börjar om rent. */
+function ConnectionsPage() {
+  const pd = usePuzzleDate();
+  return <ConnectionsPageGame key={pd.date} {...pd} />;
 }
 
 export default ConnectionsPage;

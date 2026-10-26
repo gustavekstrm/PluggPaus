@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import ConsentControls from '../components/ConsentControls';
 
 function Cookies() {
   useEffect(() => {
@@ -13,7 +14,15 @@ function Cookies() {
           Cookie-inställningar
         </h1>
 
-        <p>Senast uppdaterad: 2026-08-21</p>
+        <p>Senast uppdaterad: 2026-10-26</p>
+
+        <h2>Ditt cookieval</h2>
+        <p>
+          Statistik (Google Analytics) och personanpassade annonser används bara om du godkänner det. Avvisar du,
+          eller har du inte valt än, laddas Google Analytics inte alls och annonserna visas utan personanpassning.
+          Du kan ändra ditt val här när som helst.
+        </p>
+        <ConsentControls />
 
         <h2>Vad är cookies?</h2>
         <p>
@@ -51,8 +60,8 @@ function Cookies() {
 
         <h3>2. Analyscookies (Google Analytics)</h3>
         <p>
-          Vi använder <strong>Google Analytics</strong> för att samla in
-          anonym statistik om hur besökare använder vår webbplats. Denna information hjälper oss att förbättra
+          Om du godkänner använder vi <strong>Google Analytics</strong> för att samla in
+          statistik om hur besökare använder vår webbplats. Denna information hjälper oss att förbättra
           webbplatsen och användarupplevelsen.
         </p>
         <p>Google Analytics använder cookies för att spåra:</p>
@@ -76,7 +85,7 @@ function Cookies() {
         <h3>3. Reklamcookies (Google AdSense)</h3>
         <p>
           Vi använder <strong>Google AdSense</strong> för att visa annonser
-          på vår webbplats. Google och dess partners använder cookies för att:
+          på vår webbplats. Om du godkänner kan Google och dess partners använda cookies för att:
         </p>
         <ul style={{ paddingLeft: '2rem', lineHeight: 1.8, marginBottom: '1.5rem' }}>
           <li style={{ marginBottom: '0.5rem' }}>Visa annonser baserat på dina tidigare besök på vår webbplats och andra webbplatser</li>
@@ -84,6 +93,11 @@ function Cookies() {
           <li style={{ marginBottom: '0.5rem' }}>Förhindra att samma annons visas för ofta</li>
           <li style={{ marginBottom: '0.5rem' }}>Mäta effektiviteten av annonser</li>
         </ul>
+        <p>
+          Om du avvisar ber vi Google om icke-personanpassade annonser. Sådana annonser väljs utifrån sidans
+          innehåll och ungefärlig plats, inte din historik, men Google kan fortfarande använda cookies för
+          frekvensbegränsning, annonsstatistik och skydd mot bedrägerier.
+        </p>
         <p>
           Du kan välja bort personaliserad annonsering genom att besöka:{' '}
           <a

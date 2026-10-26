@@ -7,13 +7,15 @@ import { shareResult } from '../../utils/share';
 
 interface StatsModalProps {
   isOpen: boolean;
+  /** Pusslets datum – styr numret i delningstexten (arkivomgångar har äldre nummer). */
+  date?: string;
   onClose: () => void;
   stats: GameStats;
   gameStatus: 'playing' | 'won' | 'lost';
   evaluations: GuessLetter[][];
 }
 
-function StatsModal({ isOpen, onClose, stats, gameStatus, evaluations }: StatsModalProps) {
+function StatsModal({ isOpen, date, onClose, stats, gameStatus, evaluations }: StatsModalProps) {
   const countdown = useCountdown();
   const [copied, setCopied] = useState(false);
 
@@ -43,7 +45,7 @@ function StatsModal({ isOpen, onClose, stats, gameStatus, evaluations }: StatsMo
       .join('\n');
 
     const attempts = gameStatus === 'won' ? evaluations.length : 'X';
-    const nr = puzzleNumber(getTodayDateString());
+    const nr = puzzleNumber(date ?? getTodayDateString());
     const text = `Orda #${nr} ${attempts}/6\n\n${emoji}\n\nSpela på pluggpaus.se`;
 
     void shareResult(text).then((result) => {

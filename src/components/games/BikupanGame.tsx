@@ -9,11 +9,11 @@ function isTextField(t: EventTarget | null) {
   return t instanceof HTMLElement && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable);
 }
 
-function BikupanGame() {
+function BikupanGame({ date, isArchive = false }: { date: string; isArchive?: boolean }) {
   const {
     loading, puzzle, yesterday, outerOrder, found, input, score, rank, feedback, stats, today,
     submit, addLetter, removeLetter, reshuffle,
-  } = useBikupan();
+  } = useBikupan(date, isArchive);
   const [shareMsg, setShareMsg] = useState('');
 
   useEffect(() => {

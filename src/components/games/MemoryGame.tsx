@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { readNumber, writeNumber } from '../../utils/safeStorage';
 
 const SYMBOLS = ['📚', '✏️', '☕', '🎓', '💡', '🔬', '🧮', '🗺️'];
@@ -37,15 +37,6 @@ function MemoryGame() {
   const matchedCount = cards.filter((c) => c.matched).length;
   const won = matchedCount === cards.length;
 
-  useEffect(() => {
-    if (won) {
-      setBest((b) => {
-        const nb = b === 0 ? moves : Math.min(b, moves);
-        writeNumber(STORAGE_KEY, Number(nb));
-        return nb;
-      });
-    }
-  }, [won, moves]);
 
   const reset = useCallback(() => {
     setCards(buildDeck());
@@ -65,12 +56,22 @@ function MemoryGame() {
     setFlippedIds(newFlipped);
 
     if (newFlipped.length === 2) {
-      setMoves((m) => m + 1);
+      const nextMoves = moves + 1;
+      setMoves(nextMoves);
       setLocked(true);
       const [a, b] = newFlipped;
       const cardA = newCards.find((c) => c.id === a);
       const cardB = newCards.find((c) => c.id === b);
       if (cardA && cardB && cardA.symbol === cardB.symbol) {
+        // Sista paret? Uppdatera rekordet här i stället för i en effekt.
+        const pairsLeft = newCards.filter((c) => !c.matched).length - 2;
+        if (pairsLeft === 0) {
+          setBest((b) => {
+            const nb = b === 0 ? nextMoves : Math.min(b, nextMoves);
+            writeNumber(STORAGE_KEY, nb);
+            return nb;
+          });
+        }
         setTimeout(() => {
           setCards((prev) => prev.map((c) => (c.id === a || c.id === b ? { ...c, matched: true } : c)));
           setFlippedIds([]);

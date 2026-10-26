@@ -21,6 +21,8 @@ import NotFoundPage from './pages/NotFoundPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
+import CookieBanner from './components/CookieBanner';
+import ArkivPage from './pages/ArkivPage';
 
 function App() {
   return (
@@ -47,6 +49,7 @@ function App() {
           <Route path="/bikupan" element={<BikupanPage />} />
           <Route path="/landskapet" element={<LandskapetPage />} />
           <Route path="/basta-startord" element={<StartordPage />} />
+          <Route path="/arkiv" element={<ArkivPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/cookies" element={<Cookies />} />
           <Route path="/om-oss" element={<OmOssPage />} />
@@ -54,6 +57,7 @@ function App() {
           </Routes>
           </div>
           <Footer />
+          <CookieBanner />
         </div>
       </Router>
     </AppStateProvider>

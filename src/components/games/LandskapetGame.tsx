@@ -19,9 +19,9 @@ function padBox([x, y, w, h]: [number, number, number, number], pad = 0.08): str
   return `${x - s} ${y - s} ${w + 2 * s} ${h + 2 * s}`;
 }
 
-function LandskapetGame() {
+function LandskapetGame({ date, isArchive = false }: { date: string; isArchive?: boolean }) {
   const { loading, list, mapBox, target, results, status, stats, practice, today, guess, startPractice, backToDaily } =
-    useLandskapet();
+    useLandskapet(date, isArchive);
   const timeLeft = useCountdown();
   const [text, setText] = useState('');
   const [open, setOpen] = useState(false);

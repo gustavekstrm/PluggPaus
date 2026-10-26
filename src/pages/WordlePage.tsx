@@ -1,4 +1,7 @@
 import { Link } from 'react-router-dom';
+import ArchiveBanner from '../components/ArchiveBanner';
+import { usePuzzleDate, type PuzzleDate } from '../utils/archive';
+import { writeString } from '../utils/safeStorage';
 import AdBanner from '../components/AdBanner';
 import { useEffect, useState } from 'react';
 import QuickStats from '../components/QuickStats';
@@ -7,12 +10,12 @@ import Keyboard from '../components/wordle/Keyboard';
 import StatsModal from '../components/wordle/StatsModal';
 import { useWordle } from '../hooks/useWordle';
 
-function WordlePage() {
-  const { gameState, stats, answer, invalidWord, handleKeyPress, getKeyboardLetterStatus } = useWordle();
+function WordlePageGame({ date, isArchive }: PuzzleDate) {
+  const { gameState, stats, answer, invalidWord, handleKeyPress, getKeyboardLetterStatus } = useWordle(date, isArchive);
   const [showStats, setShowStats] = useState(false);
 
   useEffect(() => {
-    localStorage.setItem('lastPlayedGame', 'wordle');
+    writeString('lastPlayedGame', 'wordle');
     document.title = 'Orda – Wordle på Svenska | PluggPaus';
   }, []);
 
@@ -26,6 +29,7 @@ function WordlePage() {
 
   return (
     <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {isArchive && <ArchiveBanner date={date} path="/wordle" />}
       {/* Back button */}
       <div className="mb-6">
         <Link
@@ -92,6 +96,12 @@ function WordlePage() {
           </div>
         </div>
       </div>
+
+      {!isArchive && (
+        <p className="text-center mb-8 text-sm" style={{ color: 'var(--ink-muted)' }}>
+          Missat en dag? <Link to="/arkiv" className="underline">Spela tidigare pussel i arkivet</Link>.
+        </p>
+      )}
 
       {/* Ad Banner */}
       <AdBanner slot="5092040576" className="mb-8" />
@@ -169,6 +179,7 @@ function WordlePage() {
       </div>
 
       <StatsModal
+        date={date}
         isOpen={showStats}
         onClose={() => setShowStats(false)}
         stats={stats}
@@ -177,6 +188,12 @@ function WordlePage() {
       />
     </main>
   );
+}
+
+/** Läser ?datum= och monterar om spelet när datumet byts, så allt läge börjar om rent. */
+function WordlePage() {
+  const pd = usePuzzleDate();
+  return <WordlePageGame key={pd.date} {...pd} />;
 }
 
 export default WordlePage;

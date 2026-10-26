@@ -44,6 +44,7 @@ const gamesList = `
         <h2 style="font-size:1.4rem;margin:28px 0 8px">Läsvärt</h2>
         <ul>
           <li><a href="/basta-startord">Bästa startordet i svensk Wordle</a> – vi räknade på 11 012 ord.</li>
+          <li><a href="/arkiv">Pusselarkiv</a> – spela de senaste 30 dagarnas pussel i alla dagliga spel.</li>
         </ul>`;
 
 const page = (h1, paras, extra = '') =>
@@ -352,6 +353,23 @@ const ROUTES = [
     ),
   },
   {
+    path: '/arkiv',
+    title: 'Pusselarkiv – Spela Tidigare Dagars Pussel | PluggPaus',
+    desc: 'Missade du ett pussel? Spela de senaste 30 dagarnas Orda, Kopplingar, Kontext, Bikupan och Landskapet i PluggPaus pusselarkiv. Gratis, utan konto.',
+    html: page(
+      'Pusselarkiv – spela tidigare dagars pussel',
+      [
+        'Missade du en dag? I arkivet kan du spela de senaste 30 dagarnas pussel i alla fem dagliga spel: <a href="/wordle">Orda</a>, <a href="/connections">Kopplingar</a>, <a href="/contexto">Kontext</a>, <a href="/bikupan">Bikupan</a> och <a href="/landskapet">Landskapet</a>.',
+        'Arkivomgångar sparas för sig och räknas inte i din statistik eller svit, så du kan spela ikapp utan att det påverkar dagens resultat. Dagens pussel finns inte i arkivet – det spelar du på respektive spelsida.',
+      ],
+      faq([
+        ['Hur långt bak går arkivet?', 'Trettio dagar. Varje natt vid midnatt svensk tid flyttas gårdagens pussel in och det äldsta försvinner.'],
+        ['Räknas arkivpussel i min svit?', 'Nej. Sviten och statistiken gäller bara dagens pussel. Arkivomgångar sparas separat i din webbläsare.'],
+        ['Får alla samma arkivpussel?', 'Ja. Pusslet för ett visst datum är detsamma för alla, precis som när det var dagens.'],
+      ])
+    ),
+  },
+  {
     path: '/basta-startord',
     title: 'Bästa startordet i svensk Wordle – vi räknade på 11 012 ord | PluggPaus',
     desc: 'Vilket startord ger mest information i svensk Wordle? Vi beräknade entropin för varje tänkbart öppningsord över 11 012 svenska fembokstavsord. Resultat, bästa par och metod.',
@@ -430,8 +448,9 @@ const ROUTES = [
       [
         'Cookies är små textfiler som lagras på din enhet när du besöker en webbplats. PluggPaus använder <strong>nödvändiga cookies</strong> för att sidan ska fungera, <strong>analyscookies</strong> (Google Analytics) samt <strong>reklamcookies</strong> (Google AdSense).',
         '<strong>Nödvändig lagring</strong> är det som får sajten att fungera: ditt val av ljust eller mörkt tema, vilka spel du markerat som favoriter, och dina resultat i spelen. Detta ligger i webbläsarens lokala lagring på din enhet och skickas aldrig vidare.',
-        '<strong>Analyscookies</strong> från Google Analytics visar oss hur många som besöker sajten och vilka spel som används, så vi vet vad som är värt att bygga vidare på. Statistiken är aggregerad och pekar inte ut enskilda besökare.',
-        '<strong>Reklamcookies</strong> från Google AdSense gör att annonserna kan anpassas efter dina intressen. Annonserna är det som betalar för sajten. Vill du slippa anpassade annonser kan du stänga av det i <a href="https://www.google.com/settings/ads">Googles annonsinställningar</a> – du får då fortfarande annonser, men mindre relevanta.',
+        '<strong>Du väljer själv.</strong> Statistik och personanpassade annonser används bara om du godkänner det i cookievalet. Avvisar du, eller har du inte valt än, laddas Google Analytics inte alls och annonserna visas utan personanpassning. Valet kan ändras när som helst på den här sidan.',
+        '<strong>Analyscookies</strong> från Google Analytics (bara efter godkännande) visar oss hur många som besöker sajten och vilka spel som används, så vi vet vad som är värt att bygga vidare på.',
+        '<strong>Reklamcookies</strong> från Google AdSense gör att annonserna kan anpassas efter dina intressen, om du godkänner. Annonserna är det som betalar för sajten. Avvisar du visas annonser utan personanpassning; Google kan ändå använda cookies för frekvensbegränsning, annonsstatistik och skydd mot bedrägerier.',
         '<strong>Så tar du bort cookies.</strong> Alla webbläsare låter dig radera cookies och lokal lagring under inställningarna för integritet eller webbplatsdata. Gör du det försvinner även dina spelresultat och ditt temaval, eftersom de lagras på samma sätt.',
         'Läs mer om hur vi hanterar uppgifter i vår <a href="/privacy-policy">integritetspolicy</a>.',
       ]

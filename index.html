@@ -14,14 +14,34 @@
       })();
     </script>
 
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HZKLZ9LXV6"></script>
+    <!-- Samtycke: måste köras FÖRE Googles skript.
+         Consent Mode står på "denied" och AdSense ombeds om icke-personanpassade annonser
+         tills besökaren godkänt. Google Analytics laddas bara efter godkännande
+         (src/utils/consent.ts sköter valet när det görs). -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-HZKLZ9LXV6');
+      (function() {
+        var choice = null;
+        try { choice = localStorage.getItem('cookiesAccepted'); } catch (e) { /* blockerad lagring = inget samtycke */ }
+        var ok = choice === 'accepted';
+        var v = ok ? 'granted' : 'denied';
+        gtag('consent', 'default', { ad_storage: v, ad_user_data: v, ad_personalization: v, analytics_storage: v });
+        (window.adsbygoogle = window.adsbygoogle || []).requestNonPersonalizedAds = ok ? 0 : 1;
+        window.ppLoadAnalytics = function() {
+          if (window.ppAnalyticsLoaded) return;
+          window.ppAnalyticsLoaded = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=G-HZKLZ9LXV6';
+          document.head.appendChild(s);
+          gtag('js', new Date());
+          gtag('config', 'G-HZKLZ9LXV6');
+        };
+        if (ok) window.ppLoadAnalytics();
+      })();
     </script>
+
     
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4690812143168699" crossorigin="anonymous"></script>

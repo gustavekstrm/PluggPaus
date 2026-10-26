@@ -1,6 +1,6 @@
 # PluggPaus
 
-> PluggPaus (pluggpaus.se) är en svensk sajt med gratis webbspel för studiepauser: dagliga ordspel på svenska, ett geografispel om Sveriges landskap samt arkad-, minnes- och logikspel. Allt spelas direkt i webbläsaren utan konto eller nedladdning. Resultat sparas bara lokalt i besökarens webbläsare.
+> PluggPaus (pluggpaus.se) är en svensk sajt med gratis webbspel för studiepauser: dagliga ordspel på svenska, ett geografispel om Sveriges landskap samt arkad-, minnes- och logikspel. Allt spelas direkt i webbläsaren utan konto eller nedladdning. Resultat sparas bara lokalt i besökarens webbläsare. Google Analytics och personanpassade annonser används bara efter besökarens samtycke.
 
 Alla spel är byggda av PluggPaus själva. De dagliga spelen byter pussel vid midnatt svensk tid och alla spelare får samma pussel samma dag.
 
@@ -21,6 +21,9 @@ Alla spel är byggda av PluggPaus själva. De dagliga spelen byter pussel vid mi
 - [Minne](https://pluggpaus.se/minne): Memory – vänd kort och hitta par.
 - [Färgminne](https://pluggpaus.se/fargminne): Härma en allt längre färgsekvens (Simon).
 - [Tajming](https://pluggpaus.se/tajming): Tvåspelarduell om tidskänsla – stoppa en osynlig klocka.
+
+## Arkiv
+- [Pusselarkiv](https://pluggpaus.se/arkiv): Spela de senaste 30 dagarnas pussel i Orda, Kopplingar, Kontext, Bikupan och Landskapet. Räknas inte i statistiken.
 
 ## Artiklar
 - [Bästa startordet i svensk Wordle](https://pluggpaus.se/basta-startord): Entropianalys över 11 012 svenska fembokstavsord. Bästa enskilda startord: SAKER; bästa par: RIKTA + SOLEN.

@@ -15,7 +15,7 @@ function AdBanner({ slot, className = '' }: AdBannerProps) {
   useEffect(() => {
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
-    } catch (_e) {
+    } catch {
       // AdSense not loaded
     }
   }, []);

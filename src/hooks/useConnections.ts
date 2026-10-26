@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { PUZZLES, getTodaysPuzzle } from '../data/connectionsPuzzles';
-import { getTodayDateString, nextStreak, puzzleKey } from '../utils/dailyDate';
+import { useState, useCallback } from 'react';
+import { PUZZLES, getPuzzleForDate } from '../data/connectionsPuzzles';
+import { nextStreak, puzzleKey } from '../utils/dailyDate';
+import { readArchive, writeArchive } from '../utils/archive';
 import { readJSON, writeJSON } from '../utils/safeStorage';
 import type { GameState, GameStats, ConnectionsData, ConnectionsPuzzle } from '../types/connections';
 
@@ -23,59 +24,60 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-export function useConnections() {
-  const [puzzle, setPuzzle] = useState<ConnectionsPuzzle | null>(null);
-  const [gameState, setGameState] = useState<GameState | null>(null);
-  const [stats, setStats] = useState<GameStats>(defaultStats);
-
-  // Initialize game
-  useEffect(() => {
-    const todayPuzzle = getTodaysPuzzle();
-    setPuzzle(todayPuzzle);
-
-    const data = readJSON<ConnectionsData>(STORAGE_KEY);
-    if (data) {
-      setStats({ ...defaultStats, ...data.stats });
-
-      // Återuppta bara om både dag och pussel stämmer. Utan pusselkontrollen kunde
-      // gårdagens kvarvarande ord ligga kvar medan gissningarna matchades mot dagens
-      // kategorier – ingen kombination kunde då matcha och pusslet blev olösbart.
-      const today = getTodayDateString();
-      const key = puzzleKey(today, PUZZLES.length);
-      if (data.lastPlayed === today && data.puzzleKey === key && data.gameState) {
-        setGameState(data.gameState);
-      } else {
-        initializeNewGame(todayPuzzle);
-      }
-    } else {
-      initializeNewGame(todayPuzzle);
-    }
-  }, []);
-
-  const initializeNewGame = (puzzle: ConnectionsPuzzle) => {
-    const allWords = puzzle.categories.flatMap(cat => cat.words);
-    const shuffledWords = shuffleArray(allWords);
-
-    setGameState({
-      selectedWords: [],
-      solvedCategories: [],
-      remainingWords: shuffledWords,
-      mistakesRemaining: MAX_MISTAKES,
-      gameStatus: 'playing',
-      shakingWords: [],
-    });
+function newGame(puzzle: ConnectionsPuzzle): GameState {
+  return {
+    selectedWords: [],
+    solvedCategories: [],
+    remainingWords: shuffleArray(puzzle.categories.flatMap((cat) => cat.words)),
+    mistakesRemaining: MAX_MISTAKES,
+    gameStatus: 'playing',
+    shakingWords: [],
   };
+}
 
-  const saveGameState = useCallback((newState: GameState, newStats: GameStats) => {
-    const today = getTodayDateString();
-    const data: ConnectionsData = {
-      lastPlayed: today,
-      puzzleKey: puzzleKey(today, PUZZLES.length),
-      gameState: newState,
-      stats: newStats,
-    };
-    writeJSON(STORAGE_KEY, data);
-  }, []);
+/** Läser sparat läge synkront, så första renderingen redan visar rätt bräde. */
+function loadInitial(date: string, isArchive: boolean, puzzle: ConnectionsPuzzle) {
+  const data = readJSON<ConnectionsData>(STORAGE_KEY);
+  const stats: GameStats = { ...defaultStats, ...(data?.stats ?? {}) };
+  if (isArchive) {
+    const saved = readArchive<GameState>('connections', date);
+    return { stats, gameState: saved ? { ...saved, shakingWords: [] } : newGame(puzzle) };
+  }
+  // Återuppta bara om både dag och pussel stämmer. Utan pusselkontrollen kunde
+  // gårdagens kvarvarande ord ligga kvar medan gissningarna matchades mot dagens
+  // kategorier – ingen kombination kunde då matcha och pusslet blev olösbart.
+  if (data && data.lastPlayed === date && data.puzzleKey === puzzleKey(date, PUZZLES.length) && data.gameState) {
+    return { stats, gameState: data.gameState };
+  }
+  return { stats, gameState: newGame(puzzle) };
+}
+
+/**
+ * @param date      vilket dagspussel som spelas (YYYY-MM-DD, svensk tid)
+ * @param isArchive sant för ett äldre pussel från arkivet – sparas separat och rör inte statistiken
+ */
+export function useConnections(date: string, isArchive = false) {
+  const [puzzle] = useState<ConnectionsPuzzle>(() => getPuzzleForDate(date));
+  const [initial] = useState(() => loadInitial(date, isArchive, puzzle));
+  const [gameState, setGameState] = useState<GameState | null>(initial.gameState);
+  const [stats, setStats] = useState<GameStats>(initial.stats);
+
+  const saveGameState = useCallback(
+    (newState: GameState, newStats: GameStats) => {
+      if (isArchive) {
+        writeArchive('connections', date, newState);
+        return;
+      }
+      const data: ConnectionsData = {
+        lastPlayed: date,
+        puzzleKey: puzzleKey(date, PUZZLES.length),
+        gameState: newState,
+        stats: newStats,
+      };
+      writeJSON(STORAGE_KEY, data);
+    },
+    [date, isArchive]
+  );
 
   const toggleWordSelection = useCallback((word: string) => {
     if (!gameState || gameState.gameStatus !== 'playing') return;
@@ -131,8 +133,8 @@ export function useConnections() {
       const isWin = newSolved.length === 4;
 
       const newStats: GameStats = { ...stats };
-      if (isWin) {
-        const today = getTodayDateString();
+      if (isWin && !isArchive) {
+        const today = date;
         newStats.gamesPlayed++;
         newStats.gamesWon++;
         newStats.currentStreak = nextStreak(stats.currentStreak, stats.lastCompletedDate, today);
@@ -158,10 +160,10 @@ export function useConnections() {
       const isLoss = newMistakes === 0;
 
       const newStats: GameStats = { ...stats };
-      if (isLoss) {
+      if (isLoss && !isArchive) {
         newStats.gamesPlayed++;
         newStats.currentStreak = 0;
-        newStats.lastCompletedDate = getTodayDateString();
+        newStats.lastCompletedDate = date;
       }
 
       const newState: GameState = {
@@ -181,7 +183,7 @@ export function useConnections() {
         setGameState(prev => prev ? { ...prev, shakingWords: [] } : prev);
       }, 500);
     }
-  }, [gameState, puzzle, stats, saveGameState]);
+  }, [gameState, puzzle, stats, saveGameState, date, isArchive]);
 
   return {
     puzzle,

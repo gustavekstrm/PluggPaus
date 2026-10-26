@@ -2,12 +2,12 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { BikupanPuzzle } from '../data/bikupan';
 import {
   getPreviousDateString,
-  getTodayDateString,
   nextStreak,
   puzzleIndexForDate,
   puzzleKey,
 } from '../utils/dailyDate';
 import { readJSON, writeJSON } from '../utils/safeStorage';
+import { readArchive, writeArchive } from '../utils/archive';
 
 const STATE_KEY = 'bikupanState';
 const STATS_KEY = 'bikupanStats';
@@ -88,9 +88,13 @@ function shuffle<T>(arr: T[]): T[] {
   return a;
 }
 
-export function useBikupan() {
+/**
+ * @param date      vilket dagspussel som spelas (YYYY-MM-DD, svensk tid)
+ * @param isArchive sant för ett äldre pussel från arkivet – sparas separat och rör inte statistiken
+ */
+export function useBikupan(date: string, isArchive = false) {
   const [puzzles, setPuzzles] = useState<BikupanPuzzle[] | null>(null);
-  const [today] = useState(getTodayDateString);
+  const today = date;
   const [found, setFound] = useState<string[]>([]);
   const [input, setInput] = useState('');
   const [outerOrder, setOuterOrder] = useState<string[]>([]);
@@ -121,13 +125,13 @@ export function useBikupan() {
   // Återställ sparat läge när pusslet är laddat – men bara om det gäller samma pussel.
   useEffect(() => {
     if (!puzzle) return;
-    const saved = readJSON<SavedState>(STATE_KEY);
+    const saved = isArchive ? readArchive<SavedState>('bikupan', today) : readJSON<SavedState>(STATE_KEY);
     const valid = saved && saved.key === key && saved.date === today ? saved.found.filter((w) => puzzle.answers.includes(w)) : [];
     // Engångsinitiering efter att datan laddats asynkront.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setFound(valid);
     setOuterOrder(puzzle.outer);
-  }, [puzzle, key, today]);
+  }, [puzzle, key, today, isArchive]);
 
   const score = useMemo(
     () => (puzzle ? found.reduce((s, w) => s + scoreWord(w, puzzle.pangrams.has(w)), 0) : 0),
@@ -137,14 +141,16 @@ export function useBikupan() {
 
   const persist = useCallback(
     (nextFound: string[]) => {
-      writeJSON(STATE_KEY, { key, date: today, found: nextFound } satisfies SavedState);
+      const state: SavedState = { key, date: today, found: nextFound };
+      if (isArchive) writeArchive('bikupan', today, state);
+      else writeJSON(STATE_KEY, state);
     },
-    [key, today]
+    [key, today, isArchive]
   );
 
   const updateStats = useCallback(
     (nextFound: string[], prevScore: number, nextScore: number) => {
-      if (!puzzle) return;
+      if (!puzzle || isArchive) return;
       setStats((prev) => {
         const next = { ...prev, totalWords: prev.totalWords + 1 };
         if (nextFound.length === 1) next.daysPlayed = prev.daysPlayed + 1;
@@ -162,7 +168,7 @@ export function useBikupan() {
         return next;
       });
     },
-    [puzzle, today]
+    [puzzle, today, isArchive]
   );
 
   const submit = useCallback(() => {

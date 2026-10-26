@@ -25,6 +25,7 @@ function Footer() {
           <div className="pp-footer-h">Om</div>
           <div className="pp-footer-links">
             <Link to="/">Alla spel</Link>
+            <Link to="/arkiv">Pusselarkiv</Link>
             <Link to="/om-oss">Om oss &amp; kontakt</Link>
             <Link to="/privacy-policy">Integritetspolicy</Link>
             <Link to="/cookies">Cookie-inställningar</Link>

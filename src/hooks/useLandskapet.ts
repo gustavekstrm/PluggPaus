@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { Landskap } from '../data/landskap';
-import { getTodayDateString, nextStreak, puzzleIndexForDate } from '../utils/dailyDate';
+import { nextStreak, puzzleIndexForDate } from '../utils/dailyDate';
+import { readArchive, writeArchive } from '../utils/archive';
 import { readJSON, writeJSON } from '../utils/safeStorage';
 
 export const MAX_GUESSES = 6;
@@ -62,9 +63,13 @@ export const directionArrow = (deg: number) => ARROWS[Math.round(deg / 45) % 8];
 export const normalize = (s: string) => s.trim().toLowerCase().replace(/\s+/g, '');
 export const fold = (s: string) => normalize(s).normalize('NFD').replace(/[̀-ͯ]/g, '');
 
-export function useLandskapet() {
+/**
+ * @param date      vilket dagspussel som spelas (YYYY-MM-DD, svensk tid)
+ * @param isArchive sant för ett äldre pussel från arkivet – sparas separat och rör inte statistiken
+ */
+export function useLandskapet(date: string, isArchive = false) {
   const [data, setData] = useState<{ list: Landskap[]; order: number[]; box: [number, number, number, number] } | null>(null);
-  const [today] = useState(getTodayDateString);
+  const today = date;
   const [guesses, setGuesses] = useState<string[]>([]);
   const [practiceTarget, setPracticeTarget] = useState<string | null>(null);
   const [stats, setStats] = useState<LandskapetStats>(() => {
@@ -98,12 +103,12 @@ export function useLandskapet() {
   // Återställ dagens sparade gissningar – bara om de gäller samma dag och samma landskap.
   useEffect(() => {
     if (!dailyTarget) return;
-    const saved = readJSON<SavedState>(STATE_KEY);
+    const saved = isArchive ? readArchive<SavedState>('landskapet', today) : readJSON<SavedState>(STATE_KEY);
     const valid = saved && saved.date === today && saved.target === dailyTarget.name ? saved.guesses : [];
     // Engångsinitiering efter att datan laddats asynkront.
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setGuesses(valid.slice(0, MAX_GUESSES));
-  }, [dailyTarget, today]);
+  }, [dailyTarget, today, isArchive]);
 
   const maxKm = useMemo(() => {
     if (!data) return 1;
@@ -142,7 +147,12 @@ export function useLandskapet() {
       setGuesses(next);
       if (practice) return null;
 
-      writeJSON(STATE_KEY, { date: today, target: target.name, guesses: next } satisfies SavedState);
+      const state: SavedState = { date: today, target: target.name, guesses: next };
+      if (isArchive) {
+        writeArchive('landskapet', today, state);
+        return null;
+      }
+      writeJSON(STATE_KEY, state);
       const won = match.name === target.name;
       const finished = won || next.length >= MAX_GUESSES;
       if (finished) {
@@ -163,7 +173,7 @@ export function useLandskapet() {
       }
       return null;
     },
-    [data, target, status, guesses, practice, today]
+    [data, target, status, guesses, practice, today, isArchive]
   );
 
   const startPractice = useCallback(() => {
@@ -175,9 +185,9 @@ export function useLandskapet() {
 
   const backToDaily = useCallback(() => {
     setPracticeTarget(null);
-    const saved = readJSON<SavedState>(STATE_KEY);
+    const saved = isArchive ? readArchive<SavedState>('landskapet', today) : readJSON<SavedState>(STATE_KEY);
     setGuesses(saved && saved.date === today && dailyTarget && saved.target === dailyTarget.name ? saved.guesses : []);
-  }, [today, dailyTarget]);
+  }, [today, dailyTarget, isArchive]);
 
   return {
     loading: !data || !target,

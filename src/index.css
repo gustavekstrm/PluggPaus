@@ -951,14 +951,14 @@ body {
 
 .cookie-banner p {
   margin: 0;
-  color: #333;
+  color: var(--ink);
   font-size: 0.9rem;
   line-height: 1.5;
   font-weight: 500;
 }
 
 .dark .cookie-banner p {
-  color: #f8f9fa;
+  color: var(--ink);
 }
 
 .cookie-banner-buttons {
@@ -1774,3 +1774,44 @@ body {
 .ls-dist-row { display: grid; grid-template-columns: 1.2em 1fr; gap: 8px; align-items: center; color: var(--ink); font-size: 13px; }
 .ls-dist-bar { display: block; background: var(--accent); color: var(--on-accent); font-weight: 700; text-align: right; padding: 2px 6px; border-radius: 4px; min-width: 1.6em; }
 .ls-next { text-align: center; margin-top: 12px; }
+
+/* Cookieval: två likvärdiga knappar – att avvisa ska vara lika enkelt som att godkänna. */
+.cookie-banner { border: 2px solid var(--border); }
+.cookie-choice-btn {
+  min-height: 44px; min-width: 120px; padding: 10px 22px;
+  font-family: inherit; font-weight: 700; font-size: .95rem;
+  color: var(--ink); background: var(--surface2);
+  border: 2px solid var(--border); border-radius: 12px; box-shadow: 3px 3px 0 var(--shadow);
+  cursor: pointer; transition: transform .08s, box-shadow .08s;
+}
+.cookie-choice-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow); }
+.cookie-choice-btn[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
+.consent-box { border: 2px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 18px 20px; margin: 0 0 2rem; }
+
+/* ============================================================
+   Pusselarkiv
+   ============================================================ */
+.pp-archive-banner {
+  display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; justify-content: space-between;
+  margin-bottom: 16px; padding: 10px 14px; font-size: 15px; color: var(--ink);
+  background: var(--surface2); border: 2px dashed var(--border); border-radius: 12px;
+}
+.pp-archive-links { display: flex; gap: 14px; }
+.pp-archive-links a { color: var(--accent); font-weight: 700; text-decoration: underline; }
+.ar-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+.ar-day {
+  display: grid; grid-template-columns: 9.5em 1fr; gap: 10px; align-items: center;
+  padding: 10px 14px; border: 2px solid var(--border); border-radius: 12px; background: var(--surface);
+}
+.ar-date { font-weight: 700; color: var(--ink); }
+.ar-date::first-letter { text-transform: uppercase; }
+.ar-games { display: flex; flex-wrap: wrap; gap: 6px; }
+.ar-chip {
+  display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 4px 10px;
+  font-size: 14px; font-weight: 600; text-decoration: none; color: var(--ink);
+  background: var(--surface2); border: 2px solid var(--border); border-radius: 999px;
+}
+.ar-chip:hover { background: var(--accent); color: var(--on-accent); }
+.ar-done { color: var(--accent); }
+@media (max-width: 560px) { .ar-day { grid-template-columns: 1fr; } }
+.cookie-banner .cookie-link { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }

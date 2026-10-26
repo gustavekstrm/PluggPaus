@@ -8,7 +8,7 @@ function PrivacyPolicy() {
           Integritetspolicy
         </h1>
 
-        <p>Senast uppdaterad: 2026-08-21</p>
+        <p>Senast uppdaterad: 2026-10-26</p>
 
         <h2>1. Inledning</h2>
         <p>
@@ -41,6 +41,11 @@ function PrivacyPolicy() {
           Denna information används för att förbättra webbplatsens innehåll och användarupplevelse.
         </p>
         <p>
+          <strong>Analytics laddas bara om du godkänner det</strong> i cookievalet. Avvisar du, eller har du inte
+          gjort något val, laddas Google Analytics inte alls. Du kan ändra ditt val när som helst på{' '}
+          <Link to="/cookies">cookiesidan</Link>.
+        </p>
+        <p>
           Google Analytics använder cookies för att samla in denna information. Du kan läsa mer om hur Google
           använder information från webbplatser som använder deras tjänster på:{' '}
           <a
@@ -61,6 +66,12 @@ function PrivacyPolicy() {
         <p>
           Googles användning av reklamcookies gör det möjligt för Google och dess partner att visa annonser till
           våra användare baserat på deras besök på vår webbplats och/eller andra webbplatser på internet.
+        </p>
+        <p>
+          <strong>Personanpassade annonser visas bara om du godkänner det</strong> i cookievalet. Utan
+          godkännande ber vi Google om icke-personanpassade annonser och skickar samtyckessignalen
+          &quot;nekad&quot; via Googles Consent Mode. Google kan även då använda cookies för till exempel
+          frekvensbegränsning, statistik över annonsvisningar och skydd mot bedrägerier.
         </p>
         <p>
           <strong>AdSense-policy efterlevnad:</strong> PluggPaus följer

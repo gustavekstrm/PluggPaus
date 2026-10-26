@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import GamePageShell from '../components/GamePageShell';
 import BikupanGame from '../components/games/BikupanGame';
 import { writeString } from '../utils/safeStorage';
+import { usePuzzleDate } from '../utils/archive';
+import ArchiveBanner from '../components/ArchiveBanner';
 
 function BikupanPage() {
+  const { date, isArchive } = usePuzzleDate();
   useEffect(() => {
     writeString('lastPlayedGame', 'bikupan');
     document.title = 'Bikupan – Spelling Bee på Svenska | PluggPaus';
@@ -79,7 +82,13 @@ function BikupanPage() {
         },
       ]}
     >
-      <BikupanGame />
+      {isArchive && <ArchiveBanner date={date} path="/bikupan" />}
+      <BikupanGame key={date} date={date} isArchive={isArchive} />
+      {!isArchive && (
+        <p className="text-center mt-6 text-sm" style={{ color: 'var(--ink-muted)' }}>
+          Missat en dag? <Link to="/arkiv" className="underline">Spela tidigare pussel i arkivet</Link>.
+        </p>
+      )}
       <p className="text-center mt-6 text-sm" style={{ color: 'var(--ink-muted)' }}>
         Gillar du ordspel? Prova även <Link to="/wordle" className="underline">Orda</Link> och{' '}
         <Link to="/connections" className="underline">Kopplingar</Link>.
